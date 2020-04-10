@@ -1,4 +1,4 @@
-package cc.sauerwein.popularmovies;
+package cc.sauerwein.popularmovies.data;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
-import cc.sauerwein.popularmovies.R;
+import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.utilities.NetworkUtils;
 
 public class DetailActivity extends AppCompatActivity {

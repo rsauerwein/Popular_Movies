@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
-import cc.sauerwein.popularmovies.R;
+import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.utilities.InternetCheck;
 import cc.sauerwein.popularmovies.utilities.NetworkUtils;
 import retrofit2.Call;
