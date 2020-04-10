@@ -3,10 +3,10 @@ package cc.sauerwein.popularmovies;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Calendar;
 
 import cc.sauerwein.popularmovies.data.Movie;
+import cc.sauerwein.popularmovies.data.Repository;
 import cc.sauerwein.popularmovies.utilities.NetworkUtils;
 
 public class DetailActivity extends AppCompatActivity {
@@ -27,6 +28,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView mUserRating;
     private TextView mReleaseDate;
     private ImageView mMovieThumbnail;
+    private static final String LOG_TAG = DetailActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,15 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void favorite(View view) {
-        Toast toast = Toast.makeText(this, "CLICK", Toast.LENGTH_LONG);
-        toast.show();
+        Repository repository = Repository.getInstance(this);
+        Movie movie = repository.getMovieById(mMovie.getId());
+
+        if (movie == null) {
+            repository.insertMovie(mMovie);
+            Log.d(LOG_TAG, "Add movie to favorites");
+        } else {
+            repository.deleteMovie(movie);
+            Log.d(LOG_TAG, "Remove movie from favorites");
+        }
     }
 }
