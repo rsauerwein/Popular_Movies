@@ -57,6 +57,7 @@
                 android:width="48dp"
                 android:background="#64d8cb"
                 android:text="@string/mark_as_favorite"
+                android:onClick="favorite"
                 android:textAllCaps="true" />
         </LinearLayout>
     </RelativeLayout>

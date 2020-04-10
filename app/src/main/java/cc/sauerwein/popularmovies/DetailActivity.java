@@ -3,8 +3,10 @@ package cc.sauerwein.popularmovies;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -61,5 +63,10 @@ public class DetailActivity extends AppCompatActivity {
         Uri posterUri = NetworkUtils.createPosterUri(posterPath);
         Picasso.get().load(posterUri).into(mMovieThumbnail);
         mMovieThumbnail.setContentDescription(mMovie.getTitle());
+    }
+
+    public void favorite(View view) {
+        Toast toast = Toast.makeText(this, "CLICK", Toast.LENGTH_LONG);
+        toast.show();
     }
 }
