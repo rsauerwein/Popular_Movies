@@ -1,0 +1,6 @@
+package cc.sauerwein.popularmovies_stage1.preferences;
+
+public class ApiKey {
+    // Please insert your themoviedb.org API key here and rename this file to ApiKey.java
+    public static final String API_KEY = "";
+}
