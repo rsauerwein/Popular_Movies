@@ -17,6 +17,7 @@ import java.util.Calendar;
 
 import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.data.Repository;
+import cc.sauerwein.popularmovies.utilities.AppExecutors;
 import cc.sauerwein.popularmovies.utilities.NetworkUtils;
 
 public class DetailActivity extends AppCompatActivity {
@@ -69,14 +70,20 @@ public class DetailActivity extends AppCompatActivity {
 
     public void favorite(View view) {
         Repository repository = Repository.getInstance(this);
-        Movie movie = repository.getMovieById(mMovie.getId());
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Movie movie = repository.getMovieById(mMovie.getId());
 
-        if (movie == null) {
-            repository.insertMovie(mMovie);
-            Log.d(LOG_TAG, "Add movie to favorites");
-        } else {
-            repository.deleteMovie(movie);
-            Log.d(LOG_TAG, "Remove movie from favorites");
-        }
+                if (movie == null) {
+                    repository.insertMovie(mMovie);
+                    Log.d(LOG_TAG, "Add movie to favorites");
+                } else {
+                    repository.deleteMovie(movie);
+                    Log.d(LOG_TAG, "Remove movie from favorites");
+                }
+            }
+        });
+
     }
 }
