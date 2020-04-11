@@ -1,5 +1,6 @@
 package cc.sauerwein.popularmovies.data;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -10,10 +11,10 @@ import java.util.List;
 @Dao
 public interface MovieDao {
     @Query("SELECT * FROM movies")
-    List<Movie> loadAllMovies();
+    LiveData<List<Movie>> loadAllMovies();
 
     @Query("SELECT * FROM movies WHERE id = :id")
-    Movie loadMovieById(int id);
+    LiveData<Movie> loadMovieById(int id);
 
     @Insert
     void insertMovie(Movie movie);

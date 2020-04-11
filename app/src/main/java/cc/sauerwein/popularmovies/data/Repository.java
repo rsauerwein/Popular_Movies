@@ -3,6 +3,8 @@ package cc.sauerwein.popularmovies.data;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
 
 /**
@@ -32,11 +34,11 @@ public class Repository {
         return sInstance;
     }
 
-    public List<Movie> getAllMovies() {
+    public LiveData<List<Movie>> getAllMovies() {
         return mDb.movieDao().loadAllMovies();
     }
 
-    public Movie getMovieById(int id) {
+    public LiveData<Movie> getMovieById(int id) {
         return mDb.movieDao().loadMovieById(id);
     }
 
