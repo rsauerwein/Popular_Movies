@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +24,7 @@ import java.io.IOException;
 import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.utilities.InternetCheck;
 import cc.sauerwein.popularmovies.utilities.NetworkUtils;
+import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -69,6 +72,11 @@ public class MainActivity extends AppCompatActivity implements cc.sauerwein.popu
         mRetrofitService = mRetrofit.create(GetDataService.class);
 
         loadMovieData(NetworkUtils.OPTION_POPULAR_MOVIES);
+        setupViewModel();
+    }
+
+    private void setupViewModel() {
+        ViewModel viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
     }
 
     private void loadMovieData(final String option) {
