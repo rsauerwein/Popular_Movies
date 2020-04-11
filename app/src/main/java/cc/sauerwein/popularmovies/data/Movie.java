@@ -28,6 +28,7 @@ public class Movie {
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
     private String userRating;
+    private boolean isFavorite;
 
     public Movie(int id, String title, String overview, Date releaseDate, String posterPath, String userRating) {
         this.id = id;
@@ -36,6 +37,7 @@ public class Movie {
         this.releaseDate = releaseDate;
         this.posterPath = posterPath;
         this.userRating = userRating;
+        this.isFavorite = false;
     }
 
     public int getId() {
@@ -60,5 +62,13 @@ public class Movie {
 
     public String getUserRating() {
         return userRating;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }
