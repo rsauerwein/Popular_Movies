@@ -3,10 +3,13 @@ package cc.sauerwein.popularmovies;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -15,6 +18,7 @@ import java.util.Calendar;
 
 import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.utilities.NetworkUtils;
+import cc.sauerwein.popularmovies.viewmodels.MovieDetailViewModel;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -29,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(LOG_TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         setTitle(getString(R.string.movie_detail));
@@ -42,7 +47,13 @@ public class DetailActivity extends AppCompatActivity {
         mUserRating = findViewById(R.id.tv_user_rating);
         mReleaseDate = findViewById(R.id.tv_release_date);
 
+        setupViewModel();
         populateUI();
+    }
+
+    private void setupViewModel() {
+        MovieDetailViewModel viewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);
+        viewModel.getMovie(mMovie);
     }
 
     /**
@@ -64,7 +75,8 @@ public class DetailActivity extends AppCompatActivity {
         mMovieThumbnail.setContentDescription(mMovie.getTitle());
     }
 
-//    public void favorite(View view) {
+    public void favorite(View view) {
+
 //        Repository repository = Repository.getInstance(this);
 //        AppExecutors.getInstance().diskIO().execute(new Runnable() {
 //            @Override
@@ -80,6 +92,6 @@ public class DetailActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
-//
-//    }
+
+    }
 }

@@ -1,6 +1,6 @@
 package cc.sauerwein.popularmovies.data;
 
-import android.content.Context;
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -19,15 +19,15 @@ public class Repository {
     private final AppDatabase mDb;
 
 
-    public Repository(Context context) {
-        this.mDb = AppDatabase.getInstance(context);
+    public Repository(Application application) {
+        this.mDb = AppDatabase.getInstance(application);
     }
 
-    public static Repository getInstance(Context context) {
+    public static Repository getInstance(Application application) {
         if (sInstance == null) {
             synchronized (LOCK) {
                 Log.d(LOG_TAG, "Creating new repository instance");
-                sInstance = new Repository(context);
+                sInstance = new Repository(application);
             }
         }
         Log.d(LOG_TAG, "Getting the repository instance");

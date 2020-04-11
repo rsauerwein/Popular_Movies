@@ -63,4 +63,5 @@ dependencies {
     // Annotation processor
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 }
