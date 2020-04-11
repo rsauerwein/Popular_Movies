@@ -33,7 +33,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
     private void loadMovie(Movie movie) {
         Repository repository = Repository.getInstance(this.getApplication());
-        Log.d(TAG, "loadMovie by id from database");
         this.movie = repository.getMovieById(movie.getId());
+        Log.d(TAG, "loadMovie by id from database");
     }
 }
