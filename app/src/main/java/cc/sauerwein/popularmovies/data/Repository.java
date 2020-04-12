@@ -7,6 +7,10 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Singleton class
  * Use getInstance to get a Repository object
@@ -17,11 +21,18 @@ public class Repository {
     private static final Object LOCK = new Object();
     private static Repository sInstance;
     private final AppDatabase mDb;
+    private final Api.ApiInterface mRetrofitService;
+    private Callback<MovieList> callback = new Callback<MovieList>() {
+        @Override
+        public void onResponse(Call<MovieList> call, Response<MovieList> response) {
 
+        }
 
-    public Repository(Application application) {
-        this.mDb = AppDatabase.getInstance(application);
-    }
+        @Override
+        public void onFailure(Call<MovieList> call, Throwable t) {
+
+        }
+    };
 
     public static Repository getInstance(Application application) {
         if (sInstance == null) {
@@ -34,8 +45,9 @@ public class Repository {
         return sInstance;
     }
 
-    public LiveData<List<Movie>> getAllMovies() {
-        return mDb.movieDao().loadAllMovies();
+    public Repository(Application application) {
+        this.mDb = AppDatabase.getInstance(application);
+        this.mRetrofitService = Api.getApi();
     }
 
     public LiveData<Movie> getMovieById(int id) {
@@ -48,5 +60,19 @@ public class Repository {
 
     public void insertMovie(Movie movie) {
         mDb.movieDao().insertMovie(movie);
+    }
+
+    // Todo methods renaming
+    public LiveData<List<Movie>> getAllMovies() {
+        return mDb.movieDao().loadAllMovies();
+    }
+
+    // Todo - is it a good idea to share the same callback objects in different methods
+    public void getPopularMovies() {
+        mRetrofitService.getPopularMovies(Api.getApiKey()).enqueue(callback);
+    }
+
+    public void getTopRatedMovies() {
+        mRetrofitService.getTopRatedMovies(Api.getApiKey()).enqueue(callback);
     }
 }

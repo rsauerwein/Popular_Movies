@@ -43,6 +43,10 @@ public class Api {
         Call<MovieList> getTopRatedMovies(@Query("api_key") String api_key);
     }
 
+    public static String getApiKey() {
+        return API_KEY;
+    }
+
     // Todo where to implement the internet check?
 //    private void loadMovieData(final String option) {
 //        new InternetCheck(internet -> {
@@ -58,16 +62,6 @@ public class Api {
 //        });
 //    }
 
-    // Todo ab ins Repo
-//    public void getPopularMovies() {
-//        Call<MovieList> task = mRetrofitService.getPopularMovies(API_KEY);
-//        new CallApi().execute(task);
-//    }
-//
-//    public void getTopRatedMovies() {
-//        Call<MovieList> task = mRetrofitService.getTopRatedMovies(API_KEY);
-//        new CallApi().execute(task);
-//    }
 
 // Todo wsl obsolete
 //    private class CallApi extends AsyncTask<Call<MovieList>, Void, MovieList> {
