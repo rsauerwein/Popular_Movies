@@ -17,10 +17,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     private List<Movie> mMovieData;
 
-    private final MovieAdapterOnClickHandler mClickHandler;
+    //private final MovieAdapterOnClickHandler mClickHandler;
 
-    public MovieAdapter(MovieAdapterOnClickHandler mClickHandler) {
-        this.mClickHandler = mClickHandler;
+    // Todo clickhandler
+    public MovieAdapter() {
+        //this.mClickHandler = mClickHandler;
     }
 
     public interface MovieAdapterOnClickHandler {
@@ -63,18 +64,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         }
     }
 
-    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    //public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder {
         private final ImageView mMoviePosterImageView;
 
         private MovieAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_poster);
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            mClickHandler.onClick(mMovieData.get(getAdapterPosition()));
-        }
+        //      @Override
+//        public void onClick(View v) {
+//            mClickHandler.onClick(mMovieData.get(getAdapterPosition()));
+//        }
     }
 }

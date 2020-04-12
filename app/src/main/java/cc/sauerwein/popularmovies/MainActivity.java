@@ -2,6 +2,7 @@ package cc.sauerwein.popularmovies;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,19 +12,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
 import cc.sauerwein.popularmovies.adapter.MovieAdapter;
 import cc.sauerwein.popularmovies.data.Movie;
+import cc.sauerwein.popularmovies.data.MovieList;
 import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
 
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private MovieAdapter mMovieAdapter;
 
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     private MenuItem mMostPopular;
     private MenuItem mTopRated;
+
+    private MainActivityViewModel mViewModel;
 
 
     @Override
@@ -43,51 +47,22 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
         mErrorMessageTv = findViewById(R.id.tv_error_message);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        mMovieAdapter = new MovieAdapter(this);
+        mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        mViewModel.setupRecyclerview(mRecyclerView, this);
 
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mMovieAdapter);
-
-        // Todo
-//        mRetrofit = new Retrofit.Builder()
-//                .baseUrl(NetworkUtils.API_BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//
-//        mRetrofitService = mRetrofit.create(GetDataService.class);
-//
-//        loadMovieData(NetworkUtils.OPTION_POPULAR_MOVIES);
-        setupViewModel();
     }
 
-    private void setupViewModel() {
-        ViewModel viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+    private void listUpdate() {
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+        mViewModel.getPopularMovies().observe(this, new Observer<MovieList>() {
+            @Override
+            public void onChanged(MovieList movieList) {
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
+                mViewModel.setMovieListInAdapter(movieList);
+                Log.d(LOG_TAG, "Call onChanged");
+            }
+        });
     }
-// Todo
-//    private void loadMovieData(final String option) {
-//        mLoadingIndicator.setVisibility(View.VISIBLE);
-//        mRecyclerView.setVisibility(View.INVISIBLE);
-//        mErrorMessageTv.setVisibility(View.INVISIBLE);
-//
-//        new InternetCheck(internet -> {
-//            if (internet) {
-//                if (option.equals(NetworkUtils.OPTION_POPULAR_MOVIES)) {
-//                    setTitle(getString(R.string.popular));
-//                    getPopularMoviesFromApi();
-//                } else {
-//                    getTopRatedMoviesFromApi();
-//                    setTitle(getString(R.string.top_rated));
-//                }
-//            } else {
-//                showErrorMessage();
-//                mLoadingIndicator.setVisibility(View.INVISIBLE);
-//            }
-//        });
-//
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -138,54 +113,4 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
         startActivity(intent);
     }
-// Todo
-//    public void getPopularMoviesFromApi() {
-//        Call<MovieList> task = mRetrofitService.getPopularMovies(API_KEY);
-//        new CallApi().execute(task);
-//    }
-//
-//    public void getTopRatedMoviesFromApi() {
-//        Call<MovieList> task = mRetrofitService.getTopRatedMovies(API_KEY);
-//        new CallApi().execute(task);
-//    }
-//
-//    public interface GetDataService {
-//        @GET("movie/popular")
-//        Call<MovieList> getPopularMovies(@Query("api_key") String api_key);
-//
-//        @GET("movie/top_rated")
-//        Call<MovieList> getTopRatedMovies(@Query("api_key") String api_key);
-//    }
-//
-//    private class CallApi extends AsyncTask<Call<MovieList>, Void, MovieList> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected MovieList doInBackground(Call<MovieList>... calls) {
-//            try {
-//                return calls[0].execute().body();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//
-//        @Override
-//        protected void onPostExecute(MovieList movieList) {
-//            super.onPostExecute(movieList);
-//            mLoadingIndicator.setVisibility(View.INVISIBLE);
-//
-//            try {
-//                mMovieAdapter.setMovieData(movieList.getMovies());
-//                showMovies();
-//            } catch (IllegalArgumentException e) {
-//                e.printStackTrace();
-//                showErrorMessage();
-//            }
-//        }
-//    }
 }
