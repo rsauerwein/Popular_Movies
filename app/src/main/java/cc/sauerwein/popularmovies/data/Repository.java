@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -22,17 +23,8 @@ public class Repository {
     private static Repository sInstance;
     private final AppDatabase mDb;
     private final Api.ApiInterface mRetrofitService;
-    private Callback<MovieList> callback = new Callback<MovieList>() {
-        @Override
-        public void onResponse(Call<MovieList> call, Response<MovieList> response) {
-
-        }
-
-        @Override
-        public void onFailure(Call<MovieList> call, Throwable t) {
-
-        }
-    };
+    private MutableLiveData<MovieList> mMovieList;
+    private Callback<MovieList> callback;
 
     public static Repository getInstance(Application application) {
         if (sInstance == null) {
@@ -48,6 +40,20 @@ public class Repository {
     public Repository(Application application) {
         this.mDb = AppDatabase.getInstance(application);
         this.mRetrofitService = Api.getApi();
+        this.mMovieList = new MutableLiveData<>();
+
+        this.callback = new Callback<MovieList>() {
+            @Override
+            public void onResponse(Call<MovieList> call, Response<MovieList> response) {
+                Log.d(LOG_TAG, "API Request - Call onResponse");
+                mMovieList.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<MovieList> call, Throwable t) {
+                Log.d(LOG_TAG, "API Request - Call onFailure");
+            }
+        };
     }
 
     public LiveData<Movie> getMovieById(int id) {
@@ -68,11 +74,14 @@ public class Repository {
     }
 
     // Todo - is it a good idea to share the same callback objects in different methods
-    public void getPopularMovies() {
+    // Todo maybe I should check first if mMovieList contains data and if yes - clear it
+    public MutableLiveData<MovieList> getPopularMovies() {
         mRetrofitService.getPopularMovies(Api.getApiKey()).enqueue(callback);
+        return mMovieList;
     }
 
-    public void getTopRatedMovies() {
+    public MutableLiveData<MovieList> getTopRatedMovies() {
         mRetrofitService.getTopRatedMovies(Api.getApiKey()).enqueue(callback);
+        return mMovieList;
     }
 }
