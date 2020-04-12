@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import cc.sauerwein.popularmovies.adapter.MovieAdapter;
 import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.data.MovieList;
 import cc.sauerwein.popularmovies.utilities.InternetCheck;
@@ -34,10 +35,10 @@ import retrofit2.http.Query;
 
 import static cc.sauerwein.popularmovies.preferences.ApiKey.API_KEY;
 
-public class MainActivity extends AppCompatActivity implements cc.sauerwein.popularmovies.MovieAdapter.MovieAdapterOnClickHandler {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
 
     private RecyclerView mRecyclerView;
-    private cc.sauerwein.popularmovies.MovieAdapter mMovieAdapter;
+    private MovieAdapter mMovieAdapter;
 
     private ProgressBar mLoadingIndicator;
     private TextView mErrorMessageTv;
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements cc.sauerwein.popu
         mErrorMessageTv = findViewById(R.id.tv_error_message);
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        mMovieAdapter = new cc.sauerwein.popularmovies.MovieAdapter(this);
+        mMovieAdapter = new MovieAdapter(this);
 
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);

@@ -1,4 +1,4 @@
-package cc.sauerwein.popularmovies;
+package cc.sauerwein.popularmovies.adapter;
 
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import cc.sauerwein.popularmovies.R;
 import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.utilities.NetworkUtils;
 
