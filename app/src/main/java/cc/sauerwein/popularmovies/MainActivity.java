@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mViewModel.setupRecyclerview(mRecyclerView, this);
 
+        listUpdate();
     }
 
     private void listUpdate() {
