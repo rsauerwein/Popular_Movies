@@ -1,6 +1,5 @@
 package cc.sauerwein.popularmovies.adapter;
 
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +8,10 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 import cc.sauerwein.popularmovies.R;
 import cc.sauerwein.popularmovies.data.Movie;
-import cc.sauerwein.popularmovies.utilities.NetworkUtils;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
@@ -43,8 +39,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     @Override
     public void onBindViewHolder(@NonNull MovieAdapterViewHolder holder, int position) {
         String posterPath = mMovieData.get(position).getPosterPath();
-        Uri posterUri = NetworkUtils.createPosterUri(posterPath);
-        Picasso.get().load(posterUri).into(holder.mMoviePosterImageView);
+        //Uri posterUri = NetworkUtils.createPosterUri(posterPath);
+        //Picasso.get().load(posterUri).into(holder.mMoviePosterImageView);
         holder.mMoviePosterImageView.setContentDescription(mMovieData.get(position).getTitle());
     }
 
