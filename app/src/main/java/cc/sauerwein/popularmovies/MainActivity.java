@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import cc.sauerwein.popularmovies.data.Movie;
+import cc.sauerwein.popularmovies.data.MovieList;
 import cc.sauerwein.popularmovies.utilities.InternetCheck;
 import cc.sauerwein.popularmovies.utilities.NetworkUtils;
 import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
@@ -150,24 +151,24 @@ public class MainActivity extends AppCompatActivity implements cc.sauerwein.popu
     }
 
     public void getPopularMoviesFromApi() {
-        Call<cc.sauerwein.popularmovies.MovieList> task = mRetrofitService.getPopularMovies(API_KEY);
+        Call<MovieList> task = mRetrofitService.getPopularMovies(API_KEY);
         new CallApi().execute(task);
     }
 
     public void getTopRatedMoviesFromApi() {
-        Call<cc.sauerwein.popularmovies.MovieList> task = mRetrofitService.getTopRatedMovies(API_KEY);
+        Call<MovieList> task = mRetrofitService.getTopRatedMovies(API_KEY);
         new CallApi().execute(task);
     }
 
     public interface GetDataService {
         @GET("movie/popular")
-        Call<cc.sauerwein.popularmovies.MovieList> getPopularMovies(@Query("api_key") String api_key);
+        Call<MovieList> getPopularMovies(@Query("api_key") String api_key);
 
         @GET("movie/top_rated")
-        Call<cc.sauerwein.popularmovies.MovieList> getTopRatedMovies(@Query("api_key") String api_key);
+        Call<MovieList> getTopRatedMovies(@Query("api_key") String api_key);
     }
 
-    private class CallApi extends AsyncTask<Call<cc.sauerwein.popularmovies.MovieList>, Void, cc.sauerwein.popularmovies.MovieList> {
+    private class CallApi extends AsyncTask<Call<MovieList>, Void, MovieList> {
 
         @Override
         protected void onPreExecute() {
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements cc.sauerwein.popu
         }
 
         @Override
-        protected cc.sauerwein.popularmovies.MovieList doInBackground(Call<cc.sauerwein.popularmovies.MovieList>... calls) {
+        protected MovieList doInBackground(Call<MovieList>... calls) {
             try {
                 return calls[0].execute().body();
             } catch (IOException e) {
@@ -185,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements cc.sauerwein.popu
         }
 
         @Override
-        protected void onPostExecute(cc.sauerwein.popularmovies.MovieList movieList) {
+        protected void onPostExecute(MovieList movieList) {
             super.onPostExecute(movieList);
             mLoadingIndicator.setVisibility(View.INVISIBLE);
 
