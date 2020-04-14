@@ -36,19 +36,19 @@ public class MainActivityViewModel extends AndroidViewModel {
         mLoadingVisibility.set(View.GONE);
         mErrorMessageVisibility.set(View.GONE);
 
-        Log.d(LOG_TAG, "Call MainActivityViewModel constructor");
+        Log.d(LOG_TAG, "Setup MainActivityViewModel");
     }
 
     public MutableLiveData<MovieList> getPopularMovies() {
-        return mRepository.getPopularMovies();
+        return this.mRepository.getPopularMovies();
     }
 
     public MutableLiveData<MovieList> getTopRatedMovies() {
-        return mRepository.getTopRatedMovies();
+        return this.mRepository.getTopRatedMovies();
     }
 
     public void setMovieListInAdapter(MovieList movieList) {
-        mMovieAdapter.setMovieData(movieList.getMovies());
+        this.mMovieAdapter.setMovieData(movieList.getMovies());
     }
 
     // Todo solve it in a more elegant way
@@ -61,18 +61,18 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public ObservableInt getLoadingVisibility() {
-        return mLoadingVisibility;
+        return this.mLoadingVisibility;
     }
 
     public void setLoadingVisibility(int visibility) {
-        mLoadingVisibility.set(visibility);
+        this.mLoadingVisibility.set(visibility);
     }
 
     public ObservableInt getErrorMessageVisibility() {
-        return mErrorMessageVisibility;
+        return this.mErrorMessageVisibility;
     }
 
     public void setErrorMessageVisibility(int visibility) {
-        mErrorMessageVisibility.set(visibility);
+        this.mErrorMessageVisibility.set(visibility);
     }
 }

@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             public void onChanged(MovieList movieList) {
                 mViewModel.setLoadingVisibility(View.GONE);
                 mViewModel.setMovieListInAdapter(movieList);
-                Log.d(LOG_TAG, "Call onChanged");
+                Log.d(LOG_TAG, "Perform MainActivity listUpdate");
             }
         });
     }
