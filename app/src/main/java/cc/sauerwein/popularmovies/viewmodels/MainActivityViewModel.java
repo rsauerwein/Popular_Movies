@@ -29,8 +29,12 @@ public class MainActivityViewModel extends AndroidViewModel {
         super(application);
         mRepository = Repository.getInstance(application);
         mMovieAdapter = new MovieAdapter();
+
         mLoadingVisibility = new ObservableInt();
+        mErrorMessageVisibility = new ObservableInt();
+
         mLoadingVisibility.set(View.GONE);
+        mErrorMessageVisibility.set(View.GONE);
 
         Log.d(LOG_TAG, "Call MainActivityViewModel constructor");
     }
