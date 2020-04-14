@@ -24,6 +24,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
         repository = Repository.getInstance(application);
+        mMovieAdapter = new MovieAdapter();
 
         Log.d(LOG_TAG, "Call MainActivityViewModel constructor");
     }
@@ -43,7 +44,6 @@ public class MainActivityViewModel extends AndroidViewModel {
     // Todo solve it in a more elegant way
     public void setupRecyclerview(RecyclerView recyclerView, Context context) {
         GridLayoutManager layoutManager = new GridLayoutManager(context, 2);
-        mMovieAdapter = new MovieAdapter();
 
         mRecyclerView = recyclerView;
         mRecyclerView.setLayoutManager(layoutManager);
