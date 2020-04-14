@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="view_model"
+            type="cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel" />
+    </data>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,7 +22,7 @@
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_gravity="center"
-            android:visibility="invisible" />
+            android:visibility="@{view_model.getLoadingVisibility()}" />
 
         <TextView
             android:id="@+id/tv_error_message"
@@ -25,7 +32,7 @@
             android:padding="16dp"
             android:text="@string/error"
             android:textSize="20sp"
-            android:visibility="invisible" />
+            android:visibility="@{view_model.getErrorMessageVisibility()}" />
     </FrameLayout>
 
 </layout>
