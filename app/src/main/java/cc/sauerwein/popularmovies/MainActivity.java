@@ -1,8 +1,10 @@
 package cc.sauerwein.popularmovies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -13,6 +15,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.gson.Gson;
 
 import cc.sauerwein.popularmovies.adapter.MovieAdapter;
 import cc.sauerwein.popularmovies.data.Movie;
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private MovieAdapter mMovieAdapter;
 
     private MainActivityViewModel mViewModel;
+    private ActivityMainBinding mainBinding;
 
 
     @Override
@@ -38,13 +43,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         // Setup ViewModel
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.setViewModel(mViewModel);
+        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mainBinding.setViewModel(mViewModel);
 
         // bind RecyclerView
         GridLayoutManager layoutManager = new GridLayoutManager(getApplication().getApplicationContext(), 2);
-        RecyclerView recyclerView = binding.rvMovieOverview;
-        mMovieAdapter = new MovieAdapter();
+        RecyclerView recyclerView = mainBinding.rvMovieOverview;
+        mMovieAdapter = new MovieAdapter(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mMovieAdapter);
@@ -66,10 +71,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.main, menu);
-//        mMostPopular = menu.findItem(R.id.action_most_popular);
-//        mTopRated = menu.findItem(R.id.action_top_rated);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        mMostPopular = menu.findItem(R.id.action_most_popular);
+        mTopRated = menu.findItem(R.id.action_top_rated);
         return true;
     }
 
@@ -109,8 +114,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     @Override
     public void onClick(Movie movie) {
-//        Intent intent = new Intent(this, cc.sauerwein.popularmovies.DetailActivity.class);
-//        intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
-//        startActivity(intent);
+        Intent intent = new Intent(this, cc.sauerwein.popularmovies.DetailActivity.class);
+        intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
+        startActivity(intent);
     }
 }

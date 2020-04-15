@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -21,11 +23,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     private List<Movie> mMovieData;
 
-    //private final MovieAdapterOnClickHandler mClickHandler;
+    private final MovieAdapterOnClickHandler mClickHandler;
 
-    // Todo clickhandler
-    public MovieAdapter() {
-        //this.mClickHandler = mClickHandler;
+    public MovieAdapter(MovieAdapterOnClickHandler clickHandler) {
+        this.mClickHandler = clickHandler;
     }
 
     public interface MovieAdapterOnClickHandler {
@@ -36,9 +37,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     @Override
     public MovieAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.movie_poster, parent, false);
+        ViewDataBinding binding = DataBindingUtil.inflate(inflater, R.layout.movie_poster, parent, false);
 
-        return new MovieAdapterViewHolder(view);
+        return new MovieAdapterViewHolder(binding);
     }
 
     @Override
@@ -68,19 +69,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         }
     }
 
-    //public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ImageView mMoviePosterImageView;
 
-        private MovieAdapterViewHolder(@NonNull View itemView) {
-            super(itemView);
+        private MovieAdapterViewHolder(ViewDataBinding binding) {
+            super(binding.getRoot());
             mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_poster);
-            //itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
-        //      @Override
-//        public void onClick(View v) {
-//            mClickHandler.onClick(mMovieData.get(getAdapterPosition()));
-//        }
+        @Override
+        public void onClick(View v) {
+            mClickHandler.onClick(mMovieData.get(getAdapterPosition()));
+        }
     }
 }

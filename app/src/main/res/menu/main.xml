@@ -6,12 +6,19 @@
         android:orderInCategory="1"
         android:title="@string/top_rated_menu"
         android:visible="true"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_most_popular"
         android:orderInCategory="2"
         android:title="@string/most_popular_menu"
-        android:visible="false"
-        app:showAsAction="ifRoom" />
+        android:visible="true"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_my_favorites"
+        android:orderInCategory="3"
+        android:title="@string/favorites_menu"
+        android:visible="true"
+        app:showAsAction="never" />
 </menu>
