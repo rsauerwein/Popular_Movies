@@ -37,7 +37,6 @@ public class Movie {
         this.releaseDate = releaseDate;
         this.posterPath = posterPath;
         this.userRating = userRating;
-        this.isFavorite = false;
     }
 
     public int getId() {

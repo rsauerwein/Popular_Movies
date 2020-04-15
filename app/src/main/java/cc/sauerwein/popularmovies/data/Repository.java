@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import cc.sauerwein.popularmovies.utilities.AppExecutors;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,7 +47,16 @@ public class Repository {
             @Override
             public void onResponse(Call<MovieList> call, Response<MovieList> response) {
                 Log.d(LOG_TAG, "API Request - Call onResponse");
+                // Values for the UI
                 mMovieList.setValue(response.body());
+
+                // Write all Movies into the DB
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        insertMovie(response.body().getMovies());
+                    }
+                });
             }
 
             @Override
@@ -64,8 +74,8 @@ public class Repository {
         mDb.movieDao().deleteMovie(movie);
     }
 
-    public void insertMovie(Movie movie) {
-        mDb.movieDao().insertMovie(movie);
+    public void insertMovie(List<Movie> movies) {
+        mDb.movieDao().insertMovie(movies);
     }
 
     public LiveData<List<Movie>> getAllMovies() {

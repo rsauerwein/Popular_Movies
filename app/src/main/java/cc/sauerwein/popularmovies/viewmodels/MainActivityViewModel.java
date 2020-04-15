@@ -57,4 +57,14 @@ public class MainActivityViewModel extends AndroidViewModel {
     public void setErrorMessageVisibility(int visibility) {
         this.mErrorMessageVisibility.set(visibility);
     }
+
+//    public void startDetailActivity(Movie movie, Context context) {
+//        mRepository.getMovieById(movie.getId()).observeForever(new Observer<Movie>() {
+//            @Override
+//            public void onChanged(Movie movie) {
+//                int i = 0;
+//            }
+//        });
+//
+//    }
 }

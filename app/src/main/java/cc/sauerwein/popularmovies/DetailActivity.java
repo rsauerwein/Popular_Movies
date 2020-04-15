@@ -8,9 +8,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -40,10 +40,18 @@ public class DetailActivity extends AppCompatActivity {
         mActivityBinding.setViewModel(mViewModel);
 
         Intent intent = getIntent();
-        String json = intent.getStringExtra(Intent.EXTRA_TEXT);
-        mMovie = new Gson().fromJson(json, Movie.class);
+        int json = intent.getIntExtra(Intent.EXTRA_TEXT, -1);
+        int i = 0;
+        //mMovie = new Gson().fromJson(json, Movie.class);
 
-        populateUI();
+        mViewModel.getMovie(json).observe(this, new Observer<Movie>() {
+            @Override
+            public void onChanged(Movie movie) {
+                Log.d("Hey", "Hey");
+            }
+        });
+
+        //populateUI();
     }
 
     /**
