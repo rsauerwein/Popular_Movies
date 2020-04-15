@@ -11,6 +11,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -27,13 +28,15 @@ import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-
-    private MenuItem mMostPopular;
-    private MenuItem mTopRated;
     private MovieAdapter mMovieAdapter;
 
     private MainActivityViewModel mViewModel;
-    private ActivityMainBinding mainBinding;
+    private final String POPULAR_MOVIES = "popular-movies";
+    private final String TOP_RATED_MOVIES = "top-rated-movies";
+    private final String MY_FAVORITES = "my-favorites";
+    private ActivityMainBinding mMainBinding;
+    private MenuItem mMostPopular;
+    private MenuItem mTopRated;
 
 
     @Override
@@ -43,28 +46,43 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         // Setup ViewModel
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mainBinding.setViewModel(mViewModel);
+        mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mMainBinding.setViewModel(mViewModel);
 
         // bind RecyclerView
         GridLayoutManager layoutManager = new GridLayoutManager(getApplication().getApplicationContext(), 2);
-        RecyclerView recyclerView = mainBinding.rvMovieOverview;
+        RecyclerView recyclerView = mMainBinding.rvMovieOverview;
         mMovieAdapter = new MovieAdapter(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mMovieAdapter);
 
-        listUpdate();
+        listUpdate(POPULAR_MOVIES);
     }
 
-    private void listUpdate() {
+    private void listUpdate(String option) {
+        Log.d(LOG_TAG, "Perform MainActivity listUpdate");
+        mMovieAdapter.resetMovieData();
         mViewModel.setLoadingVisibility(View.VISIBLE);
-        mViewModel.getPopularMovies().observe(this, new Observer<MovieList>() {
+
+        MutableLiveData<MovieList> result;
+
+        switch (option) {
+            case TOP_RATED_MOVIES:
+                result = mViewModel.getTopRatedMovies();
+                break;
+            case POPULAR_MOVIES:
+                result = mViewModel.getPopularMovies();
+                break;
+            default:
+                Log.wtf(LOG_TAG, "Passed illegal argument to listUpdate");
+                throw new IllegalArgumentException();
+        }
+        result.observe(this, new Observer<MovieList>() {
             @Override
             public void onChanged(MovieList movieList) {
                 mViewModel.setLoadingVisibility(View.GONE);
                 mMovieAdapter.setMovieData(movieList.getMovies());
-                Log.d(LOG_TAG, "Perform MainActivity listUpdate");
             }
         });
     }
@@ -80,25 +98,24 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-//        mMovieAdapter.resetMovieData();
-//
-//        switch (item.getItemId()) {
-//            case R.id.action_top_rated:
-//// Todo
-//                //                loadMovieData(NetworkUtils.OPTION_TOP_RATED_MOVIES_MOVIES);
-//                mTopRated.setVisible(false);
-//                mMostPopular.setVisible(true);
-//                break;
-//            case R.id.action_most_popular:
-//                // Todo
-//                //loadMovieData(NetworkUtils.OPTION_POPULAR_MOVIES);
-//                mMostPopular.setVisible(false);
-//                mTopRated.setVisible(true);
-//                break;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
+        switch (item.getItemId()) {
+            case R.id.action_top_rated:
+                listUpdate(TOP_RATED_MOVIES);
+                mTopRated.setVisible(false);
+                mMostPopular.setVisible(true);
+                break;
+            case R.id.action_most_popular:
+                listUpdate(POPULAR_MOVIES);
+                mMostPopular.setVisible(false);
+                mTopRated.setVisible(true);
+                break;
+            case R.id.action_my_favorites:
+                listUpdate(MY_FAVORITES);
+                mTopRated.setVisible(true);
+                mMostPopular.setVisible(true);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
         return true;
     }
 
