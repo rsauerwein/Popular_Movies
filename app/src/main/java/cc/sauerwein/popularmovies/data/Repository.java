@@ -68,13 +68,10 @@ public class Repository {
         mDb.movieDao().insertMovie(movie);
     }
 
-    // Todo methods renaming
     public LiveData<List<Movie>> getAllMovies() {
         return mDb.movieDao().loadAllMovies();
     }
 
-    // Todo - is it a good idea to share the same callback objects in different methods
-    // Todo maybe I should check first if mMovieList contains data and if yes - clear it
     public MutableLiveData<MovieList> getPopularMovies() {
         mRetrofitService.getPopularMovies(Api.getApiKey()).enqueue(callback);
         return mMovieList;
