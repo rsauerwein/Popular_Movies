@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import cc.sauerwein.popularmovies.adapter.MovieAdapter;
 import cc.sauerwein.popularmovies.data.Movie;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     private MenuItem mMostPopular;
     private MenuItem mTopRated;
+    private MovieAdapter mMovieAdapter;
 
     private MainActivityViewModel mViewModel;
 
@@ -33,11 +36,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Setup ViewModel
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setViewModel(mViewModel);
 
-        mViewModel.setupRecyclerview(binding.rvMovieOverview);
+        // bind RecyclerView
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplication().getApplicationContext(), 2);
+        RecyclerView recyclerView = binding.rvMovieOverview;
+        mMovieAdapter = new MovieAdapter();
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mMovieAdapter);
 
         listUpdate();
     }
@@ -48,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             @Override
             public void onChanged(MovieList movieList) {
                 mViewModel.setLoadingVisibility(View.GONE);
-                mViewModel.setMovieListInAdapter(movieList);
+                mMovieAdapter.setMovieData(movieList.getMovies());
                 Log.d(LOG_TAG, "Perform MainActivity listUpdate");
             }
         });
