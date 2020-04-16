@@ -22,8 +22,6 @@ import cc.sauerwein.popularmovies.viewmodels.MovieDetailViewModel;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private Movie mMovie;
-
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     private MovieDetailViewModel mViewModel;
     private ActivityDetailBinding mActivityBinding;
@@ -41,35 +39,24 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int json = intent.getIntExtra(Intent.EXTRA_TEXT, -1);
-        int i = 0;
-        //mMovie = new Gson().fromJson(json, Movie.class);
 
         mViewModel.getMovie(json).observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
-                Log.d("Hey", "Hey");
+                mActivityBinding.tvMovieTitle.setText(movie.getTitle());
+                mActivityBinding.tvDescription.setText(movie.getOverview());
+                mActivityBinding.tvUserRating.setText(getString(R.string.movie_rating, movie.getUserRating()));
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(movie.getReleaseDate());
+                mActivityBinding.tvReleaseDate.setText(String.format("%1d", calendar.get(Calendar.YEAR)));
+
+                String posterPath = movie.getPosterPath();
+                Uri posterUri = NetworkUtils.createPosterUri(posterPath);
+                Picasso.get().load(posterUri).into(mActivityBinding.ivMoviePosterThumbnail);
+                mActivityBinding.ivMoviePosterThumbnail.setContentDescription(movie.getTitle());
             }
         });
-
-        //populateUI();
-    }
-
-    /**
-     * Populate the Movie detail information to the UI
-     */
-    private void populateUI() {
-        mActivityBinding.tvMovieTitle.setText(mMovie.getTitle());
-        mActivityBinding.tvDescription.setText(mMovie.getOverview());
-        mActivityBinding.tvUserRating.setText(getString(R.string.movie_rating, mMovie.getUserRating()));
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(mMovie.getReleaseDate());
-        mActivityBinding.tvReleaseDate.setText(String.format("%1d", calendar.get(Calendar.YEAR)));
-
-        String posterPath = mMovie.getPosterPath();
-        Uri posterUri = NetworkUtils.createPosterUri(posterPath);
-        Picasso.get().load(posterUri).into(mActivityBinding.ivMoviePosterThumbnail);
-        mActivityBinding.ivMoviePosterThumbnail.setContentDescription(mMovie.getTitle());
     }
 
     public void favorite(View view) {
