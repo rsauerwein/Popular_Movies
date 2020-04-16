@@ -12,24 +12,28 @@ import cc.sauerwein.popularmovies.data.Repository;
 
 public class MovieDetailViewModel extends AndroidViewModel {
     private static final String TAG = MovieDetailViewModel.class.getSimpleName();
-    private LiveData<Movie> movie;
+    final private Repository mRepository;
+    private LiveData<Movie> mMovie;
 
 
     public MovieDetailViewModel(@NonNull Application application) {
         super(application);
+        mRepository = Repository.getInstance(application);
         Log.d(TAG, "Call MovieDetailViewModel constructor with arguments");
     }
 
 
     public LiveData<Movie> getMovie(int id) {
-        Repository repository = Repository.getInstance(this.getApplication());
-        this.movie = repository.getMovieById(id);
-        return this.movie;
+        mMovie = mRepository.getMovieById(id);
+        return mMovie;
     }
 
-//    private void loadMovie(Movie movie) {
-//        Repository repository = Repository.getInstance(this.getApplication());
-//        this.movie = repository.getMovieById(movie.getId());
-//        Log.d(TAG, "loadMovie by id from database");
-//    }
+    public void favoriteButtonTap(Movie movie) {
+        if (movie.isFavorite()) {
+            movie.setFavorite(false);
+        } else {
+            movie.setFavorite(true);
+        }
+        mRepository.updateMovie(movie);
+    }
 }

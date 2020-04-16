@@ -22,6 +22,8 @@ import cc.sauerwein.popularmovies.viewmodels.MovieDetailViewModel;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private Movie mMovie;
+
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     private MovieDetailViewModel mViewModel;
     private ActivityDetailBinding mActivityBinding;
@@ -43,6 +45,7 @@ public class DetailActivity extends AppCompatActivity {
         mViewModel.getMovie(json).observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
+                mMovie = movie;
                 mActivityBinding.tvMovieTitle.setText(movie.getTitle());
                 mActivityBinding.tvDescription.setText(movie.getOverview());
                 mActivityBinding.tvUserRating.setText(getString(R.string.movie_rating, movie.getUserRating()));
@@ -55,27 +58,16 @@ public class DetailActivity extends AppCompatActivity {
                 Uri posterUri = NetworkUtils.createPosterUri(posterPath);
                 Picasso.get().load(posterUri).into(mActivityBinding.ivMoviePosterThumbnail);
                 mActivityBinding.ivMoviePosterThumbnail.setContentDescription(movie.getTitle());
+
+                if (movie.isFavorite()) {
+                    Log.d(LOG_TAG, "isFavorite");
+                }
             }
         });
     }
 
     public void favorite(View view) {
-
-//        Repository repository = Repository.getInstance(this);
-//        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                Movie movie = repository.getMovieById(mMovie.getId());
-//
-//                if (movie == null) {
-//                    repository.insertMovie(mMovie);
-//                    Log.d(LOG_TAG, "Add movie to favorites");
-//                } else {
-//                    repository.deleteMovie(movie);
-//                    Log.d(LOG_TAG, "Remove movie from favorites");
-//                }
-//            }
-//        });
-
+        mViewModel.favoriteButtonTap(mMovie);
+        Log.d(LOG_TAG, "click favorite");
     }
 }

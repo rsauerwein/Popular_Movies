@@ -26,17 +26,7 @@ public class Repository {
     private final Api.ApiInterface mRetrofitService;
     private MutableLiveData<MovieList> mMovieList;
     private Callback<MovieList> callback;
-
-    public static Repository getInstance(Application application) {
-        if (sInstance == null) {
-            synchronized (LOCK) {
-                Log.d(LOG_TAG, "Creating new repository instance");
-                sInstance = new Repository(application);
-            }
-        }
-        Log.d(LOG_TAG, "Getting the repository instance");
-        return sInstance;
-    }
+    private static AppExecutors sAppExecutors;
 
     public Repository(Application application) {
         this.mDb = AppDatabase.getInstance(application);
@@ -51,7 +41,7 @@ public class Repository {
                 mMovieList.setValue(response.body());
 
                 // Write all Movies into the DB
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                sAppExecutors.diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
                         insertMovie(response.body().getMovies());
@@ -66,6 +56,18 @@ public class Repository {
         };
     }
 
+    public static Repository getInstance(Application application) {
+        if (sInstance == null) {
+            synchronized (LOCK) {
+                Log.d(LOG_TAG, "Creating new repository instance");
+                sInstance = new Repository(application);
+                sAppExecutors = AppExecutors.getInstance();
+            }
+        }
+        Log.d(LOG_TAG, "Getting the repository instance");
+        return sInstance;
+    }
+
     public LiveData<Movie> getMovieById(int id) {
         return mDb.movieDao().loadMovieById(id);
     }
@@ -76,6 +78,15 @@ public class Repository {
 
     public void insertMovie(List<Movie> movies) {
         mDb.movieDao().insertMovie(movies);
+    }
+
+    public void updateMovie(Movie movie) {
+        sAppExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.movieDao().updateMovie(movie);
+            }
+        });
     }
 
     public LiveData<List<Movie>> getAllMovies() {
