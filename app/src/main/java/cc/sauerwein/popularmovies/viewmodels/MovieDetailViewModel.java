@@ -34,12 +34,12 @@ public class MovieDetailViewModel extends AndroidViewModel {
         this.mMovie = mMovie;
     }
 
-    public void favoriteButtonTap(Movie movie) {
-        if (movie.isFavorite()) {
-            movie.setFavorite(false);
+    public void favoriteButtonTap() {
+        if (mMovie.getValue().isFavorite()) {
+            mMovie.getValue().setFavorite(false);
         } else {
-            movie.setFavorite(true);
+            mMovie.getValue().setFavorite(true);
         }
-        mRepository.updateMovie(movie);
+        mRepository.updateMovie(mMovie.getValue());
     }
 }

@@ -38,32 +38,13 @@ public class DetailActivity extends AppCompatActivity {
 
         mViewModel.fetchMovie(json);
 
-//        mViewModel.fetchMovie(json).observe(this, new Observer<Movie>() {
-//            @Override
-//            public void onChanged(Movie movie) {
-//                mMovie = movie;
-//                //mActivityBinding.tvMovieTitle.setText(movie.getTitle());
-//                mActivityBinding.tvDescription.setText(movie.getOverview());
-//                mActivityBinding.tvUserRating.setText(getString(R.string.movie_rating, movie.getUserRating()));
-//
-//                Calendar calendar = Calendar.getInstance();
-//                calendar.setTime(movie.getReleaseDate());
-//                mActivityBinding.tvReleaseDate.setText(String.format("%1d", calendar.get(Calendar.YEAR)));
-//
 //                String posterPath = movie.getPosterPath();
 //                Uri posterUri = NetworkUtils.createPosterUri(posterPath);
 //                Picasso.get().load(posterUri).into(mActivityBinding.ivMoviePosterThumbnail);
-//                mActivityBinding.ivMoviePosterThumbnail.setContentDescription(movie.getTitle());
-//
-//                if (movie.isFavorite()) {
-//                    Log.d(LOG_TAG, "isFavorite");
-//                }
-//            }
-//        });
     }
 
     public void favorite(View view) {
-        mViewModel.favoriteButtonTap(mMovie);
+        mViewModel.favoriteButtonTap();
         Log.d(LOG_TAG, "click favorite");
     }
 }
