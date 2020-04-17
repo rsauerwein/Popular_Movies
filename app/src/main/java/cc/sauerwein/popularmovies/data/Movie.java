@@ -1,10 +1,14 @@
 package cc.sauerwein.popularmovies.data;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -80,5 +84,14 @@ public class Movie {
 
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
+    }
+
+    @BindingAdapter("moviePoster")
+    public static void loadImage(ImageView view, String url) {
+        Picasso.get().load(url).into(view);
+    }
+
+    public String getMoviePosterUrl() {
+        return "https://image.tmdb.org/t/p/w185/" + posterPath;
     }
 }

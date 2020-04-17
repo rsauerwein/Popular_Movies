@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="view_model"
             type="cc.sauerwein.popularmovies.viewmodels.MovieDetailViewModel" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
     </data>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,7 +45,8 @@
                     android:layout_width="133dp"
                     android:layout_height="200dp"
                     android:contentDescription="@string/movie_poster_description"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    app:moviePoster="@{imageUrl}" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
