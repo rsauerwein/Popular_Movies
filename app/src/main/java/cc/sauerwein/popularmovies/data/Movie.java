@@ -8,6 +8,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -88,7 +89,10 @@ public class Movie {
 
     @BindingAdapter("moviePoster")
     public static void loadImage(ImageView view, String url) {
-        Picasso.get().load(url).into(view);
+        Picasso.get()
+                .load(url)
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .into(view);
     }
 
     public String getMoviePosterUrl() {
