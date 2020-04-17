@@ -35,6 +35,8 @@ public class Movie {
     @ColumnInfo(name = "vote_average")
     private String userRating;
     private boolean isFavorite;
+    private boolean isPopular;
+    private boolean isTopRated;
 
     public Movie(int id, String title, String overview, Date releaseDate, String posterPath, String userRating) {
         this.id = id;
