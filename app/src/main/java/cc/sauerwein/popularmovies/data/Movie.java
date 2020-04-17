@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -51,6 +52,12 @@ public class Movie {
         return overview;
     }
 
+    public String getFormatedReleaseDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(this.releaseDate);
+        return String.format("%1d", calendar.get(Calendar.YEAR));
+    }
+
     public Date getReleaseDate() {
         return releaseDate;
     }
@@ -61,6 +68,10 @@ public class Movie {
 
     public String getUserRating() {
         return userRating;
+    }
+
+    public String getFormatedUserRating() {
+        return this.userRating + "/10";
     }
 
     public boolean isFavorite() {
