@@ -22,10 +22,16 @@ public class MovieDetailViewModel extends AndroidViewModel {
         Log.d(TAG, "Call MovieDetailViewModel constructor with arguments");
     }
 
-
-    public LiveData<Movie> getMovie(int id) {
+    public void fetchMovie(int id) {
         mMovie = mRepository.getMovieById(id);
+    }
+
+    public LiveData<Movie> getMovie() {
         return mMovie;
+    }
+
+    public void setMovie(LiveData<Movie> mMovie) {
+        this.mMovie = mMovie;
     }
 
     public void favoriteButtonTap(Movie movie) {

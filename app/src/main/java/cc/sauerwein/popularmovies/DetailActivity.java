@@ -1,23 +1,16 @@
 package cc.sauerwein.popularmovies;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.squareup.picasso.Picasso;
-
-import java.util.Calendar;
 
 import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.databinding.ActivityDetailBinding;
-import cc.sauerwein.popularmovies.utilities.NetworkUtils;
 import cc.sauerwein.popularmovies.viewmodels.MovieDetailViewModel;
 
 public class DetailActivity extends AppCompatActivity {
@@ -37,33 +30,36 @@ public class DetailActivity extends AppCompatActivity {
 
         mViewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);
         mActivityBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+        mActivityBinding.setLifecycleOwner(this);
         mActivityBinding.setViewModel(mViewModel);
 
         Intent intent = getIntent();
         int json = intent.getIntExtra(Intent.EXTRA_TEXT, -1);
 
-        mViewModel.getMovie(json).observe(this, new Observer<Movie>() {
-            @Override
-            public void onChanged(Movie movie) {
-                mMovie = movie;
-                mActivityBinding.tvMovieTitle.setText(movie.getTitle());
-                mActivityBinding.tvDescription.setText(movie.getOverview());
-                mActivityBinding.tvUserRating.setText(getString(R.string.movie_rating, movie.getUserRating()));
+        mViewModel.fetchMovie(json);
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(movie.getReleaseDate());
-                mActivityBinding.tvReleaseDate.setText(String.format("%1d", calendar.get(Calendar.YEAR)));
-
-                String posterPath = movie.getPosterPath();
-                Uri posterUri = NetworkUtils.createPosterUri(posterPath);
-                Picasso.get().load(posterUri).into(mActivityBinding.ivMoviePosterThumbnail);
-                mActivityBinding.ivMoviePosterThumbnail.setContentDescription(movie.getTitle());
-
-                if (movie.isFavorite()) {
-                    Log.d(LOG_TAG, "isFavorite");
-                }
-            }
-        });
+//        mViewModel.fetchMovie(json).observe(this, new Observer<Movie>() {
+//            @Override
+//            public void onChanged(Movie movie) {
+//                mMovie = movie;
+//                //mActivityBinding.tvMovieTitle.setText(movie.getTitle());
+//                mActivityBinding.tvDescription.setText(movie.getOverview());
+//                mActivityBinding.tvUserRating.setText(getString(R.string.movie_rating, movie.getUserRating()));
+//
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.setTime(movie.getReleaseDate());
+//                mActivityBinding.tvReleaseDate.setText(String.format("%1d", calendar.get(Calendar.YEAR)));
+//
+//                String posterPath = movie.getPosterPath();
+//                Uri posterUri = NetworkUtils.createPosterUri(posterPath);
+//                Picasso.get().load(posterUri).into(mActivityBinding.ivMoviePosterThumbnail);
+//                mActivityBinding.ivMoviePosterThumbnail.setContentDescription(movie.getTitle());
+//
+//                if (movie.isFavorite()) {
+//                    Log.d(LOG_TAG, "isFavorite");
+//                }
+//            }
+//        });
     }
 
     public void favorite(View view) {
