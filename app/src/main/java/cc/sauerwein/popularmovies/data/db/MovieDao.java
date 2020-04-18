@@ -20,12 +20,6 @@ public interface MovieDao {
     @Query("SELECT * FROM movies WHERE id = :id")
     LiveData<Movie> loadMovieById(int id);
 
-    @Query("SELECT * FROM movies WHERE isPopular ORDER BY sortId")
-    LiveData<List<Movie>> loadPopularMovies();
-
-    @Query("SELECT * FROM movies WHERE isTopRated ORDER BY sortId")
-    LiveData<List<Movie>> loadTopRatedMovies();
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovies(List<Movie> movies);
 

@@ -7,6 +7,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.Gson;
@@ -40,13 +42,13 @@ public class DetailActivity extends AppCompatActivity {
         mViewModel.setMovie(movie);
         mActivityBinding.setImageUrl(movie.getMoviePosterUrl());
 
-        //mViewModel.fetchMovie(json);
-//        //mViewModel.getMovie().observe(this, new Observer<Movie>() {
-//            @Override
-//            public void onChanged(Movie movie) {
-//
-////            }
-//        });
+        LiveData<Movie> queryresult = mViewModel.fetchMovie(movie.getId());
+        queryresult.observe(this, new Observer<Movie>() {
+            @Override
+            public void onChanged(Movie movie) {
+                if (movie == null) return;
+            }
+        });
     }
 
     public void favorite(View view) {

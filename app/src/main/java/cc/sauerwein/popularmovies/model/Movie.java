@@ -34,10 +34,6 @@ public class Movie {
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
     private String userRating;
-    private boolean isFavorite;
-    private boolean isPopular;
-    private boolean isTopRated;
-    private int sortId;
 
     // Options
     public final static String OPTION_IS_FAVORITE = "is-favorite";
@@ -87,14 +83,6 @@ public class Movie {
         return this.userRating + "/10";
     }
 
-    public boolean isFavorite() {
-        return isFavorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
-    }
-
     @BindingAdapter("moviePoster")
     public static void loadImage(ImageView view, String url) {
         Picasso.get()
@@ -105,37 +93,5 @@ public class Movie {
 
     public String getMoviePosterUrl() {
         return "https://image.tmdb.org/t/p/w185/" + posterPath;
-    }
-
-    public boolean isPopular() {
-        return isPopular;
-    }
-
-    public void setPopular(boolean popular) {
-        isPopular = popular;
-    }
-
-    public boolean isTopRated() {
-        return isTopRated;
-    }
-
-    public void setTopRated(boolean topRated) {
-        isTopRated = topRated;
-    }
-
-    public void setOption(String option) {
-        if (option.equals(OPTION_IS_POPULAR)) {
-            isPopular = true;
-        } else if (option.equals(OPTION_IS_TOP_RATED)) {
-            isTopRated = true;
-        }
-    }
-
-    public int getSortId() {
-        return sortId;
-    }
-
-    public void setSortId(int sortId) {
-        this.sortId = sortId;
     }
 }

@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:width="48dp"
-                        android:background="@{view_model.movie.favorite ? @color/colorAccent : @color/colorPrimary}"
+                        android:background="@color/colorPrimary"
                         android:onClick="favorite"
                         android:text="@string/mark_as_favorite"
                         android:textAllCaps="true" />

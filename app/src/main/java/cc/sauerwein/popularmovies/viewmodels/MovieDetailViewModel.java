@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import cc.sauerwein.popularmovies.data.Repository;
 import cc.sauerwein.popularmovies.model.Movie;
@@ -21,8 +22,8 @@ public class MovieDetailViewModel extends AndroidViewModel {
         Log.d(TAG, "Call MovieDetailViewModel constructor with arguments");
     }
 
-    public void fetchMovie(int id) {
-        //mMovie = mRepository.getMovieById(id);
+    public LiveData<Movie> fetchMovie(int id) {
+        return mRepository.getMovieById(id);
     }
 
     public Movie getMovie() {
@@ -34,11 +35,11 @@ public class MovieDetailViewModel extends AndroidViewModel {
     }
 
     public void favoriteButtonTap() {
-        if (mMovie.isFavorite()) {
-            mMovie.setFavorite(false);
-        } else {
-            mMovie.setFavorite(true);
-        }
+//        if (mMovie.isFavorite()) {
+//            mMovie.setFavorite(false);
+//        } else {
+//            mMovie.setFavorite(true);
+//        }
         mRepository.updateMovie(mMovie);
     }
 }
