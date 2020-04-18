@@ -100,4 +100,20 @@ public class Movie {
     public String getMoviePosterUrl() {
         return "https://image.tmdb.org/t/p/w185/" + posterPath;
     }
+
+    public boolean isPopular() {
+        return isPopular;
+    }
+
+    public void setPopular(boolean popular) {
+        isPopular = popular;
+    }
+
+    public boolean isTopRated() {
+        return isTopRated;
+    }
+
+    public void setTopRated(boolean topRated) {
+        isTopRated = topRated;
+    }
 }

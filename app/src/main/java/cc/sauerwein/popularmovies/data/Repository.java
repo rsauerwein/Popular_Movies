@@ -37,9 +37,6 @@ public class Repository {
             @Override
             public void onResponse(Call<MovieList> call, Response<MovieList> response) {
                 Log.d(LOG_TAG, "API Request - Call onResponse");
-                // Values for the UI
-                mMovieList.setValue(response.body());
-
                 // Write all Movies into the DB
                 sAppExecutors.diskIO().execute(new Runnable() {
                     @Override
@@ -72,6 +69,10 @@ public class Repository {
         return mDb.movieDao().loadMovieById(id);
     }
 
+    public LiveData<List<Movie>> getFavoriteMovies() {
+        return mDb.movieDao().loadAllMovies();
+    }
+
     public void deleteMovie(Movie movie) {
         mDb.movieDao().deleteMovie(movie);
     }
@@ -93,13 +94,13 @@ public class Repository {
         return mDb.movieDao().loadAllMovies();
     }
 
-    public MutableLiveData<MovieList> getPopularMovies() {
+    public LiveData<List<Movie>> getPopularMovies() {
         mRetrofitService.getPopularMovies(Api.getApiKey()).enqueue(callback);
-        return mMovieList;
+        return mDb.movieDao().loadAllMovies();
     }
 
-    public MutableLiveData<MovieList> getTopRatedMovies() {
+    public LiveData<List<Movie>> getTopRatedMovies() {
         mRetrofitService.getTopRatedMovies(Api.getApiKey()).enqueue(callback);
-        return mMovieList;
+        return mDb.movieDao().loadAllMovies();
     }
 }

@@ -11,15 +11,16 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import cc.sauerwein.popularmovies.adapter.MovieAdapter;
 import cc.sauerwein.popularmovies.data.Movie;
-import cc.sauerwein.popularmovies.data.MovieList;
 import cc.sauerwein.popularmovies.databinding.ActivityMainBinding;
 import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private ActivityMainBinding mMainBinding;
     private MenuItem mMostPopular;
     private MenuItem mTopRated;
+    private MenuItem mMyFavorites;
 
 
     @Override
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mMovieAdapter.resetMovieData();
         mViewModel.setLoadingVisibility(View.VISIBLE);
 
-        MutableLiveData<MovieList> result;
+        LiveData<List<Movie>> result;
 
         switch (option) {
             case TOP_RATED_MOVIES:
@@ -72,15 +74,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             case POPULAR_MOVIES:
                 result = mViewModel.getPopularMovies();
                 break;
+            case MY_FAVORITES:
+                result = mViewModel.getFavoriteMovies();
+                break;
             default:
                 Log.wtf(LOG_TAG, "Passed illegal argument to listUpdate");
                 throw new IllegalArgumentException();
         }
-        result.observe(this, new Observer<MovieList>() {
+        result.observe(this, new Observer<List<Movie>>() {
             @Override
-            public void onChanged(MovieList movieList) {
+            public void onChanged(List<Movie> movies) {
                 mViewModel.setLoadingVisibility(View.GONE);
-                mMovieAdapter.setMovieData(movieList.getMovies());
+                mMovieAdapter.setMovieData(movies);
             }
         });
     }
@@ -91,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         inflater.inflate(R.menu.main, menu);
         mMostPopular = menu.findItem(R.id.action_most_popular);
         mTopRated = menu.findItem(R.id.action_top_rated);
+        mMyFavorites = menu.findItem(R.id.action_my_favorites);
         return true;
     }
 
@@ -101,16 +107,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 listUpdate(TOP_RATED_MOVIES);
                 mTopRated.setVisible(false);
                 mMostPopular.setVisible(true);
+                mMyFavorites.setVisible(true);
                 break;
             case R.id.action_most_popular:
                 listUpdate(POPULAR_MOVIES);
                 mMostPopular.setVisible(false);
                 mTopRated.setVisible(true);
+                mMyFavorites.setVisible(true);
                 break;
             case R.id.action_my_favorites:
                 listUpdate(MY_FAVORITES);
                 mTopRated.setVisible(true);
                 mMostPopular.setVisible(true);
+                mMyFavorites.setVisible(false);
             default:
                 return super.onOptionsItemSelected(item);
         }

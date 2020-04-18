@@ -7,9 +7,11 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableInt;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
 
-import cc.sauerwein.popularmovies.data.MovieList;
+import java.util.List;
+
+import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.data.Repository;
 
 public class MainActivityViewModel extends AndroidViewModel {
@@ -34,12 +36,16 @@ public class MainActivityViewModel extends AndroidViewModel {
         Log.d(LOG_TAG, "Setup MainActivityViewModel");
     }
 
-    public MutableLiveData<MovieList> getPopularMovies() {
+    public LiveData<List<Movie>> getPopularMovies() {
         return this.mRepository.getPopularMovies();
     }
 
-    public MutableLiveData<MovieList> getTopRatedMovies() {
+    public LiveData<List<Movie>> getTopRatedMovies() {
         return this.mRepository.getTopRatedMovies();
+    }
+
+    public LiveData<List<Movie>> getFavoriteMovies() {
+        return mRepository.getFavoriteMovies();
     }
 
     public ObservableInt getLoadingVisibility() {
@@ -57,14 +63,4 @@ public class MainActivityViewModel extends AndroidViewModel {
     public void setErrorMessageVisibility(int visibility) {
         this.mErrorMessageVisibility.set(visibility);
     }
-
-//    public void startDetailActivity(Movie movie, Context context) {
-//        mRepository.getMovieById(movie.getId()).observeForever(new Observer<Movie>() {
-//            @Override
-//            public void onChanged(Movie movie) {
-//                int i = 0;
-//            }
-//        });
-//
-//    }
 }
