@@ -101,12 +101,12 @@ public class Repository {
 
     // Todo avoid unnecessary API calls
     public LiveData<List<Movie>> getPopularMovies() {
-        mRetrofitService.getPopularMovies(Api.getApiKey()).enqueue(callback);
+        mRetrofitService.fetchPopularMovies(Api.getApiKey()).enqueue(callback);
         return mDb.movieDao().loadAllMovies();
     }
 
     public LiveData<List<Movie>> getTopRatedMovies() {
-        mRetrofitService.getTopRatedMovies(Api.getApiKey()).enqueue(callback);
+        mRetrofitService.fetchTopRatedMovies(Api.getApiKey()).enqueue(callback);
         return mDb.movieDao().loadAllMovies();
     }
 }

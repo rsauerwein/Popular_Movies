@@ -38,10 +38,10 @@ public class Api {
 
     public interface ApiInterface {
         @GET("movie/popular")
-        Call<MovieList> getPopularMovies(@Query("api_key") String api_key);
+        Call<MovieList> fetchPopularMovies(@Query("api_key") String api_key);
 
         @GET("movie/top_rated")
-        Call<MovieList> getTopRatedMovies(@Query("api_key") String api_key);
+        Call<MovieList> fetchTopRatedMovies(@Query("api_key") String api_key);
     }
 
     public static String getApiKey() {
