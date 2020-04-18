@@ -1,10 +1,13 @@
 package cc.sauerwein.popularmovies.data.network;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.model.MovieList;
 import cc.sauerwein.popularmovies.preferences.ApiKey;
+import cc.sauerwein.popularmovies.utilities.InternetCheck;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -16,6 +19,7 @@ public class Api {
     private static final String API_BASE_URL = "https://api.themoviedb.org/3/";
     private static final String API_KEY = ApiKey.API_KEY; //Insert your API key here
     private static ApiInterface api;
+    private static final String LOG_TAG = Api.class.getSimpleName();
 
     public static ApiInterface getApi() {
         if (api == null) {
@@ -46,6 +50,15 @@ public class Api {
         ApiInterface api = Api.getApi();
         Call<MovieList> call;
 
+        // Todo handle offline situations
+        new InternetCheck(internet -> {
+            if (internet) {
+                Log.d(LOG_TAG, "Device online");
+            } else {
+                Log.d(LOG_TAG, "Device offline");
+            }
+        });
+
         switch (option) {
             case Movie.OPTION_IS_POPULAR:
                 call = api.fetchPopularMovies(API_KEY);
@@ -70,51 +83,4 @@ public class Api {
 
         return null;
     }
-
-    // Todo where to implement the internet check?
-//    private void loadMovieData(final String option) {
-//        new InternetCheck(internet -> {
-//            if (internet) {
-//                if (option.equals(Api.OPTION_POPULAR_MOVIES)) {
-//                    getPopularMovies();
-//                } else {
-//                    getTopRatedMovies();
-//                }
-//            } else {
-//                // Todo
-//            }
-//        });
-//    }
-
-
-// Todo wsl obsolete
-//    private class CallApi extends AsyncTask<Call<MovieList>, Void, MovieList> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected MovieList doInBackground(Call<MovieList>... calls) {
-//            try {
-//                return calls[0].execute().body();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//
-//        @Override
-//        protected void onPostExecute(MovieList movieList) {
-//            super.onPostExecute(movieList);
-//
-//            try {
-//                //mMovieAdapter.setMovieData(movieList.getMovies());
-//            } catch (IllegalArgumentException e) {
-//                e.printStackTrace();
-//                // Todo
-//            }
-//        }
-//    }
 }
