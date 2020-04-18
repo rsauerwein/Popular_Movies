@@ -38,6 +38,11 @@ public class Movie {
     private boolean isPopular;
     private boolean isTopRated;
 
+    // Options
+    public final static String OPTION_IS_FAVORITE = "is-favorite";
+    public final static String OPTION_IS_TOP_RATED = "is-top-rated";
+    public final static String OPTION_IS_POPULAR = "is-popular";
+
     public Movie(int id, String title, String overview, Date releaseDate, String posterPath, String userRating) {
         this.id = id;
         this.title = title;
@@ -115,5 +120,13 @@ public class Movie {
 
     public void setTopRated(boolean topRated) {
         isTopRated = topRated;
+    }
+
+    public void setOption(String option) {
+        if (option.equals(OPTION_IS_POPULAR)) {
+            isPopular = true;
+        } else if (option.equals(OPTION_IS_TOP_RATED)) {
+            isTopRated = true;
+        }
     }
 }

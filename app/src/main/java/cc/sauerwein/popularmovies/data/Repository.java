@@ -101,12 +101,24 @@ public class Repository {
 
     // Todo avoid unnecessary API calls
     public LiveData<List<Movie>> getPopularMovies() {
-        mRetrofitService.fetchPopularMovies(Api.getApiKey()).enqueue(callback);
+        sAppExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Response<MovieList> response = Api.fetchMovies(Movie.OPTION_IS_POPULAR);
+                mDb.movieDao().insertMovies(response.body().getMovies());
+            }
+        });
         return mDb.movieDao().loadAllMovies();
     }
 
     public LiveData<List<Movie>> getTopRatedMovies() {
-        mRetrofitService.fetchTopRatedMovies(Api.getApiKey()).enqueue(callback);
+        sAppExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Response<MovieList> response = Api.fetchMovies(Movie.OPTION_IS_TOP_RATED);
+                mDb.movieDao().insertMovies(response.body().getMovies());
+            }
+        });
         return mDb.movieDao().loadAllMovies();
     }
 }

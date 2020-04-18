@@ -1,8 +1,12 @@
 package cc.sauerwein.popularmovies.data.network;
 
+import java.io.IOException;
+
+import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.model.MovieList;
 import cc.sauerwein.popularmovies.preferences.ApiKey;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
@@ -36,6 +40,35 @@ public class Api {
 
     public static String getApiKey() {
         return API_KEY;
+    }
+
+    public static Response<MovieList> fetchMovies(String option) {
+        ApiInterface api = Api.getApi();
+        Call<MovieList> call;
+
+        switch (option) {
+            case Movie.OPTION_IS_POPULAR:
+                call = api.fetchPopularMovies(API_KEY);
+                break;
+            case Movie.OPTION_IS_TOP_RATED:
+                call = api.fetchTopRatedMovies(API_KEY);
+                break;
+            default:
+                throw new IllegalArgumentException("Method call with invalid option");
+        }
+
+        try {
+            Response<MovieList> response = call.execute();
+            for (Movie movie : response.body().getMovies()) {
+                movie.setOption(option);
+            }
+
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     // Todo where to implement the internet check?
