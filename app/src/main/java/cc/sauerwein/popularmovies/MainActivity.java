@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import cc.sauerwein.popularmovies.adapter.MovieAdapter;
-import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.databinding.ActivityMainBinding;
+import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {

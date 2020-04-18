@@ -1,4 +1,4 @@
-package cc.sauerwein.popularmovies.data;
+package cc.sauerwein.popularmovies.data.db;
 
 import androidx.room.TypeConverter;
 

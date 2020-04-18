@@ -10,8 +10,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.databinding.ActivityDetailBinding;
+import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.viewmodels.MovieDetailViewModel;
 
 public class DetailActivity extends AppCompatActivity {

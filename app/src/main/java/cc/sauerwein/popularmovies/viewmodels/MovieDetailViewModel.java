@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.data.Repository;
+import cc.sauerwein.popularmovies.model.Movie;
 
 public class MovieDetailViewModel extends AndroidViewModel {
     private static final String TAG = MovieDetailViewModel.class.getSimpleName();

@@ -8,6 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import cc.sauerwein.popularmovies.data.db.AppDatabase;
+import cc.sauerwein.popularmovies.data.network.Api;
+import cc.sauerwein.popularmovies.model.Movie;
+import cc.sauerwein.popularmovies.model.MovieList;
 import cc.sauerwein.popularmovies.utilities.AppExecutors;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +50,7 @@ public class Repository {
                 });
             }
 
+            // Todo implement better errorhandling in general
             @Override
             public void onFailure(Call<MovieList> call, Throwable t) {
                 Log.d(LOG_TAG, "API Request - Call onFailure");
@@ -78,7 +83,7 @@ public class Repository {
     }
 
     public void insertMovie(List<Movie> movies) {
-        mDb.movieDao().insertMovie(movies);
+        mDb.movieDao().insertMovies(movies);
     }
 
     public void updateMovie(Movie movie) {
@@ -94,6 +99,7 @@ public class Repository {
         return mDb.movieDao().loadAllMovies();
     }
 
+    // Todo avoid unnecessary API calls
     public LiveData<List<Movie>> getPopularMovies() {
         mRetrofitService.getPopularMovies(Api.getApiKey()).enqueue(callback);
         return mDb.movieDao().loadAllMovies();

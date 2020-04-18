@@ -1,4 +1,4 @@
-package cc.sauerwein.popularmovies.data;
+package cc.sauerwein.popularmovies.data.db;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +10,8 @@ import androidx.room.TypeConverters;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import cc.sauerwein.popularmovies.model.Movie;
 
 @Database(entities = {Movie.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)

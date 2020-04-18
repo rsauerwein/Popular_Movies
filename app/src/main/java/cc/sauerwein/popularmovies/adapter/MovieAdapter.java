@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import cc.sauerwein.popularmovies.R;
-import cc.sauerwein.popularmovies.data.Movie;
+import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.utilities.NetworkUtils;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {

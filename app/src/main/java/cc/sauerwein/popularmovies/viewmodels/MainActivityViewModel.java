@@ -11,8 +11,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import cc.sauerwein.popularmovies.data.Movie;
 import cc.sauerwein.popularmovies.data.Repository;
+import cc.sauerwein.popularmovies.model.Movie;
 
 public class MainActivityViewModel extends AndroidViewModel {
 

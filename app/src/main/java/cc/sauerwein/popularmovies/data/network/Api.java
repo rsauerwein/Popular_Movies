@@ -1,5 +1,6 @@
-package cc.sauerwein.popularmovies.data;
+package cc.sauerwein.popularmovies.data.network;
 
+import cc.sauerwein.popularmovies.model.MovieList;
 import cc.sauerwein.popularmovies.preferences.ApiKey;
 import retrofit2.Call;
 import retrofit2.Retrofit;
