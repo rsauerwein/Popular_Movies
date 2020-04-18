@@ -51,11 +51,21 @@ public class Repository {
     }
 
     public void deleteMovie(Movie movie) {
-        mDb.movieDao().deleteMovie(movie);
+        sAppExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.movieDao().deleteMovie(movie);
+            }
+        });
     }
 
-    public void insertMovie(List<Movie> movies) {
-        mDb.movieDao().insertMovies(movies);
+    public void insertMovie(Movie movie) {
+        sAppExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.movieDao().insertMovie(movie);
+            }
+        });
     }
 
     public void updateMovie(Movie movie) {

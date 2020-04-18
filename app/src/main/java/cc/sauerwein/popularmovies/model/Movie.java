@@ -34,6 +34,7 @@ public class Movie {
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
     private String userRating;
+    private boolean isFavorite;
 
     // Options
     public final static String OPTION_IS_FAVORITE = "is-favorite";
@@ -93,5 +94,13 @@ public class Movie {
 
     public String getMoviePosterUrl() {
         return "https://image.tmdb.org/t/p/w185/" + posterPath;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }

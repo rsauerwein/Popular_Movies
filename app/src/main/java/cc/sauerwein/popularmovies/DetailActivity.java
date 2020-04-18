@@ -47,6 +47,8 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onChanged(Movie movie) {
                 if (movie == null) return;
+                mActivityBinding.btnFavorite.setText("Remove from favorites");
+                mViewModel.getMovie().setFavorite(true);
             }
         });
     }
