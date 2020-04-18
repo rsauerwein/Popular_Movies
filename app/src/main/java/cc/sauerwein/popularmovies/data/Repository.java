@@ -4,7 +4,6 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -13,8 +12,6 @@ import cc.sauerwein.popularmovies.data.network.Api;
 import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.model.MovieList;
 import cc.sauerwein.popularmovies.utilities.AppExecutors;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -27,35 +24,10 @@ public class Repository {
     private static final Object LOCK = new Object();
     private static Repository sInstance;
     private final AppDatabase mDb;
-    private final Api.ApiInterface mRetrofitService;
-    private MutableLiveData<MovieList> mMovieList;
-    private Callback<MovieList> callback;
     private static AppExecutors sAppExecutors;
 
     public Repository(Application application) {
         this.mDb = AppDatabase.getInstance(application);
-        this.mRetrofitService = Api.getApi();
-        this.mMovieList = new MutableLiveData<>();
-
-        this.callback = new Callback<MovieList>() {
-            @Override
-            public void onResponse(Call<MovieList> call, Response<MovieList> response) {
-                Log.d(LOG_TAG, "API Request - Call onResponse");
-                // Write all Movies into the DB
-                sAppExecutors.diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        insertMovie(response.body().getMovies());
-                    }
-                });
-            }
-
-            // Todo implement better errorhandling in general
-            @Override
-            public void onFailure(Call<MovieList> call, Throwable t) {
-                Log.d(LOG_TAG, "API Request - Call onFailure");
-            }
-        };
     }
 
     public static Repository getInstance(Application application) {
