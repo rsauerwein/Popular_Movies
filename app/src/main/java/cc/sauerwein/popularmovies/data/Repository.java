@@ -108,7 +108,7 @@ public class Repository {
                 mDb.movieDao().insertMovies(response.body().getMovies());
             }
         });
-        return mDb.movieDao().loadAllMovies();
+        return mDb.movieDao().loadPopularMovies();
     }
 
     public LiveData<List<Movie>> getTopRatedMovies() {
@@ -119,6 +119,6 @@ public class Repository {
                 mDb.movieDao().insertMovies(response.body().getMovies());
             }
         });
-        return mDb.movieDao().loadAllMovies();
+        return mDb.movieDao().loadTopRatedMovies();
     }
 }
