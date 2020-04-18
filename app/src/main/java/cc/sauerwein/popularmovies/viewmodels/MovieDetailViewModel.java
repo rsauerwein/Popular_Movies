@@ -5,7 +5,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 import cc.sauerwein.popularmovies.data.Repository;
 import cc.sauerwein.popularmovies.model.Movie;
@@ -13,7 +12,7 @@ import cc.sauerwein.popularmovies.model.Movie;
 public class MovieDetailViewModel extends AndroidViewModel {
     private static final String TAG = MovieDetailViewModel.class.getSimpleName();
     final private Repository mRepository;
-    private LiveData<Movie> mMovie;
+    private Movie mMovie;
 
 
     public MovieDetailViewModel(@NonNull Application application) {
@@ -23,23 +22,23 @@ public class MovieDetailViewModel extends AndroidViewModel {
     }
 
     public void fetchMovie(int id) {
-        mMovie = mRepository.getMovieById(id);
+        //mMovie = mRepository.getMovieById(id);
     }
 
-    public LiveData<Movie> getMovie() {
+    public Movie getMovie() {
         return mMovie;
     }
 
-    public void setMovie(LiveData<Movie> mMovie) {
-        this.mMovie = mMovie;
+    public void setMovie(Movie movie) {
+        this.mMovie = movie;
     }
 
     public void favoriteButtonTap() {
-        if (mMovie.getValue().isFavorite()) {
-            mMovie.getValue().setFavorite(false);
+        if (mMovie.isFavorite()) {
+            mMovie.setFavorite(false);
         } else {
-            mMovie.getValue().setFavorite(true);
+            mMovie.setFavorite(true);
         }
-        mRepository.updateMovie(mMovie.getValue());
+        mRepository.updateMovie(mMovie);
     }
 }

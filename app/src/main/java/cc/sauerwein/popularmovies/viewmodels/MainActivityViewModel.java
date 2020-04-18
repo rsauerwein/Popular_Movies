@@ -37,11 +37,11 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Movie>> getPopularMovies() {
-        return this.mRepository.getPopularMovies();
+        return mRepository.fetchMovies(Movie.OPTION_IS_POPULAR);
     }
 
     public LiveData<List<Movie>> getTopRatedMovies() {
-        return this.mRepository.getTopRatedMovies();
+        return mRepository.fetchMovies(Movie.OPTION_IS_TOP_RATED);
     }
 
     public LiveData<List<Movie>> getFavoriteMovies() {

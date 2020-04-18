@@ -7,8 +7,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.gson.Gson;
 
 import cc.sauerwein.popularmovies.databinding.ActivityDetailBinding;
 import cc.sauerwein.popularmovies.model.Movie;
@@ -32,16 +33,20 @@ public class DetailActivity extends AppCompatActivity {
         mActivityBinding.setLifecycleOwner(this);
         mActivityBinding.setViewModel(mViewModel);
 
-        Intent intent = getIntent();
-        int json = intent.getIntExtra(Intent.EXTRA_TEXT, -1);
 
-        mViewModel.fetchMovie(json);
-        mViewModel.getMovie().observe(this, new Observer<Movie>() {
-            @Override
-            public void onChanged(Movie movie) {
-                mActivityBinding.setImageUrl(movie.getMoviePosterUrl());
-            }
-        });
+        Intent intent = getIntent();
+        String json = intent.getStringExtra(Intent.EXTRA_TEXT);
+        Movie movie = new Gson().fromJson(json, Movie.class);
+        mViewModel.setMovie(movie);
+        mActivityBinding.setImageUrl(movie.getMoviePosterUrl());
+
+        //mViewModel.fetchMovie(json);
+//        //mViewModel.getMovie().observe(this, new Observer<Movie>() {
+//            @Override
+//            public void onChanged(Movie movie) {
+//
+////            }
+//        });
     }
 
     public void favorite(View view) {

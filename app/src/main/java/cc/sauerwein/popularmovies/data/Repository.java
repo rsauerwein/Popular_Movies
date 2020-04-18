@@ -4,15 +4,14 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
 import cc.sauerwein.popularmovies.data.db.AppDatabase;
 import cc.sauerwein.popularmovies.data.network.Api;
 import cc.sauerwein.popularmovies.model.Movie;
-import cc.sauerwein.popularmovies.model.MovieList;
 import cc.sauerwein.popularmovies.utilities.AppExecutors;
-import retrofit2.Response;
 
 /**
  * Singleton class
@@ -25,6 +24,7 @@ public class Repository {
     private static Repository sInstance;
     private final AppDatabase mDb;
     private static AppExecutors sAppExecutors;
+    public static LiveData<List<Movie>> mMovies;
 
     public Repository(Application application) {
         this.mDb = AppDatabase.getInstance(application);
@@ -71,26 +71,16 @@ public class Repository {
         return mDb.movieDao().loadAllMovies();
     }
 
-    // Todo avoid unnecessary API calls
-    public LiveData<List<Movie>> getPopularMovies() {
-        sAppExecutors.diskIO().execute(new Runnable() {
+    public LiveData<List<Movie>> fetchMovies(String option) {
+        final MutableLiveData<List<Movie>> result = new MutableLiveData<>();
+        sAppExecutors.networkIO().execute(new Runnable() {
             @Override
             public void run() {
-                Response<MovieList> response = Api.fetchMovies(Movie.OPTION_IS_POPULAR);
-                mDb.movieDao().insertMovies(response.body().getMovies());
+                List<Movie> movies = Api.fetchMovies(option).body().getMovies();
+                result.postValue(movies);
             }
         });
-        return mDb.movieDao().loadPopularMovies();
-    }
 
-    public LiveData<List<Movie>> getTopRatedMovies() {
-        sAppExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                Response<MovieList> response = Api.fetchMovies(Movie.OPTION_IS_TOP_RATED);
-                mDb.movieDao().insertMovies(response.body().getMovies());
-            }
-        });
-        return mDb.movieDao().loadTopRatedMovies();
+        return result;
     }
 }

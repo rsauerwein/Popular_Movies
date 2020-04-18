@@ -17,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import cc.sauerwein.popularmovies.adapter.MovieAdapter;
@@ -139,8 +141,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     public void onClick(Movie movie) {
         Intent intent = new Intent(this, cc.sauerwein.popularmovies.DetailActivity.class);
-        int id = movie.getId();
-        intent.putExtra(Intent.EXTRA_TEXT, movie.getId());
+        intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
         startActivity(intent);
     }
 }
