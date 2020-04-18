@@ -37,6 +37,7 @@ public class Movie {
     private boolean isFavorite;
     private boolean isPopular;
     private boolean isTopRated;
+    private int sortId;
 
     // Options
     public final static String OPTION_IS_FAVORITE = "is-favorite";
@@ -128,5 +129,13 @@ public class Movie {
         } else if (option.equals(OPTION_IS_TOP_RATED)) {
             isTopRated = true;
         }
+    }
+
+    public int getSortId() {
+        return sortId;
+    }
+
+    public void setSortId(int sortId) {
+        this.sortId = sortId;
     }
 }

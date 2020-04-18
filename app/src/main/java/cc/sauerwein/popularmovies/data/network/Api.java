@@ -71,9 +71,12 @@ public class Api {
         }
 
         try {
+            int i = 1;
             Response<MovieList> response = call.execute();
             for (Movie movie : response.body().getMovies()) {
                 movie.setOption(option);
+                movie.setSortId(i);
+                i++;
             }
 
             return response;
