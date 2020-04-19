@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -35,15 +34,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private MenuItem mMostPopular;
     private MenuItem mTopRated;
     private MenuItem mMyFavorites;
-    private Toolbar mToolbar;
 
     // Options for listUpdate
     private final String POPULAR_MOVIES = "popular-movies";
     private final String TOP_RATED_MOVIES = "top-rated-movies";
     private final String MY_FAVORITES = "my-favorites";
-
-    // savedInstance keys
-    private final String MOVIE_LIST = "movie-list";
 
 
     @Override
@@ -54,29 +49,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mMainBinding.setViewModel(mViewModel);
+        mMainBinding.setLifecycleOwner(this);
 
         // setup RecyclerView
         mViewModel.setupRecyclerView(mMainBinding.rvMovieOverview, new MovieAdapter(this, mViewModel));
 
         // Setup Toolbar
-        mToolbar = mMainBinding.mainActivityToolbar;
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(mMainBinding.mainActivityToolbar);
 
         // Avoid unnecessary API calls
         if (savedInstanceState == null) {
             listUpdate(POPULAR_MOVIES);
         }
     }
-
-//    @Override
-//    protected void onSaveInstanceState(@NonNull Bundle outState) {
-//        List<Movie> movieList = mViewModel.getMovieList();
-//        if(movieList != null) {
-//            outState.putString(MOVIE_LIST, new Gson().toJson(movieList));
-//        }
-//
-//        super.onSaveInstanceState(outState);
-//    }
 
     private void listUpdate(String option) {
         Log.d(LOG_TAG, "Perform MainActivity listUpdate");
@@ -88,15 +73,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         switch (option) {
             case TOP_RATED_MOVIES:
-                mToolbar.setTitle(getString(R.string.top_rated));
+                mViewModel.setActionBarTitle(getString(R.string.top_rated));
                 result = mViewModel.getTopRatedMovies();
                 break;
             case POPULAR_MOVIES:
-                mToolbar.setTitle(R.string.popular);
+                mViewModel.setActionBarTitle(getString(R.string.popular));
                 result = mViewModel.getPopularMovies();
                 break;
             case MY_FAVORITES:
-                mToolbar.setTitle(getString(R.string.my_favorites));
+                mViewModel.setActionBarTitle(getString(R.string.my_favorites));
                 result = mViewModel.getFavoriteMovies();
                 break;
             default:

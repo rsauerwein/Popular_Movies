@@ -24,6 +24,7 @@
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="@{view_model.actionBarTitle}"
             app:titleTextColor="@color/textOnPrimary" />
 
         <androidx.recyclerview.widget.RecyclerView

@@ -8,11 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ObservableInt;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import cc.sauerwein.popularmovies.R;
 import cc.sauerwein.popularmovies.adapter.MovieAdapter;
 import cc.sauerwein.popularmovies.data.Repository;
 import cc.sauerwein.popularmovies.model.Movie;
@@ -22,10 +24,13 @@ public class MainActivityViewModel extends AndroidViewModel {
     private static final String LOG_TAG = MainActivityViewModel.class.getSimpleName();
     private Repository mRepository;
 
+    // Layout data
     private ObservableInt mLoadingVisibility;
     private ObservableInt mErrorMessageVisibility;
     private ObservableInt mRecyclerViewVisibility;
+    private MutableLiveData<String> mActionBarTitle;
 
+    // Recyclerview
     private MovieAdapter mMovieAdapter;
     private List<Movie> mMovieList;
 
@@ -37,10 +42,12 @@ public class MainActivityViewModel extends AndroidViewModel {
         mLoadingVisibility = new ObservableInt();
         mErrorMessageVisibility = new ObservableInt();
         mRecyclerViewVisibility = new ObservableInt();
+        mActionBarTitle = new MutableLiveData<>();
 
         mLoadingVisibility.set(View.GONE);
         mErrorMessageVisibility.set(View.GONE);
         mRecyclerViewVisibility.set(View.GONE);
+        mActionBarTitle.postValue(application.getString(R.string.popular));
 
         Log.d(LOG_TAG, "Setup MainActivityViewModel");
     }
@@ -112,5 +119,13 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public void resetMovieData() {
         this.mMovieList = null;
+    }
+
+    public MutableLiveData<String> getActionBarTitle() {
+        return mActionBarTitle;
+    }
+
+    public void setActionBarTitle(String title) {
+        this.mActionBarTitle.postValue(title);
     }
 }
