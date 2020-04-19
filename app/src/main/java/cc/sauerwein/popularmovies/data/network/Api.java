@@ -8,7 +8,6 @@ import java.util.List;
 
 import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.model.MovieList;
-import cc.sauerwein.popularmovies.preferences.ApiKey;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
