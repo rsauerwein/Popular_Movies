@@ -10,8 +10,6 @@ import androidx.databinding.ViewDataBinding;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import cc.sauerwein.popularmovies.R;
 import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 
@@ -55,7 +53,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         private void bind(MainActivityViewModel viewModel, Integer position) {
             binding.setVariable(BR.view_model, viewModel);
             binding.setVariable(BR.position, position);
-            Picasso.get().load(viewModel.getMovieList().get(position).getMoviePosterUrl()).into(mMoviePosterImageView);
+            binding.setVariable(BR.imageUrl, viewModel.getMovieList().get(position).getMoviePosterUrl());
         }
     }
 }
