@@ -47,9 +47,9 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onChanged(Movie movie) {
                 if (movie == null) {
-                    mActivityBinding.btnFavorite.setText(getString(R.string.mark_as_favorite));
+                    mViewModel.setmBtnFavoriteText(getString(R.string.mark_as_favorite));
                 } else {
-                    mActivityBinding.btnFavorite.setText("Remove from favorites");
+                    mViewModel.setmBtnFavoriteText("Remove from favorites");
                     mViewModel.getMovie().setFavorite(true);
                 }
             }
