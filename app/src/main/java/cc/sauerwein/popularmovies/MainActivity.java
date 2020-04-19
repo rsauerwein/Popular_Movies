@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
 
         // Setup ViewModel
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
@@ -144,16 +143,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 return super.onOptionsItemSelected(item);
         }
         return true;
-    }
-
-    private void showMovies() {
-//        mErrorMessageTv.setVisibility(View.INVISIBLE);
-//        mRecyclerView.setVisibility(View.VISIBLE);
-    }
-
-    private void showErrorMessage() {
-//        mRecyclerView.setVisibility(View.INVISIBLE);
-//        mErrorMessageTv.setVisibility(View.VISIBLE);
     }
 
     @Override
