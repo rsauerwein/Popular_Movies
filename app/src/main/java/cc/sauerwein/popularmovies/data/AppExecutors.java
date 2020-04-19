@@ -1,4 +1,4 @@
-package cc.sauerwein.popularmovies.utilities;
+package cc.sauerwein.popularmovies.data;
 
 /*
  * Copyright (C) 2017 The Android Open Source Project

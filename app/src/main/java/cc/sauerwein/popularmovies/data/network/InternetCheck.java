@@ -1,4 +1,4 @@
-package cc.sauerwein.popularmovies.utilities;
+package cc.sauerwein.popularmovies.data.network;
 
 import android.os.AsyncTask;
 
