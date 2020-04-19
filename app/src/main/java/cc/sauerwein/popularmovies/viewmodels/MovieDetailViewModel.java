@@ -22,7 +22,6 @@ public class MovieDetailViewModel extends AndroidViewModel {
         super(application);
         mRepository = Repository.getInstance(application);
         mBtnFavoriteText = new MutableLiveData<>();
-        mBtnFavoriteText.postValue("Mark as favorite");
         Log.d(TAG, "Call MovieDetailViewModel constructor with arguments");
     }
 

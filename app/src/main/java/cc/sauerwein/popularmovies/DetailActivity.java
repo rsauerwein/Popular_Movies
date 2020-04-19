@@ -46,9 +46,12 @@ public class DetailActivity extends AppCompatActivity {
         queryresult.observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
-                if (movie == null) return;
-                mActivityBinding.btnFavorite.setText("Remove from favorites");
-                mViewModel.getMovie().setFavorite(true);
+                if (movie == null) {
+                    mActivityBinding.btnFavorite.setText(getString(R.string.mark_as_favorite));
+                } else {
+                    mActivityBinding.btnFavorite.setText("Remove from favorites");
+                    mViewModel.getMovie().setFavorite(true);
+                }
             }
         });
     }
