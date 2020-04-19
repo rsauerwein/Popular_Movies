@@ -2,7 +2,6 @@ package cc.sauerwein.popularmovies.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -41,13 +40,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     }
 
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView mMoviePosterImageView;
         private final ViewDataBinding binding;
 
         private MovieAdapterViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_poster);
         }
 
         private void bind(MainActivityViewModel viewModel, Integer position) {
