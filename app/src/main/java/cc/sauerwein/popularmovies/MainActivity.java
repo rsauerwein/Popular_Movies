@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         // Setup ViewModel
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -58,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mMovieAdapter);
+
+        // Setup Toolbar
+        Toolbar toolbar = mMainBinding.mainActivityToolbar;
+        setSupportActionBar(toolbar);
 
         listUpdate(POPULAR_MOVIES);
     }
