@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ObservableInt;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -41,6 +43,14 @@ public class MainActivityViewModel extends AndroidViewModel {
         mRecyclerViewVisibility.set(View.GONE);
 
         Log.d(LOG_TAG, "Setup MainActivityViewModel");
+    }
+
+    public void setupRecyclerView(RecyclerView recyclerView, MovieAdapter movieAdapter) {
+        this.mMovieAdapter = movieAdapter;
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplication().getApplicationContext(), 2);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(movieAdapter);
     }
 
     public LiveData<List<Movie>> getPopularMovies() {

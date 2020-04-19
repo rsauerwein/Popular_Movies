@@ -16,8 +16,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
@@ -52,18 +50,17 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState == null) {
+
+        }
+
         // Setup ViewModel
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mMainBinding.setViewModel(mViewModel);
 
         // bind RecyclerView
-        GridLayoutManager layoutManager = new GridLayoutManager(getApplication().getApplicationContext(), 2);
-        RecyclerView recyclerView = mMainBinding.rvMovieOverview;
-        mViewModel.setMovieAdapter(new MovieAdapter(this, mViewModel));
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(mViewModel.getmMovieAdapter());
+        mViewModel.setupRecyclerView(mMainBinding.rvMovieOverview, new MovieAdapter(this, mViewModel));
 
         // Setup Toolbar
         mToolbar = mMainBinding.mainActivityToolbar;
