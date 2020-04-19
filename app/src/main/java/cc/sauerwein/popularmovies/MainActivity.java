@@ -94,7 +94,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             @Override
             public void onChanged(List<Movie> movies) {
                 mViewModel.setLoadingVisibility(View.GONE);
-                mMovieAdapter.setMovieData(movies);
+                if (movies != null) {
+                    mMovieAdapter.setMovieData(movies);
+                } else {
+                    mViewModel.setErrorMessageVisibility(View.VISIBLE);
+                }
             }
         });
     }
