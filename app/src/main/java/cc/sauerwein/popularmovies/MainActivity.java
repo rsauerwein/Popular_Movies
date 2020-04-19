@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.Gson;
@@ -18,7 +19,7 @@ import cc.sauerwein.popularmovies.databinding.ActivityMainBinding;
 import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 
-public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
+public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -45,10 +46,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mMainBinding.setLifecycleOwner(this);
 
         // setup RecyclerView
-        mViewModel.setupRecyclerView(mMainBinding.rvMovieOverview, new MovieAdapter(this, mViewModel));
+        mViewModel.setupRecyclerView(mMainBinding.rvMovieOverview, new MovieAdapter(mViewModel));
 
         // Setup Toolbar
         setSupportActionBar(mMainBinding.mainActivityToolbar);
+
+        setupClickListener();
 
         // Avoid unnecessary API calls
         if (savedInstanceState == null) {
@@ -94,10 +97,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         return true;
     }
 
-    @Override
-    public void onClick(Movie movie) {
-        Intent intent = new Intent(this, cc.sauerwein.popularmovies.DetailActivity.class);
-        intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
-        startActivity(intent);
+    public void setupClickListener() {
+        mViewModel.getClickedItem().observe(this, new Observer<Movie>() {
+            @Override
+            public void onChanged(Movie movie) {
+                Intent intent = new Intent(getApplicationContext(), cc.sauerwein.popularmovies.DetailActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
+                startActivity(intent);
+            }
+        });
     }
 }

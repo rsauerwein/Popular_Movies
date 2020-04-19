@@ -42,6 +42,8 @@ public class MainActivityViewModel extends AndroidViewModel {
     private final String TOP_RATED_MOVIES = "top-rated-movies";
     private final String MY_FAVORITES = "my-favorites";
 
+    private MutableLiveData<Movie> mClickedItem;
+
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
@@ -51,6 +53,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         mErrorMessageVisibility = new ObservableInt();
         mRecyclerViewVisibility = new ObservableInt();
         mActionBarTitle = new MutableLiveData<>();
+        mClickedItem = new MutableLiveData<>();
 
         mLoadingVisibility.set(View.GONE);
         mErrorMessageVisibility.set(View.GONE);
@@ -169,5 +172,13 @@ public class MainActivityViewModel extends AndroidViewModel {
                 }
             }
         });
+    }
+
+    public void posterClick(int position) {
+        mClickedItem.postValue(mMovieList.get(position));
+    }
+
+    public MutableLiveData<Movie> getClickedItem() {
+        return mClickedItem;
     }
 }

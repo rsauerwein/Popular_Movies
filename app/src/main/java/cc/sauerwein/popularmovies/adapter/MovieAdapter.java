@@ -1,7 +1,6 @@
 package cc.sauerwein.popularmovies.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -14,21 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import cc.sauerwein.popularmovies.R;
-import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
     private final MainActivityViewModel mViewModel;
 
-    private final MovieAdapterOnClickHandler mClickHandler;
-
-    public MovieAdapter(MovieAdapterOnClickHandler clickHandler, MainActivityViewModel viewModel) {
-        this.mClickHandler = clickHandler;
+    public MovieAdapter(MainActivityViewModel viewModel) {
         this.mViewModel = viewModel;
-    }
-
-    public interface MovieAdapterOnClickHandler {
-        void onClick(Movie movie);
     }
 
     @NonNull
@@ -51,7 +42,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         return mViewModel.getMovieList().size();
     }
 
-    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder {
         private final ImageView mMoviePosterImageView;
         private final ViewDataBinding binding;
 
@@ -59,18 +50,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
             super(binding.getRoot());
             this.binding = binding;
             mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_poster);
-            itemView.setOnClickListener(this);
+//            itemView.setOnClickListener(this);
         }
 
         private void bind(MainActivityViewModel viewModel, Integer position) {
             binding.setVariable(BR.view_model, viewModel);
             binding.setVariable(BR.position, position);
             Picasso.get().load(viewModel.getMovieList().get(position).getMoviePosterUrl()).into(mMoviePosterImageView);
-        }
-
-        @Override
-        public void onClick(View v) {
-            mClickHandler.onClick(mViewModel.getMovieList().get(getAdapterPosition()));
         }
     }
 }
