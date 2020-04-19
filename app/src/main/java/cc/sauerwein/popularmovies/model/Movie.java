@@ -18,7 +18,6 @@ import java.util.Date;
 
 /**
  * Stores all relevant movie metadata
- * As we create Movie objects with gson, we don't need a constructor
  */
 @Entity(tableName = "movies")
 public class Movie {
