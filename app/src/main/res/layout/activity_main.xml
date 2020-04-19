@@ -46,7 +46,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:padding="16dp"
-            android:text="@string/error"
+            android:text="@string/empty_favorites"
             android:textSize="20sp"
             android:visibility="@{view_model.getErrorMessageVisibility()}" />
     </LinearLayout>

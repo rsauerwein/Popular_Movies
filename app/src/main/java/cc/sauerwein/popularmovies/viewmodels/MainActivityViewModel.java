@@ -162,13 +162,22 @@ public class MainActivityViewModel extends AndroidViewModel {
             public void onChanged(List<Movie> movies) {
                 result.removeObserver(this);
                 setLoadingVisibility(View.GONE);
-                if (movies != null) {
+                setErrorMessageVisibility(View.GONE);
+
+                // Check if the result contains data
+                if (movies != null && movies.size() != 0) {
                     setRecyclerViewVisibility(View.VISIBLE);
                     setMovieList(movies);
                 } else {
-                    listUpdate(MY_FAVORITES, context);
-                    Toast toast = Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_LONG);
-                    toast.show();
+                    // Result contains no data and local favorite db is empty
+                    if (option == MY_FAVORITES) {
+                        mErrorMessageVisibility.set(View.VISIBLE);
+                    } else {
+                        // Device seems to be offline but locally stored favorites are available
+                        listUpdate(MY_FAVORITES, context);
+                        Toast toast = Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_LONG);
+                        toast.show();
+                    }
                 }
             }
         });

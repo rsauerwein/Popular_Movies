@@ -88,7 +88,7 @@ public class Movie {
     public static void loadImage(ImageView view, String url) {
         Picasso.get()
                 .load(url)
-                .networkPolicy(NetworkPolicy.OFFLINE)
+                .networkPolicy(NetworkPolicy.OFFLINE) // Todo fix caching bug..
                 .into(view);
     }
 
