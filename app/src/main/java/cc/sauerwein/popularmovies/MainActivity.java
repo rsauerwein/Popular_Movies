@@ -50,23 +50,22 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState == null) {
-
-        }
-
         // Setup ViewModel
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mMainBinding.setViewModel(mViewModel);
 
-        // bind RecyclerView
+        // setup RecyclerView
         mViewModel.setupRecyclerView(mMainBinding.rvMovieOverview, new MovieAdapter(this, mViewModel));
 
         // Setup Toolbar
         mToolbar = mMainBinding.mainActivityToolbar;
         setSupportActionBar(mToolbar);
 
-        listUpdate(POPULAR_MOVIES);
+        // Avoid unnecessary API calls
+        if (savedInstanceState == null) {
+            listUpdate(POPULAR_MOVIES);
+        }
     }
 
 //    @Override
