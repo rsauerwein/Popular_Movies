@@ -42,6 +42,8 @@ public class DetailActivity extends AppCompatActivity {
         mViewModel.setMovie(movie);
         mActivityBinding.setImageUrl(movie.getMoviePosterUrl());
 
+        // Query the Room database
+        // If the query contains a result, the movie is a favorite movie.
         LiveData<Movie> queryresult = mViewModel.fetchMovie(movie.getId());
         queryresult.observe(this, new Observer<Movie>() {
             @Override
