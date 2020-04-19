@@ -71,8 +71,7 @@ public class Api {
         }
 
         try {
-            Response<MovieList> response = call.execute();
-            return response;
+            return call.execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
