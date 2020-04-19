@@ -1,2 +1,2 @@
 /build
-/src/main/java/cc/sauerwein/popularmovies/preferences/ApiKey.java
+/src/main/java/cc/sauerwein/popularmovies/data/network/ApiKey.java
