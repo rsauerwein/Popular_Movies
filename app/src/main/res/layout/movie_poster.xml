@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-        <variable
-            name="position"
-            type="java.lang.Integer" />
-
-        <variable
-            name="viewModel"
-            type="cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel" />
-    </data>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -20,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:contentDescription="@string/movie_poster_description"
         android:scaleType="centerCrop" />
     </FrameLayout>
 
