@@ -50,7 +50,7 @@ public class Api {
         ApiInterface api = Api.getApi();
         Call<MovieList> call;
 
-        // Todo handle offline situations
+        // Todo howto interrupt the request in case internet=false?
         new InternetCheck(internet -> {
             if (internet) {
                 Log.d(LOG_TAG, "Device online");
