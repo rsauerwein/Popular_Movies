@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,8 +47,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        //setContentView(R.layout.activity_main);
 
         // Setup ViewModel
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
@@ -79,12 +79,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         switch (option) {
             case TOP_RATED_MOVIES:
+                mToolbar.setTitle(getString(R.string.top_rated));
                 result = mViewModel.getTopRatedMovies();
                 break;
             case POPULAR_MOVIES:
+                mToolbar.setTitle(R.string.popular);
                 result = mViewModel.getPopularMovies();
                 break;
             case MY_FAVORITES:
+                mToolbar.setTitle(getString(R.string.my_favorites));
                 result = mViewModel.getFavoriteMovies();
                 break;
             default:
@@ -99,7 +102,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                     mViewModel.setRecyclerViewVisibility(View.VISIBLE);
                     mMovieAdapter.setMovieData(movies);
                 } else {
-                    mViewModel.setErrorMessageVisibility(View.VISIBLE);
+                    listUpdate(MY_FAVORITES);
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_LONG);
+                    toast.show();
                 }
             }
         });
@@ -119,21 +124,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_top_rated:
-                mToolbar.setTitle(getString(R.string.top_rated));
                 listUpdate(TOP_RATED_MOVIES);
                 mTopRated.setVisible(false);
                 mMostPopular.setVisible(true);
                 mMyFavorites.setVisible(true);
                 break;
             case R.id.action_most_popular:
-                mToolbar.setTitle(R.string.popular);
                 listUpdate(POPULAR_MOVIES);
                 mMostPopular.setVisible(false);
                 mTopRated.setVisible(true);
                 mMyFavorites.setVisible(true);
                 break;
             case R.id.action_my_favorites:
-                mToolbar.setTitle(getString(R.string.my_favorites));
                 listUpdate(MY_FAVORITES);
                 mTopRated.setVisible(true);
                 mMostPopular.setVisible(true);

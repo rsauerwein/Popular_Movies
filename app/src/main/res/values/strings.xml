@@ -11,7 +11,8 @@
     <string name="most_popular_menu">Most popular</string>
     <string name="favorites_menu">My favorites</string>
 
-    <string name="error">Unable to load Movie data. Please check your network connection and try again by pressing the Switch To button.</string>
+    <!--    Error messages-->
+    <string name="error">Can\'t retrieve data from the internet\nSwitch to my Favorites</string>
 
     <string name="mark_as_favorite">Mark as Favorite</string>
     <string name="movie_poster_description">Movie poster</string>
