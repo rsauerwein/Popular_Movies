@@ -1,14 +1,17 @@
 package cc.sauerwein.popularmovies.viewmodels;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableInt;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +36,11 @@ public class MainActivityViewModel extends AndroidViewModel {
     // Recyclerview
     private MovieAdapter mMovieAdapter;
     private List<Movie> mMovieList;
+
+    // Options for listUpdate
+    private final String POPULAR_MOVIES = "popular-movies";
+    private final String TOP_RATED_MOVIES = "top-rated-movies";
+    private final String MY_FAVORITES = "my-favorites";
 
 
     public MainActivityViewModel(@NonNull Application application) {
@@ -127,5 +135,47 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public void setActionBarTitle(String title) {
         this.mActionBarTitle.postValue(title);
+    }
+
+    public void listUpdate(String option, Context context) {
+        Log.d(LOG_TAG, "Perform MainActivity listUpdate");
+        this.resetMovieData();
+        this.setRecyclerViewVisibility(View.GONE);
+        this.setLoadingVisibility(View.VISIBLE);
+
+        LiveData<List<Movie>> result;
+
+        switch (option) {
+            case TOP_RATED_MOVIES:
+                this.setActionBarTitle(context.getString(R.string.top_rated));
+                result = this.getTopRatedMovies();
+                break;
+            case POPULAR_MOVIES:
+                this.setActionBarTitle(context.getString(R.string.popular));
+                result = this.getPopularMovies();
+                break;
+            case MY_FAVORITES:
+                this.setActionBarTitle(context.getString(R.string.my_favorites));
+                result = this.getFavoriteMovies();
+                break;
+            default:
+                Log.wtf(LOG_TAG, "Passed illegal argument to listUpdate");
+                throw new IllegalArgumentException();
+        }
+        result.observeForever(new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                result.removeObserver(this);
+                setLoadingVisibility(View.GONE);
+                if (movies != null) {
+                    setRecyclerViewVisibility(View.VISIBLE);
+                    setMovieList(movies);
+                } else {
+                    listUpdate(MY_FAVORITES, context);
+                    Toast toast = Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
     }
 }

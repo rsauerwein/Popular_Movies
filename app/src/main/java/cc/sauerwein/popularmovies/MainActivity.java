@@ -2,23 +2,16 @@ package cc.sauerwein.popularmovies;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.Gson;
-
-import java.util.List;
 
 import cc.sauerwein.popularmovies.adapter.MovieAdapter;
 import cc.sauerwein.popularmovies.databinding.ActivityMainBinding;
@@ -59,50 +52,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         // Avoid unnecessary API calls
         if (savedInstanceState == null) {
-            listUpdate(POPULAR_MOVIES);
+            mViewModel.listUpdate(POPULAR_MOVIES, this);
         }
     }
 
-    private void listUpdate(String option) {
-        Log.d(LOG_TAG, "Perform MainActivity listUpdate");
-        mViewModel.resetMovieData();
-        mViewModel.setRecyclerViewVisibility(View.GONE);
-        mViewModel.setLoadingVisibility(View.VISIBLE);
 
-        LiveData<List<Movie>> result;
-
-        switch (option) {
-            case TOP_RATED_MOVIES:
-                mViewModel.setActionBarTitle(getString(R.string.top_rated));
-                result = mViewModel.getTopRatedMovies();
-                break;
-            case POPULAR_MOVIES:
-                mViewModel.setActionBarTitle(getString(R.string.popular));
-                result = mViewModel.getPopularMovies();
-                break;
-            case MY_FAVORITES:
-                mViewModel.setActionBarTitle(getString(R.string.my_favorites));
-                result = mViewModel.getFavoriteMovies();
-                break;
-            default:
-                Log.wtf(LOG_TAG, "Passed illegal argument to listUpdate");
-                throw new IllegalArgumentException();
-        }
-        result.observe(this, new Observer<List<Movie>>() {
-            @Override
-            public void onChanged(List<Movie> movies) {
-                mViewModel.setLoadingVisibility(View.GONE);
-                if (movies != null) {
-                    mViewModel.setRecyclerViewVisibility(View.VISIBLE);
-                    mViewModel.setMovieList(movies);
-                } else {
-                    listUpdate(MY_FAVORITES);
-                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            }
-        });
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,19 +72,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_top_rated:
-                listUpdate(TOP_RATED_MOVIES);
+                mViewModel.listUpdate(TOP_RATED_MOVIES, this);
                 mTopRated.setVisible(false);
                 mMostPopular.setVisible(true);
                 mMyFavorites.setVisible(true);
                 break;
             case R.id.action_most_popular:
-                listUpdate(POPULAR_MOVIES);
+                mViewModel.listUpdate(POPULAR_MOVIES, this);
                 mMostPopular.setVisible(false);
                 mTopRated.setVisible(true);
                 mMyFavorites.setVisible(true);
                 break;
             case R.id.action_my_favorites:
-                listUpdate(MY_FAVORITES);
+                mViewModel.listUpdate(MY_FAVORITES, this);
                 mTopRated.setVisible(true);
                 mMostPopular.setVisible(true);
                 mMyFavorites.setVisible(false);
