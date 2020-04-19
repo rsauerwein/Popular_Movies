@@ -4,16 +4,13 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
 import cc.sauerwein.popularmovies.data.db.AppDatabase;
 import cc.sauerwein.popularmovies.data.network.Api;
 import cc.sauerwein.popularmovies.model.Movie;
-import cc.sauerwein.popularmovies.model.MovieList;
 import cc.sauerwein.popularmovies.utilities.AppExecutors;
-import retrofit2.Response;
 
 /**
  * Singleton class
@@ -84,19 +81,6 @@ public class Repository {
     }
 
     public LiveData<List<Movie>> fetchMovies(String option) {
-        final MutableLiveData<List<Movie>> result = new MutableLiveData<>();
-        sAppExecutors.networkIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                Response<MovieList> response = Api.fetchMovies(option);
-                if (response != null) {
-                    result.postValue(response.body().getMovies());
-                } else {
-                    result.postValue(null);
-                }
-            }
-        });
-
-        return result;
+        return Api.fetchMovies(option);
     }
 }

@@ -2,13 +2,16 @@ package cc.sauerwein.popularmovies.data.network;
 
 import android.util.Log;
 
-import java.io.IOException;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.List;
 
 import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.model.MovieList;
 import cc.sauerwein.popularmovies.preferences.ApiKey;
 import cc.sauerwein.popularmovies.utilities.InternetCheck;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -46,18 +49,10 @@ public class Api {
         return API_KEY;
     }
 
-    public static Response<MovieList> fetchMovies(String option) {
+    public static MutableLiveData<List<Movie>> fetchMovies(String option) {
+        final MutableLiveData<List<Movie>> result = new MutableLiveData<>();
         ApiInterface api = Api.getApi();
         Call<MovieList> call;
-
-        // Todo howto interrupt the request in case internet=false?
-        new InternetCheck(internet -> {
-            if (internet) {
-                Log.d(LOG_TAG, "Device online");
-            } else {
-                Log.d(LOG_TAG, "Device offline");
-            }
-        });
 
         switch (option) {
             case Movie.OPTION_IS_POPULAR:
@@ -70,12 +65,27 @@ public class Api {
                 throw new IllegalArgumentException("Method call with invalid option");
         }
 
-        try {
-            return call.execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new InternetCheck(internet -> {
+            if (internet) {
+                Log.d(LOG_TAG, "Device online");
+                call.enqueue(new Callback<MovieList>() {
+                    @Override
+                    public void onResponse(Call<MovieList> call, Response<MovieList> response) {
+                        result.postValue(response.body().getMovies());
+                    }
 
-        return null;
+                    @Override
+                    public void onFailure(Call<MovieList> call, Throwable t) {
+                        Log.e(LOG_TAG, t.getMessage());
+                        result.postValue(null);
+                    }
+                });
+            } else {
+                Log.d(LOG_TAG, "Device offline");
+                result.postValue(null);
+            }
+        });
+
+        return result;
     }
 }
