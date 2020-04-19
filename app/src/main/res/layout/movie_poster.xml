@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:onClick="@{(view) ->view_model.posterClick(position)}"
+        android:contentDescription="@{view_model.movieList.get(position).title}"
         android:scaleType="centerCrop" />
     </FrameLayout>
 

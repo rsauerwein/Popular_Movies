@@ -50,7 +50,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
             super(binding.getRoot());
             this.binding = binding;
             mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_poster);
-//            itemView.setOnClickListener(this);
         }
 
         private void bind(MainActivityViewModel viewModel, Integer position) {
