@@ -67,19 +67,6 @@ public class Repository {
         });
     }
 
-    public void updateMovie(Movie movie) {
-        sAppExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                mDb.movieDao().updateMovie(movie);
-            }
-        });
-    }
-
-    public LiveData<List<Movie>> getAllMovies() {
-        return mDb.movieDao().loadAllMovies();
-    }
-
     public LiveData<List<Movie>> fetchMovies(String option) {
         return Api.fetchMovies(option);
     }

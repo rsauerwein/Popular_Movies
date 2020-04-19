@@ -6,7 +6,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import java.util.List;
 
@@ -21,13 +20,7 @@ public interface MovieDao {
     LiveData<Movie> loadMovieById(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertMovies(List<Movie> movies);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovie(Movie movie);
-
-    @Update
-    void updateMovie(Movie movie);
 
     @Delete
     void deleteMovie(Movie movie);

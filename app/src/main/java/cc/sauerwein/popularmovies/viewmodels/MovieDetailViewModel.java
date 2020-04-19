@@ -49,7 +49,6 @@ public class MovieDetailViewModel extends AndroidViewModel {
             mRepository.insertMovie(mMovie);
             mBtnFavoriteText.postValue("Remove from favorites");
         }
-        mRepository.updateMovie(mMovie);
     }
 
     public MutableLiveData<String> getmBtnFavoriteText() {
