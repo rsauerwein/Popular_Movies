@@ -2,10 +2,7 @@ package cc.sauerwein.popularmovies.data.network;
 
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
-
 import java.io.IOException;
-import java.util.List;
 
 import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.model.MovieList;
@@ -23,7 +20,6 @@ public class Api {
     private static final String API_KEY = ApiKey.API_KEY; //Insert your API key here
     private static ApiInterface api;
     private static final String LOG_TAG = Api.class.getSimpleName();
-    private static MutableLiveData<List<Movie>> mMovies;
 
     public static ApiInterface getApi() {
         if (api == null) {
@@ -33,8 +29,6 @@ public class Api {
                     .build();
 
             api = retrofit.create(ApiInterface.class);
-
-            mMovies = new MutableLiveData<>();
         }
 
         return api;
@@ -78,10 +72,6 @@ public class Api {
 
         try {
             Response<MovieList> response = call.execute();
-
-
-            mMovies.postValue(response.body().getMovies());
-            //return mMovies;
             return response;
         } catch (IOException e) {
             e.printStackTrace();
