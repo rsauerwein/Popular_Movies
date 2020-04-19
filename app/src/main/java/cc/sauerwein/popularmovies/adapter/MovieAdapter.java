@@ -1,6 +1,5 @@
 package cc.sauerwein.popularmovies.adapter;
 
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,24 +8,23 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import cc.sauerwein.popularmovies.R;
 import cc.sauerwein.popularmovies.model.Movie;
-import cc.sauerwein.popularmovies.utilities.NetworkUtils;
+import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
-
-    private List<Movie> mMovieData;
+    private final MainActivityViewModel mViewModel;
 
     private final MovieAdapterOnClickHandler mClickHandler;
 
-    public MovieAdapter(MovieAdapterOnClickHandler clickHandler) {
+    public MovieAdapter(MovieAdapterOnClickHandler clickHandler, MainActivityViewModel viewModel) {
         this.mClickHandler = clickHandler;
+        this.mViewModel = viewModel;
     }
 
     public interface MovieAdapterOnClickHandler {
@@ -44,43 +42,35 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     @Override
     public void onBindViewHolder(@NonNull MovieAdapterViewHolder holder, int position) {
-        String posterPath = mMovieData.get(position).getPosterPath();
-        Uri posterUri = NetworkUtils.createPosterUri(posterPath);
-        Picasso.get().load(posterUri).into(holder.mMoviePosterImageView);
-        holder.mMoviePosterImageView.setContentDescription(mMovieData.get(position).getTitle());
+        holder.bind(mViewModel, position);
     }
 
     @Override
     public int getItemCount() {
-        if (mMovieData == null) return 0;
-        return mMovieData.size();
-    }
-
-    public void resetMovieData() {
-        mMovieData = null;
-    }
-
-    public void setMovieData(List<Movie> movieData) throws IllegalArgumentException {
-        if (movieData != null) {
-            this.mMovieData = movieData;
-            notifyDataSetChanged();
-        } else {
-            throw new IllegalArgumentException("movieData must contain movies");
-        }
+        if (mViewModel.getMovieList() == null) return 0;
+        return mViewModel.getMovieList().size();
     }
 
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ImageView mMoviePosterImageView;
+        private final ViewDataBinding binding;
 
         private MovieAdapterViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
+            this.binding = binding;
             mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_poster);
             itemView.setOnClickListener(this);
         }
 
+        private void bind(MainActivityViewModel viewModel, Integer position) {
+            binding.setVariable(BR.view_model, viewModel);
+            binding.setVariable(BR.position, position);
+            Picasso.get().load(viewModel.getMovieList().get(position).getMoviePosterUrl()).into(mMoviePosterImageView);
+        }
+
         @Override
         public void onClick(View v) {
-            mClickHandler.onClick(mMovieData.get(getAdapterPosition()));
+            mClickHandler.onClick(mViewModel.getMovieList().get(getAdapterPosition()));
         }
     }
 }

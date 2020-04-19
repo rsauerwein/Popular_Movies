@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import cc.sauerwein.popularmovies.adapter.MovieAdapter;
 import cc.sauerwein.popularmovies.data.Repository;
 import cc.sauerwein.popularmovies.model.Movie;
 
@@ -22,6 +23,9 @@ public class MainActivityViewModel extends AndroidViewModel {
     private ObservableInt mLoadingVisibility;
     private ObservableInt mErrorMessageVisibility;
     private ObservableInt mRecyclerViewVisibility;
+
+    private MovieAdapter mMovieAdapter;
+    private List<Movie> mMovieList;
 
 
     public MainActivityViewModel(@NonNull Application application) {
@@ -73,5 +77,30 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public void setRecyclerViewVisibility(int visibility) {
         this.mRecyclerViewVisibility.set(visibility);
+    }
+
+    public List<Movie> getMovieList() {
+        return mMovieList;
+    }
+
+    public void setMovieList(List<Movie> movieList) {
+        if (movieList != null) {
+            this.mMovieList = movieList;
+            mMovieAdapter.notifyDataSetChanged();
+        } else {
+            throw new IllegalArgumentException("movieData must contain movies");
+        }
+    }
+
+    public void setMovieAdapter(MovieAdapter mMovieAdapter) {
+        this.mMovieAdapter = mMovieAdapter;
+    }
+
+    public MovieAdapter getmMovieAdapter() {
+        return mMovieAdapter;
+    }
+
+    public void resetMovieData() {
+        this.mMovieList = null;
     }
 }

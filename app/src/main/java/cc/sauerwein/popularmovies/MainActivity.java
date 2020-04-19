@@ -31,17 +31,21 @@ import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private MovieAdapter mMovieAdapter;
 
     private MainActivityViewModel mViewModel;
-    private final String POPULAR_MOVIES = "popular-movies";
-    private final String TOP_RATED_MOVIES = "top-rated-movies";
-    private final String MY_FAVORITES = "my-favorites";
     private ActivityMainBinding mMainBinding;
     private MenuItem mMostPopular;
     private MenuItem mTopRated;
     private MenuItem mMyFavorites;
     private Toolbar mToolbar;
+
+    // Options for listUpdate
+    private final String POPULAR_MOVIES = "popular-movies";
+    private final String TOP_RATED_MOVIES = "top-rated-movies";
+    private final String MY_FAVORITES = "my-favorites";
+
+    // savedInstance keys
+    private final String MOVIE_LIST = "movie-list";
 
 
     @Override
@@ -56,10 +60,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         // bind RecyclerView
         GridLayoutManager layoutManager = new GridLayoutManager(getApplication().getApplicationContext(), 2);
         RecyclerView recyclerView = mMainBinding.rvMovieOverview;
-        mMovieAdapter = new MovieAdapter(this);
+        mViewModel.setMovieAdapter(new MovieAdapter(this, mViewModel));
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(mMovieAdapter);
+        recyclerView.setAdapter(mViewModel.getmMovieAdapter());
 
         // Setup Toolbar
         mToolbar = mMainBinding.mainActivityToolbar;
@@ -68,9 +72,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         listUpdate(POPULAR_MOVIES);
     }
 
+//    @Override
+//    protected void onSaveInstanceState(@NonNull Bundle outState) {
+//        List<Movie> movieList = mViewModel.getMovieList();
+//        if(movieList != null) {
+//            outState.putString(MOVIE_LIST, new Gson().toJson(movieList));
+//        }
+//
+//        super.onSaveInstanceState(outState);
+//    }
+
     private void listUpdate(String option) {
         Log.d(LOG_TAG, "Perform MainActivity listUpdate");
-        mMovieAdapter.resetMovieData();
+        mViewModel.resetMovieData();
         mViewModel.setRecyclerViewVisibility(View.GONE);
         mViewModel.setLoadingVisibility(View.VISIBLE);
 
@@ -99,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 mViewModel.setLoadingVisibility(View.GONE);
                 if (movies != null) {
                     mViewModel.setRecyclerViewVisibility(View.VISIBLE);
-                    mMovieAdapter.setMovieData(movies);
+                    mViewModel.setMovieList(movies);
                 } else {
                     listUpdate(MY_FAVORITES);
                     Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_LONG);
