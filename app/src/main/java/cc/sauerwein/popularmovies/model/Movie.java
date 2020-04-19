@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 import java.util.Calendar;
 import java.util.Date;
 
+import cc.sauerwein.popularmovies.R;
+
 
 /**
  * Stores all relevant movie metadata
@@ -88,6 +90,7 @@ public class Movie {
     public static void loadImage(ImageView view, String url) {
         Picasso.get()
                 .load(url)
+                .error(R.drawable.ic_error_red_24dp)
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .into(view, new Callback() {
                     // Fix the issue that the application stops working after deleting application data
