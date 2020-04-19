@@ -8,6 +8,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -88,8 +89,22 @@ public class Movie {
     public static void loadImage(ImageView view, String url) {
         Picasso.get()
                 .load(url)
-                .networkPolicy(NetworkPolicy.OFFLINE) // Todo fix caching bug..
-                .into(view);
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .into(view, new Callback() {
+                    // Fix the issue that the application stops working after deleting application data
+                    // https://stackoverflow.com/questions/23978828/how-do-i-use-disk-caching-in-picasso
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Picasso.get()
+                                .load(url)
+                                .into(view);
+                    }
+                });
     }
 
     public String getMoviePosterUrl() {
