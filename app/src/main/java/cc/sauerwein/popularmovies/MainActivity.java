@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private MenuItem mMostPopular;
     private MenuItem mTopRated;
     private MenuItem mMyFavorites;
+    private Toolbar mToolbar;
 
 
     @Override
@@ -62,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         recyclerView.setAdapter(mMovieAdapter);
 
         // Setup Toolbar
-        Toolbar toolbar = mMainBinding.mainActivityToolbar;
-        setSupportActionBar(toolbar);
+        mToolbar = mMainBinding.mainActivityToolbar;
+        setSupportActionBar(mToolbar);
 
         listUpdate(POPULAR_MOVIES);
     }
@@ -112,18 +113,21 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_top_rated:
+                mToolbar.setTitle(getString(R.string.top_rated));
                 listUpdate(TOP_RATED_MOVIES);
                 mTopRated.setVisible(false);
                 mMostPopular.setVisible(true);
                 mMyFavorites.setVisible(true);
                 break;
             case R.id.action_most_popular:
+                mToolbar.setTitle(R.string.popular);
                 listUpdate(POPULAR_MOVIES);
                 mMostPopular.setVisible(false);
                 mTopRated.setVisible(true);
                 mMyFavorites.setVisible(true);
                 break;
             case R.id.action_my_favorites:
+                mToolbar.setTitle(getString(R.string.my_favorites));
                 listUpdate(MY_FAVORITES);
                 mTopRated.setVisible(true);
                 mMostPopular.setVisible(true);
