@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private void listUpdate(String option) {
         Log.d(LOG_TAG, "Perform MainActivity listUpdate");
         mMovieAdapter.resetMovieData();
+        mViewModel.setRecyclerViewVisibility(View.GONE);
         mViewModel.setLoadingVisibility(View.VISIBLE);
 
         LiveData<List<Movie>> result;
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             public void onChanged(List<Movie> movies) {
                 mViewModel.setLoadingVisibility(View.GONE);
                 if (movies != null) {
+                    mViewModel.setRecyclerViewVisibility(View.VISIBLE);
                     mMovieAdapter.setMovieData(movies);
                 } else {
                     mViewModel.setErrorMessageVisibility(View.VISIBLE);

@@ -21,6 +21,7 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     private ObservableInt mLoadingVisibility;
     private ObservableInt mErrorMessageVisibility;
+    private ObservableInt mRecyclerViewVisibility;
 
 
     public MainActivityViewModel(@NonNull Application application) {
@@ -29,9 +30,11 @@ public class MainActivityViewModel extends AndroidViewModel {
 
         mLoadingVisibility = new ObservableInt();
         mErrorMessageVisibility = new ObservableInt();
+        mRecyclerViewVisibility = new ObservableInt();
 
         mLoadingVisibility.set(View.GONE);
         mErrorMessageVisibility.set(View.GONE);
+        mRecyclerViewVisibility.set(View.GONE);
 
         Log.d(LOG_TAG, "Setup MainActivityViewModel");
     }
@@ -62,5 +65,13 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public void setErrorMessageVisibility(int visibility) {
         this.mErrorMessageVisibility.set(visibility);
+    }
+
+    public ObservableInt getRecyclerViewVisibility() {
+        return mRecyclerViewVisibility;
+    }
+
+    public void setRecyclerViewVisibility(int visibility) {
+        this.mRecyclerViewVisibility.set(visibility);
     }
 }
