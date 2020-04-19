@@ -63,12 +63,12 @@ public class MainActivityViewModel extends AndroidViewModel {
         Log.d(LOG_TAG, "Setup MainActivityViewModel");
     }
 
-    public void setupRecyclerView(RecyclerView recyclerView, MovieAdapter movieAdapter) {
-        this.mMovieAdapter = movieAdapter;
-        GridLayoutManager layoutManager = new GridLayoutManager(getApplication().getApplicationContext(), 2);
+    public void setupRecyclerView(RecyclerView recyclerView, int spanCount) {
+        this.mMovieAdapter = new MovieAdapter(this);
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplication().getApplicationContext(), spanCount);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(movieAdapter);
+        recyclerView.setAdapter(this.mMovieAdapter);
     }
 
     public LiveData<List<Movie>> getPopularMovies() {

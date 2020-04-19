@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.Gson;
 
-import cc.sauerwein.popularmovies.adapter.MovieAdapter;
 import cc.sauerwein.popularmovies.databinding.ActivityMainBinding;
 import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         mMainBinding.setLifecycleOwner(this);
 
         // setup RecyclerView
-        mViewModel.setupRecyclerView(mMainBinding.rvMovieOverview, new MovieAdapter(mViewModel));
+        mViewModel.setupRecyclerView(mMainBinding.rvMovieOverview, 2);
 
         // Setup Toolbar
         setSupportActionBar(mMainBinding.mainActivityToolbar);
