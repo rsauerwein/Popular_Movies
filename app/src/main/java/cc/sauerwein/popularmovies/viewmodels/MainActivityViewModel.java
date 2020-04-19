@@ -117,14 +117,6 @@ public class MainActivityViewModel extends AndroidViewModel {
         }
     }
 
-    public void setMovieAdapter(MovieAdapter mMovieAdapter) {
-        this.mMovieAdapter = mMovieAdapter;
-    }
-
-    public MovieAdapter getmMovieAdapter() {
-        return mMovieAdapter;
-    }
-
     public void resetMovieData() {
         this.mMovieList = null;
     }
