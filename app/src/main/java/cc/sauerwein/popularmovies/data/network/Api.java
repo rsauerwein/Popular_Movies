@@ -8,12 +8,14 @@ import java.util.List;
 
 import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.model.MovieList;
+import cc.sauerwein.popularmovies.model.VideoList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public class Api {
@@ -41,6 +43,9 @@ public class Api {
 
         @GET("movie/top_rated")
         Call<MovieList> fetchTopRatedMovies(@Query("api_key") String api_key);
+
+        @GET("/movie/{movie_id}/videos")
+        Call<VideoList> fetchVideos(@Query("api_key") String api_key, @Path(value = "movie_id", encoded = true) String movieId);
     }
 
     public static String getApiKey() {
