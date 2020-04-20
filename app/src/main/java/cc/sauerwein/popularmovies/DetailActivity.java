@@ -36,6 +36,7 @@ public class DetailActivity extends AppCompatActivity {
         mActivityBinding.setViewModel(mViewModel);
 
         setSupportActionBar(mActivityBinding.detailActivityToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         Intent intent = getIntent();
