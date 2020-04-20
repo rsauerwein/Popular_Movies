@@ -2,6 +2,7 @@ package cc.sauerwein.popularmovies;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), cc.sauerwein.popularmovies.DetailActivity.class);
                 intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
                 startActivity(intent);
+                Log.d(LOG_TAG, "Call clickListener");
             }
         });
     }
