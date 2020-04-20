@@ -190,4 +190,8 @@ public class MainActivityViewModel extends AndroidViewModel {
     public MutableLiveData<Movie> getClickedItem() {
         return mClickedItem;
     }
+
+    public void resetClickedItem() {
+        mClickedItem.postValue(null);
+    }
 }

@@ -98,13 +98,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setupClickListener() {
-        mViewModel.getClickedItem().observe(this, new Observer<Movie>() {
+        mViewModel.getClickedItem().observeForever(new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
-                Intent intent = new Intent(getApplicationContext(), cc.sauerwein.popularmovies.DetailActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
-                startActivity(intent);
-                Log.d(LOG_TAG, "Call clickListener");
+                if (movie != null) {
+                    Intent intent = new Intent(getApplicationContext(), cc.sauerwein.popularmovies.DetailActivity.class);
+                    intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
+                    startActivity(intent);
+                    Log.d(LOG_TAG, "Call clickListener");
+
+                    // Perhaps not the best solution..
+                    // Workaround for the issue that onChanged get's triggered again when rotating device
+                    // when the ViewModel already stores a clicked item
+                    mViewModel.getClickedItem().removeObserver(this);
+                    mViewModel.resetClickedItem();
+                }
             }
         });
     }
