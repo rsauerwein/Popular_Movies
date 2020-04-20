@@ -35,6 +35,8 @@ public class DetailActivity extends AppCompatActivity {
         mActivityBinding.setLifecycleOwner(this);
         mActivityBinding.setViewModel(mViewModel);
 
+        setSupportActionBar(mActivityBinding.detailActivityToolbar);
+
 
         Intent intent = getIntent();
         String json = intent.getStringExtra(Intent.EXTRA_TEXT);
