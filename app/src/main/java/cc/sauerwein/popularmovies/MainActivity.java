@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setupClickListener() {
-        mViewModel.getClickedItem().observeForever(new Observer<Movie>() {
+        mViewModel.getClickedItem().observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
                 if (movie != null) {
@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                     // Perhaps not the best solution..
                     // Workaround for the issue that onChanged get's triggered again when rotating device
                     // when the ViewModel already stores a clicked item
-                    mViewModel.getClickedItem().removeObserver(this);
                     mViewModel.resetClickedItem();
                 }
             }
