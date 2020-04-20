@@ -8,6 +8,7 @@ import java.util.List;
 
 import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.model.MovieList;
+import cc.sauerwein.popularmovies.model.ReviewList;
 import cc.sauerwein.popularmovies.model.Video;
 import cc.sauerwein.popularmovies.model.VideoList;
 import retrofit2.Call;
@@ -71,6 +72,9 @@ public class Api {
 
         @GET("movie/{movie_id}/videos")
         Call<VideoList> fetchVideos(@Path(value = "movie_id", encoded = true) String movieId, @Query("api_key") String api_key);
+
+        @GET("movie/{movie_id}/reviews")
+        Call<ReviewList> fetchReviews(@Path(value = "movie_id", encoded = true) String movieId, @Query("api_key") String api_key);
     }
 
     public static MutableLiveData<List<Movie>> fetchMovies(String option) {
