@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import androidx.databinding.BindingAdapter;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
@@ -14,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cc.sauerwein.popularmovies.R;
 
@@ -37,6 +39,11 @@ public class Movie {
     @ColumnInfo(name = "vote_average")
     private String userRating;
     private boolean isFavorite;
+    // Todo figure out how to store videos and reviews in room
+    @Ignore
+    private List<Video> videos;
+    @Ignore
+    private List<Review> reviews;
 
     // Options
     public final static String OPTION_IS_FAVORITE = "is-favorite";
@@ -119,5 +126,21 @@ public class Movie {
 
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
+    }
+
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }
