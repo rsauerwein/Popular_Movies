@@ -8,6 +8,7 @@ import java.util.List;
 
 import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.model.MovieList;
+import cc.sauerwein.popularmovies.model.Video;
 import cc.sauerwein.popularmovies.model.VideoList;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +38,30 @@ public class Api {
         return api;
     }
 
+    // Todo Spaghetti code here...
+    public static MutableLiveData<List<Video>> fetchVideos(String movieId) {
+        ApiInterface api = Api.getApi();
+        final MutableLiveData<List<Video>> result = new MutableLiveData<>();
+
+        api.fetchVideos(movieId, getApiKey()).enqueue(new Callback<VideoList>() {
+            @Override
+            public void onResponse(Call<VideoList> call, Response<VideoList> response) {
+                result.postValue(response.body().getVideos());
+            }
+
+            @Override
+            public void onFailure(Call<VideoList> call, Throwable t) {
+
+            }
+        });
+
+        return result;
+    }
+
+    public static String getApiKey() {
+        return API_KEY;
+    }
+
     public interface ApiInterface {
         @GET("movie/popular")
         Call<MovieList> fetchPopularMovies(@Query("api_key") String api_key);
@@ -44,12 +69,8 @@ public class Api {
         @GET("movie/top_rated")
         Call<MovieList> fetchTopRatedMovies(@Query("api_key") String api_key);
 
-        @GET("/movie/{movie_id}/videos")
-        Call<VideoList> fetchVideos(@Query("api_key") String api_key, @Path(value = "movie_id", encoded = true) String movieId);
-    }
-
-    public static String getApiKey() {
-        return API_KEY;
+        @GET("movie/{movie_id}/videos")
+        Call<VideoList> fetchVideos(@Path(value = "movie_id", encoded = true) String movieId, @Query("api_key") String api_key);
     }
 
     public static MutableLiveData<List<Movie>> fetchMovies(String option) {

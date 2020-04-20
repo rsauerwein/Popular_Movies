@@ -39,6 +39,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
     public void setMovie(Movie movie) {
         this.mMovie = movie;
+        mRepository.fetchVideos(String.valueOf(movie.getId()));
     }
 
     public void favoriteButtonTap() {

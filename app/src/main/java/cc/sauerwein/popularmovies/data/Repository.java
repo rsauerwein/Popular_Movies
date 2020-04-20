@@ -10,6 +10,7 @@ import java.util.List;
 import cc.sauerwein.popularmovies.data.db.AppDatabase;
 import cc.sauerwein.popularmovies.data.network.Api;
 import cc.sauerwein.popularmovies.model.Movie;
+import cc.sauerwein.popularmovies.model.Video;
 
 /**
  * Singleton class
@@ -68,5 +69,9 @@ public class Repository {
 
     public LiveData<List<Movie>> fetchMovies(String option) {
         return Api.fetchMovies(option);
+    }
+
+    public LiveData<List<Video>> fetchVideos(String movieId) {
+        return Api.fetchVideos(movieId);
     }
 }
