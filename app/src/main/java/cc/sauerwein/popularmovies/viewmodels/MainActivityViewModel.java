@@ -3,6 +3,7 @@ package cc.sauerwein.popularmovies.viewmodels;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,9 +39,9 @@ public class MainActivityViewModel extends AndroidViewModel {
     private List<Movie> mMovieList;
 
     // Options for listUpdate
-    private final String POPULAR_MOVIES = "popular-movies";
-    private final String TOP_RATED_MOVIES = "top-rated-movies";
-    private final String MY_FAVORITES = "my-favorites";
+    public final String POPULAR_MOVIES = "popular-movies";
+    public final String TOP_RATED_MOVIES = "top-rated-movies";
+    public final String MY_FAVORITES = "my-favorites";
 
     private MutableLiveData<Movie> mClickedItem;
 
@@ -193,5 +194,17 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public void resetClickedItem() {
         mClickedItem.postValue(null);
+    }
+
+    public void toggleSort(MenuItem item) {
+        Application application = getApplication();
+
+        if (item.getTitle().toString().equals(application.getString(R.string.most_popular_menu))) {
+            listUpdate(POPULAR_MOVIES, application.getApplicationContext());
+            item.setTitle(application.getString(R.string.top_rated_menu));
+        } else if (item.getTitle().toString().equals(application.getString(R.string.top_rated_menu))) {
+            listUpdate(TOP_RATED_MOVIES, application.getApplicationContext());
+            item.setTitle(application.getString(R.string.most_popular_menu));
+        }
     }
 }

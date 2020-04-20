@@ -25,14 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MainActivityViewModel mViewModel;
     private ActivityMainBinding mMainBinding;
-    private MenuItem mMostPopular;
-    private MenuItem mTopRated;
+    private MenuItem mToggleSort;
     private MenuItem mMyFavorites;
-
-    // Options for listUpdate
-    private final String POPULAR_MOVIES = "popular-movies";
-    private final String TOP_RATED_MOVIES = "top-rated-movies";
-    private final String MY_FAVORITES = "my-favorites";
 
 
     @Override
@@ -55,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Avoid unnecessary API calls
         if (savedInstanceState == null) {
-            mViewModel.listUpdate(POPULAR_MOVIES, this);
+            mViewModel.listUpdate(mViewModel.POPULAR_MOVIES, this);
         } else {
             // Fix the issue that the ActionBar contains the application title after rotating the device
             getSupportActionBar().setTitle(mViewModel.getActionBarTitle().getValue());
@@ -68,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-        mMostPopular = menu.findItem(R.id.action_most_popular);
-        mTopRated = menu.findItem(R.id.action_top_rated);
+        mToggleSort = menu.findItem(R.id.action_toggle_sort);
         mMyFavorites = menu.findItem(R.id.action_my_favorites);
         return true;
     }
@@ -77,26 +70,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_top_rated:
-                mViewModel.listUpdate(TOP_RATED_MOVIES, this);
-                mTopRated.setVisible(false);
-                mMostPopular.setVisible(true);
-                mMyFavorites.setVisible(true);
-                break;
-            case R.id.action_most_popular:
-                mViewModel.listUpdate(POPULAR_MOVIES, this);
-                mMostPopular.setVisible(false);
-                mTopRated.setVisible(true);
-                mMyFavorites.setVisible(true);
+            case R.id.action_toggle_sort:
+                mViewModel.toggleSort(item);
                 break;
             case R.id.action_my_favorites:
-                mViewModel.listUpdate(MY_FAVORITES, this);
-                mTopRated.setVisible(true);
-                mMostPopular.setVisible(true);
-                mMyFavorites.setVisible(false);
+                mViewModel.listUpdate(mViewModel.MY_FAVORITES, this);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        mMainBinding.rvMovieOverview.scrollToPosition(0);
         return true;
     }
 
