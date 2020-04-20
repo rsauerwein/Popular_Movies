@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         // Avoid unnecessary API calls
         if (savedInstanceState == null) {
             mViewModel.listUpdate(POPULAR_MOVIES, this);
+        } else {
+            // Fix the issue that the ActionBar contains the application title after rotating the device
+            getSupportActionBar().setTitle(mViewModel.getActionBarTitle().getValue());
         }
     }
 
