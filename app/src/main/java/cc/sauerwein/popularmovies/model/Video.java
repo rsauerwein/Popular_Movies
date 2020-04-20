@@ -5,6 +5,7 @@ package cc.sauerwein.popularmovies.model;
  * https://developers.themoviedb.org/3/movies/get-movie-videos
  */
 public class Video {
+    private String name;
     private String key;
     private String site;
 }
