@@ -42,7 +42,12 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String json = intent.getStringExtra(Intent.EXTRA_TEXT);
         Movie movie = new Gson().fromJson(json, Movie.class);
-        mViewModel.setMovie(movie);
+
+        // Avoid unnecessary api calls
+        if (savedInstanceState == null) {
+            mViewModel.setMovie(movie);
+        }
+
         mActivityBinding.setImageUrl(movie.getMoviePosterUrl());
 
         // Query the Room database
