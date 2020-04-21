@@ -11,10 +11,6 @@
         <variable
             name="position"
             type="Integer" />
-
-        <variable
-            name="imageUrl"
-            type="String" />
     </data>
 
     <FrameLayout
@@ -28,7 +24,7 @@
         android:onClick="@{(view) ->view_model.posterClick(position)}"
         android:contentDescription="@{view_model.movieList.get(position).title}"
         android:scaleType="centerCrop"
-        app:moviePoster="@{imageUrl}" />
+        app:moviePoster="@{view_model.movieList.get(position).getMoviePosterUrl()}" />
     </FrameLayout>
 
 </layout>

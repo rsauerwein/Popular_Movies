@@ -51,7 +51,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         private void bind(MainActivityViewModel viewModel, Integer position) {
             binding.setVariable(BR.view_model, viewModel);
             binding.setVariable(BR.position, position);
-            binding.setVariable(BR.imageUrl, viewModel.getMovieList().get(position).getMoviePosterUrl());
         }
     }
 }
