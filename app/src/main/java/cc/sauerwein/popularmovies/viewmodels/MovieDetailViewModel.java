@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import cc.sauerwein.popularmovies.R;
 import cc.sauerwein.popularmovies.data.Repository;
@@ -39,7 +40,13 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
     public void setMovie(Movie movie) {
         this.mMovie = movie;
-        mRepository.fetchVideos(String.valueOf(movie.getId()));
+        MutableLiveData<Movie> details = mRepository.getMovieDetails(movie);
+        details.observeForever(new Observer<Movie>() {
+            @Override
+            public void onChanged(Movie movie) {
+                Log.d("..", "..");
+            }
+        });
     }
 
     public void favoriteButtonTap() {

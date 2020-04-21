@@ -35,6 +35,9 @@ public class Movie {
     @SerializedName("poster_path")
     @ColumnInfo(name = "poster_path")
     private String posterPath;
+    @ColumnInfo(name = "backdrop_path")
+    @SerializedName("backdrop_path")
+    private String backdropPath;
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
     private String userRating;
@@ -142,5 +145,13 @@ public class Movie {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 }
