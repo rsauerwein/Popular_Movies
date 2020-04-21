@@ -40,10 +40,10 @@ public class Movie {
     private String backdropPath;
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
-    private String voteAverage;
+    private double voteAverage;
     @SerializedName("vote_count")
     @ColumnInfo(name = "vote_count")
-    private String voteCount;
+    private int voteCount;
     private boolean isFavorite;
     // Todo figure out how to store videos and reviews in room
     @Ignore
@@ -56,7 +56,7 @@ public class Movie {
     public final static String OPTION_IS_TOP_RATED = "is-top-rated";
     public final static String OPTION_IS_POPULAR = "is-popular";
 
-    public Movie(int id, String title, String overview, Date releaseDate, String posterPath, String voteAverage) {
+    public Movie(int id, String title, String overview, Date releaseDate, String posterPath, double voteAverage) {
         this.id = id;
         this.title = title;
         this.overview = overview;
@@ -91,7 +91,7 @@ public class Movie {
         return posterPath;
     }
 
-    public String getVoteAverage() {
+    public double getVoteAverage() {
         return voteAverage;
     }
 
@@ -158,11 +158,11 @@ public class Movie {
         this.backdropPath = backdropPath;
     }
 
-    public String getVoteCount() {
+    public int getVoteCount() {
         return voteCount;
     }
 
-    public void setVoteCount(String voteCount) {
+    public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
     }
 }
