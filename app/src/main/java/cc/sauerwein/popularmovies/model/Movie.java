@@ -40,7 +40,10 @@ public class Movie {
     private String backdropPath;
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
-    private String userRating;
+    private String voteAverage;
+    @SerializedName("vote_count")
+    @ColumnInfo(name = "vote_count")
+    private String voteCount;
     private boolean isFavorite;
     // Todo figure out how to store videos and reviews in room
     @Ignore
@@ -53,13 +56,13 @@ public class Movie {
     public final static String OPTION_IS_TOP_RATED = "is-top-rated";
     public final static String OPTION_IS_POPULAR = "is-popular";
 
-    public Movie(int id, String title, String overview, Date releaseDate, String posterPath, String userRating) {
+    public Movie(int id, String title, String overview, Date releaseDate, String posterPath, String voteAverage) {
         this.id = id;
         this.title = title;
         this.overview = overview;
         this.releaseDate = releaseDate;
         this.posterPath = posterPath;
-        this.userRating = userRating;
+        this.voteAverage = voteAverage;
     }
 
     public int getId() {
@@ -88,12 +91,12 @@ public class Movie {
         return posterPath;
     }
 
-    public String getUserRating() {
-        return userRating;
+    public String getVoteAverage() {
+        return voteAverage;
     }
 
     public String getFormatedUserRating() {
-        return this.userRating + "/10";
+        return this.voteAverage + "/10";
     }
 
     @BindingAdapter("moviePoster")
@@ -153,5 +156,13 @@ public class Movie {
 
     public void setBackdropPath(String backdropPath) {
         this.backdropPath = backdropPath;
+    }
+
+    public String getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(String voteCount) {
+        this.voteCount = voteCount;
     }
 }
