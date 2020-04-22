@@ -97,6 +97,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="24dp"
                 android:text="@{view_model.movie.overview}" />
+
+            <fragment
+                android:id="@+id/videos"
+                android:name="cc.sauerwein.popularmovies.VideoFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 </layout>
