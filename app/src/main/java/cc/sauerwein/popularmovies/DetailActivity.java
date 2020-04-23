@@ -69,4 +69,8 @@ public class DetailActivity extends AppCompatActivity {
         mViewModel.favoriteButtonTap();
         Log.d(LOG_TAG, "click favorite");
     }
+
+    public void playVideo(View view) {
+        Log.d(LOG_TAG, "click play video");
+    }
 }
