@@ -35,6 +35,7 @@ public class DetailActivity extends AppCompatActivity {
         mActivityBinding.setLifecycleOwner(this);
         mActivityBinding.setViewModel(mViewModel);
 
+
         setSupportActionBar(mActivityBinding.detailActivityToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

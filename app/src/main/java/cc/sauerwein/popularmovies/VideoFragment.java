@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import cc.sauerwein.popularmovies.databinding.FragmentVideoBinding;
 import cc.sauerwein.popularmovies.viewmodels.MovieDetailViewModel;
 
 /**
@@ -68,10 +70,9 @@ public class VideoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mViewModel = new ViewModelProvider(requireActivity()).get(MovieDetailViewModel.class);
-        Log.d("..", "halloooo");
-        return inflater.inflate(R.layout.fragment_video, container, false);
-
-
+        FragmentVideoBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_video, container, false);
+        mViewModel.setupRecyclerView(binding.rvVideos);
+        return binding.getRoot();
     }
 
     @Override
