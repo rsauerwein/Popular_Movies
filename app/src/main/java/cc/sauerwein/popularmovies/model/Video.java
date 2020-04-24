@@ -20,6 +20,10 @@ public class Video {
     public String getSite() {
         return site;
     }
+
+    public String getYoutubeUrl() {
+        return "http://www.youtube.com/watch?v=" + key;
+    }
 }
 
 

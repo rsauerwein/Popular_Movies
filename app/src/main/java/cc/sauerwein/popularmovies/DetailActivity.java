@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,6 +81,7 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_share:
+                share();
                 break;
             default:
                 Log.wtf(LOG_TAG, "onOptionsItemSelected called with unknown item");
@@ -97,5 +99,24 @@ public class DetailActivity extends AppCompatActivity {
         String key = mViewModel.getMovie().getVideos().get(Integer.parseInt(view.getTag().toString())).getKey();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + key));
         startActivity(intent);
+    }
+
+    public void share() {
+        if (mViewModel.getMovie().getVideos().size() > 0) {
+            final Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT,
+                    getString(R.string.share) + mViewModel.getMovie().getVideos().get(0).getYoutubeUrl());
+
+            try {
+                startActivity(Intent.createChooser(intent, "Select an action"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast toast = Toast.makeText(this, "No trailers to share available", Toast.LENGTH_LONG);
+            toast.show();
+        }
+
     }
 }
