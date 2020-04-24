@@ -3,6 +3,7 @@ package cc.sauerwein.popularmovies.viewmodels;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -52,19 +53,22 @@ public class MovieDetailViewModel extends AndroidViewModel {
     // As soon as this method gets called the ViewModel also adds Details (Reviews, Videos) to the Movie object
     public void setMovie(Movie movie) {
         this.mMovie = movie;
+
         MutableLiveData<Movie> details = mRepository.getMovieDetails(movie);
         details.observeForever(new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
-                notifiyRecyclerView();
                 details.removeObserver(this);
+
+                if (movie == null) {
+                    Toast toast = Toast.makeText(mContext, mContext.getString(R.string.detail_error), Toast.LENGTH_LONG);
+                    toast.show();
+                } else {
+                    mVideoAdapter.notifyDataSetChanged();
+                    mReviewAdapter.notifyDataSetChanged();
+                }
             }
         });
-    }
-
-    private void notifiyRecyclerView() {
-        mVideoAdapter.notifyDataSetChanged();
-        mReviewAdapter.notifyDataSetChanged();
     }
 
     public void favoriteButtonTap() {

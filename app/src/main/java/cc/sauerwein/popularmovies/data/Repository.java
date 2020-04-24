@@ -105,6 +105,7 @@ public class Repository {
                     movie.setVideos(api.fetchVideos(movieId, apiKey).execute().body().getVideos());
                     movieDetails.postValue(movie);
                 } catch (IOException e) {
+                    movieDetails.postValue(null);
                     e.printStackTrace();
                 }
             }
