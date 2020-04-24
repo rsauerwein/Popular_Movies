@@ -73,10 +73,14 @@ public class Repository {
         return Api.fetchMovies(option);
     }
 
-    // Fetch movie details from Room and also from the API
-    // Possible issue: The code relies on that the Room request is faster than the API..
-    // Todo I think its better to split this into two seperate methods getMovieDetails and isFavorite or something like that
-    // the ViewModel have to call and handle them separately
+
+    /**
+     * Checks if the movie is already stored in room (favorite)
+     * and fetches more details from the API
+     *
+     * @param movie
+     * @return
+     */
     public MutableLiveData<Movie> getMovieDetails(Movie movie) {
         final MutableLiveData<Movie> movieDetails = new MutableLiveData<>();
         Api.ApiInterface api = Api.getApi();
