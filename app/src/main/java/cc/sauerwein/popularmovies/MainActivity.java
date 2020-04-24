@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private MainActivityViewModel mViewModel;
     private ActivityMainBinding mMainBinding;
-    private MenuItem mToggleSort;
-    private MenuItem mMyFavorites;
 
 
     @Override
@@ -62,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-        mToggleSort = menu.findItem(R.id.action_toggle_sort);
-        mMyFavorites = menu.findItem(R.id.action_my_favorites);
         return true;
     }
 
