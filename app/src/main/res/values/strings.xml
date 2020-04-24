@@ -16,12 +16,18 @@
     <string name="detail_error">Can\'t retrieve details from the internet</string>
     <string name="empty_favorites">My favorites is empty</string>
 
+    <!--   Favorites function-->
     <string name="mark_as_favorite">Mark as Favorite</string>
     <string name="remove_from_favorites">Remove from favorites</string>
-    <string name="movie_poster_description">Movie poster</string>
     <string name="movie_rating">%1s/10</string>
 
+    <!--    Share function -->
     <string name="share_prompt">Select an action</string>
     <string name="share_message">Hey, check out this awesome movie trailer\n\n</string>
     <string name="share_error">No trailers to share available</string>
+
+    <!--    Content descriptions-->
+    <string name="movie_poster_description">Movie poster</string>
+    <string name="video_play_button">Play trailer button</string>
 </resources>
+

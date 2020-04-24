@@ -24,6 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:moviePoster="@{view_model.movie.getMoviePosterUrl()}"
+            android:contentDescription="@string/movie_poster_description"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
