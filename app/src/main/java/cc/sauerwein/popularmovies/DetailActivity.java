@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 
 import cc.sauerwein.popularmovies.databinding.ActivityDetailBinding;
 import cc.sauerwein.popularmovies.model.Movie;
+import cc.sauerwein.popularmovies.model.Video;
 import cc.sauerwein.popularmovies.viewmodels.MovieDetailViewModel;
 
 public class DetailActivity extends AppCompatActivity {
@@ -96,8 +97,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void playVideo(View view) {
-        String key = mViewModel.getMovie().getVideos().get(Integer.parseInt(view.getTag().toString())).getKey();
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + key));
+        Video video = mViewModel.getMovie().getVideos().get(Integer.parseInt(view.getTag().toString()));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(video.getYoutubeUrl()));
         startActivity(intent);
     }
 
