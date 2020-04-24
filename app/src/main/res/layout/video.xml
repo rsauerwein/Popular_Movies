@@ -16,7 +16,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="playVideo">
+        android:onClick="playVideo"
+        android:tag="@{position}">
 
         <ImageView
             android:id="@+id/imageView"

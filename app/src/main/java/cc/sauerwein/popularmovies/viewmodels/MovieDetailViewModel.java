@@ -44,6 +44,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
         return mMovie;
     }
 
+    // Todo review
     public void setMovie(Movie movie) {
         this.mMovie = movie;
         MutableLiveData<Movie> details = mRepository.getMovieDetails(movie);

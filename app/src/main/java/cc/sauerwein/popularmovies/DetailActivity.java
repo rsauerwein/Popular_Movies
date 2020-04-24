@@ -1,6 +1,7 @@
 package cc.sauerwein.popularmovies;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,6 +72,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void playVideo(View view) {
-        Log.d(LOG_TAG, "click play video");
+        String key = mViewModel.getMovie().getVideos().get(Integer.valueOf(view.getTag().toString())).getKey();
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + key));
+        startActivity(intent);
     }
 }
