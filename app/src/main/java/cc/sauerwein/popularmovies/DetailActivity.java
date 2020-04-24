@@ -28,7 +28,6 @@ public class DetailActivity extends AppCompatActivity {
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     private MovieDetailViewModel mViewModel;
     private ActivityDetailBinding mActivityBinding;
-    private MenuItem mShareButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +73,6 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.detail, menu);
-        mShareButton = menu.findItem(R.id.action_share);
         return true;
     }
 
