@@ -36,15 +36,20 @@ public class MovieDetailViewModel extends AndroidViewModel {
         Log.d(TAG, "Call MovieDetailViewModel constructor with arguments");
     }
 
+    // Query the room db for a specific Movie
+    // That way we could check if an entry is already stored (favorite)
     public LiveData<Movie> fetchMovie(int id) {
         return mRepository.getMovieById(id);
     }
 
+    // Get the Movie object which the ViewModel holds
     public Movie getMovie() {
         return mMovie;
     }
 
-    // Todo review
+    // As we pass the Movie object from the Main to Detail Activity we need this method to allow the
+    // activity to set the Movie object
+    // As soon as this method gets called the ViewModel also adds Details (Reviews, Videos) to the Movie object
     public void setMovie(Movie movie) {
         this.mMovie = movie;
         MutableLiveData<Movie> details = mRepository.getMovieDetails(movie);
@@ -52,7 +57,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
             @Override
             public void onChanged(Movie movie) {
                 notifiyRecyclerView();
-                Log.d("..", "..");
+                details.removeObserver(this);
             }
         });
     }
