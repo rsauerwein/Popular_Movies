@@ -30,73 +30,18 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:titleTextColor="@color/textOnPrimary" />
 
-            <TextView
-                android:id="@+id/tv_movie_title"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#26a69a"
-                android:padding="24dp"
-                android:text="@{view_model.movie.title}"
-                android:textColor="@android:color/white"
-                android:textSize="48sp" />
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                app:moviePoster="@{view_model.movie.getMovieBackdropUrl()}" />
 
-            <RelativeLayout
+
+            <fragment
+                android:id="@+id/fragment_overview"
+                android:name="cc.sauerwein.popularmovies.OverviewFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="24dp">
-
-                <ImageView
-                    android:id="@+id/iv_movie_poster_thumbnail"
-                    android:layout_width="133dp"
-                    android:layout_height="200dp"
-                    android:contentDescription="@string/movie_poster_description"
-                    android:scaleType="fitXY"
-                    app:moviePoster="@{view_model.movie.getMoviePosterUrl()}" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_toEndOf="@id/iv_movie_poster_thumbnail"
-                    android:layout_toRightOf="@id/iv_movie_poster_thumbnail"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_release_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{view_model.movie.getFormatedReleaseDate()}"
-                        android:textSize="24sp" />
-
-                    <TextView
-                        android:id="@+id/tv_user_rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="@{view_model.movie.getFormatedUserRating()}" />
-
-                    <Button
-                        android:id="@+id/btn_favorite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:width="48dp"
-                        android:background="@color/colorPrimary"
-                        android:onClick="favorite"
-                        android:text="@{view_model.getmBtnFavoriteText()}"
-                        android:textAllCaps="true" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="24dp"
-                android:text="@{view_model.movie.overview}" />
+                android:layout_height="wrap_content" />
 
             <fragment
                 android:id="@+id/fragment_videos"
