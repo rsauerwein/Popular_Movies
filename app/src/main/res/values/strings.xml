@@ -21,5 +21,7 @@
     <string name="movie_poster_description">Movie poster</string>
     <string name="movie_rating">%1s/10</string>
 
-    <string name="share">Hey, check out this awesome movie trailer\n\n</string>
+    <string name="share_prompt">Select an action</string>
+    <string name="share_message">Hey, check out this awesome movie trailer\n\n</string>
+    <string name="share_error">No trailers to share available</string>
 </resources>

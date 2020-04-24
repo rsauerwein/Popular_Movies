@@ -106,15 +106,15 @@ public class DetailActivity extends AppCompatActivity {
             final Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT,
-                    getString(R.string.share) + mViewModel.getMovie().getVideos().get(0).getYoutubeUrl());
+                    getString(R.string.share_message) + mViewModel.getMovie().getVideos().get(0).getYoutubeUrl());
 
             try {
-                startActivity(Intent.createChooser(intent, "Select an action"));
+                startActivity(Intent.createChooser(intent, getString(R.string.share_prompt)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            Toast toast = Toast.makeText(this, "No trailers to share available", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, getString(R.string.share_error), Toast.LENGTH_LONG);
             toast.show();
         }
 
