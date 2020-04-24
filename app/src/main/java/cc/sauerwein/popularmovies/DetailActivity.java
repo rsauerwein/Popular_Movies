@@ -28,7 +28,6 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(LOG_TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_detail);
         mActivityBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         setTitle(getString(R.string.movie_detail));
 
@@ -59,7 +58,7 @@ public class DetailActivity extends AppCompatActivity {
                 if (movie == null) {
                     mViewModel.setmBtnFavoriteText(getString(R.string.mark_as_favorite));
                 } else {
-                    mViewModel.setmBtnFavoriteText("Remove from favorites");
+                    mViewModel.setmBtnFavoriteText(getString(R.string.remove_from_favorites));
                     mViewModel.getMovie().setFavorite(true);
                 }
             }
@@ -72,7 +71,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void playVideo(View view) {
-        String key = mViewModel.getMovie().getVideos().get(Integer.valueOf(view.getTag().toString())).getKey();
+        String key = mViewModel.getMovie().getVideos().get(Integer.parseInt(view.getTag().toString())).getKey();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + key));
         startActivity(intent);
     }
