@@ -45,7 +45,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         private MovieAdapterViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            // itemView.findViewById(R.id.iv_movie_poster)
         }
 
         private void bind(MainActivityViewModel viewModel, Integer position) {
