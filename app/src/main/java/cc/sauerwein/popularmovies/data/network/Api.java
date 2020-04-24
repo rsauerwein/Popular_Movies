@@ -9,7 +9,6 @@ import java.util.List;
 import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.model.MovieList;
 import cc.sauerwein.popularmovies.model.ReviewList;
-import cc.sauerwein.popularmovies.model.Video;
 import cc.sauerwein.popularmovies.model.VideoList;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,26 +36,6 @@ public class Api {
         }
 
         return api;
-    }
-
-    // Todo Spaghetti code here...
-    public static MutableLiveData<List<Video>> fetchVideos(String movieId) {
-        ApiInterface api = Api.getApi();
-        final MutableLiveData<List<Video>> result = new MutableLiveData<>();
-
-        api.fetchVideos(movieId, getApiKey()).enqueue(new Callback<VideoList>() {
-            @Override
-            public void onResponse(Call<VideoList> call, Response<VideoList> response) {
-                result.postValue(response.body().getVideos());
-            }
-
-            @Override
-            public void onFailure(Call<VideoList> call, Throwable t) {
-
-            }
-        });
-
-        return result;
     }
 
     public static String getApiKey() {
