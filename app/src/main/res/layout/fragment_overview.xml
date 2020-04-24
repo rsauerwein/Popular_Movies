@@ -80,5 +80,16 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_year"
             tools:text="(1337)" />
 
+        <Button
+            android:id="@+id/btn_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:onClick="favorite"
+            android:text="@{view_model.getmBtnFavoriteText()}"
+            app:layout_constraintStart_toStartOf="@+id/tv_vote_average"
+            app:layout_constraintTop_toBottomOf="@+id/tv_vote_average"
+            tools:text="Remove from favorites" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

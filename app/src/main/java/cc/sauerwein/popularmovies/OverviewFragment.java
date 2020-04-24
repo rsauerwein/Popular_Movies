@@ -67,6 +67,7 @@ public class OverviewFragment extends Fragment {
         FragmentOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_overview, container, false);
         binding.setViewModel(mViewModel);
         binding.setVariable(BR.view_model, mViewModel);
+        binding.setLifecycleOwner(requireActivity());
         return binding.getRoot();
     }
 }

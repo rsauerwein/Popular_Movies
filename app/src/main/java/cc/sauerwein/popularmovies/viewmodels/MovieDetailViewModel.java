@@ -65,8 +65,10 @@ public class MovieDetailViewModel extends AndroidViewModel {
     public void favoriteButtonTap() {
         if (mMovie.isFavorite()) {
             mRepository.deleteMovie(mMovie);
+            mMovie.setFavorite(false);
             mBtnFavoriteText.postValue(mContext.getString(R.string.mark_as_favorite));
         } else {
+            mMovie.setFavorite(true);
             mRepository.insertMovie(mMovie);
             mBtnFavoriteText.postValue("Remove from favorites");
         }
