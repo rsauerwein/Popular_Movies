@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 mViewModel.listUpdate(mViewModel.MY_FAVORITES, this);
                 break;
             default:
+                Log.wtf(LOG_TAG, "onOptionsItemSelected called with unknown item");
                 return super.onOptionsItemSelected(item);
         }
         mMainBinding.rvMovieOverview.scrollToPosition(0);

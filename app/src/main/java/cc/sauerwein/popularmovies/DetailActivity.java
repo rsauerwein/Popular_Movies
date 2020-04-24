@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LiveData;
@@ -23,6 +26,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     private MovieDetailViewModel mViewModel;
     private ActivityDetailBinding mActivityBinding;
+    private MenuItem mShareButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,25 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail, menu);
+        mShareButton = menu.findItem(R.id.action_share);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_share:
+                break;
+            default:
+                Log.wtf(LOG_TAG, "onOptionsItemSelected called with unknown item");
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
     public void favorite(View view) {
