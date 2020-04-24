@@ -19,7 +19,6 @@
     <!--   Favorites function-->
     <string name="mark_as_favorite">Mark as Favorite</string>
     <string name="remove_from_favorites">Remove from favorites</string>
-    <string name="movie_rating">%1s/10</string>
 
     <!--    Share function -->
     <string name="share_prompt">Select an action</string>
