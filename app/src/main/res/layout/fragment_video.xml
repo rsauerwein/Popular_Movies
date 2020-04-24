@@ -10,7 +10,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Trailers"
+            android:text="@string/trailers"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <androidx.recyclerview.widget.RecyclerView

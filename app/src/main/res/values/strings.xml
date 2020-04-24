@@ -25,9 +25,15 @@
     <string name="share_prompt">Select an action</string>
     <string name="share_message">Hey, check out this awesome movie trailer\n\n</string>
     <string name="share_error">No trailers to share available</string>
+    <string name="share">Share</string>
 
     <!--    Content descriptions-->
     <string name="movie_poster_description">Movie poster</string>
     <string name="video_play_button">Play trailer button</string>
+
+    <!--    Misc-->
+    <string name="reviews">Reviews</string>
+    <string name="trailers">Trailers</string>
+    <string name="author">Author</string>
 </resources>
 
