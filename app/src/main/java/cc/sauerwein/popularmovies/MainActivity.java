@@ -10,13 +10,11 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.Gson;
 
 import cc.sauerwein.popularmovies.databinding.ActivityMainBinding;
-import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,20 +79,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setupClickListener() {
-        mViewModel.getClickedItem().observe(this, new Observer<Movie>() {
-            @Override
-            public void onChanged(Movie movie) {
-                if (movie != null) {
-                    Intent intent = new Intent(getApplicationContext(), cc.sauerwein.popularmovies.DetailActivity.class);
-                    intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
-                    startActivity(intent);
-                    Log.d(LOG_TAG, "Call clickListener");
+        mViewModel.getClickedItem().observe(this, movie -> {
+            if (movie != null) {
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, new Gson().toJson(movie));
+                startActivity(intent);
+                Log.d(LOG_TAG, "Call clickListener");
 
-                    // Perhaps not the best solution..
-                    // Workaround for the issue that onChanged get's triggered again when rotating device
-                    // when the ViewModel already stores a clicked item
-                    mViewModel.resetClickedItem();
-                }
+                // Perhaps not the best solution..
+                // Workaround for the issue that onChanged get's triggered again when rotating device
+                // when the ViewModel already stores a clicked item
+                mViewModel.resetClickedItem();
             }
         });
     }

@@ -52,21 +52,11 @@ public class Repository {
     }
 
     public void deleteMovie(Movie movie) {
-        sAppExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                mDb.movieDao().deleteMovie(movie);
-            }
-        });
+        sAppExecutors.diskIO().execute(() -> mDb.movieDao().deleteMovie(movie));
     }
 
     public void insertMovie(Movie movie) {
-        sAppExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                mDb.movieDao().insertMovie(movie);
-            }
-        });
+        sAppExecutors.diskIO().execute(() -> mDb.movieDao().insertMovie(movie));
     }
 
     public LiveData<List<Movie>> fetchMovies(String option) {
@@ -97,17 +87,14 @@ public class Repository {
         });
 
 
-        sAppExecutors.networkIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    movie.setReviews(api.fetchReviews(movieId, apiKey).execute().body().getReviews());
-                    movie.setVideos(api.fetchVideos(movieId, apiKey).execute().body().getVideos());
-                    movieDetails.postValue(movie);
-                } catch (IOException e) {
-                    movieDetails.postValue(null);
-                    e.printStackTrace();
-                }
+        sAppExecutors.networkIO().execute(() -> {
+            try {
+                movie.setReviews(api.fetchReviews(movieId, apiKey).execute().body().getReviews());
+                movie.setVideos(api.fetchVideos(movieId, apiKey).execute().body().getVideos());
+                movieDetails.postValue(movie);
+            } catch (IOException e) {
+                movieDetails.postValue(null);
+                e.printStackTrace();
             }
         });
         return movieDetails;

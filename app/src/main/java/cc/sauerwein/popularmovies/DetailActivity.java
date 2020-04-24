@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.Gson;
@@ -57,15 +56,12 @@ public class DetailActivity extends AppCompatActivity {
         // Query the Room database
         // If the query contains a result, the movie is a favorite movie.
         LiveData<Movie> queryresult = mViewModel.fetchMovie(movie.getId());
-        queryresult.observe(this, new Observer<Movie>() {
-            @Override
-            public void onChanged(Movie movie) {
-                if (movie == null) {
-                    mViewModel.setmBtnFavoriteText(getString(R.string.mark_as_favorite));
-                } else {
-                    mViewModel.setmBtnFavoriteText(getString(R.string.remove_from_favorites));
-                    mViewModel.getMovie().setFavorite(true);
-                }
+        queryresult.observe(this, movie1 -> {
+            if (movie1 == null) {
+                mViewModel.setmBtnFavoriteText(getString(R.string.mark_as_favorite));
+            } else {
+                mViewModel.setmBtnFavoriteText(getString(R.string.remove_from_favorites));
+                mViewModel.getMovie().setFavorite(true);
             }
         });
     }
