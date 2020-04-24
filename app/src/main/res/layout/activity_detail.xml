@@ -36,8 +36,8 @@
                 android:layout_height="wrap_content"
                 android:background="#26a69a"
                 android:padding="24dp"
-                android:textColor="@android:color/white"
                 android:text="@{view_model.movie.title}"
+                android:textColor="@android:color/white"
                 android:textSize="48sp" />
 
             <RelativeLayout
@@ -99,9 +99,15 @@
                 android:text="@{view_model.movie.overview}" />
 
             <fragment
-                android:id="@+id/videos"
+                android:id="@+id/fragment_videos"
                 android:name="cc.sauerwein.popularmovies.VideoFragment"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <fragment
+                android:id="@+id/fragment_reviews"
+                android:name="cc.sauerwein.popularmovies.ReviewFragment"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

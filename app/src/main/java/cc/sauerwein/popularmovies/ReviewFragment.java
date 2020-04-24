@@ -1,25 +1,23 @@
 package cc.sauerwein.popularmovies;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import cc.sauerwein.popularmovies.databinding.FragmentVideoBinding;
+import cc.sauerwein.popularmovies.databinding.FragmentReviewBinding;
 import cc.sauerwein.popularmovies.viewmodels.MovieDetailViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link VideoFragment#newInstance} factory method to
+ * Use the {@link ReviewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class VideoFragment extends Fragment {
+public class ReviewFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +28,7 @@ public class VideoFragment extends Fragment {
     private String mParam2;
     private MovieDetailViewModel mViewModel;
 
-    public VideoFragment() {
+    public ReviewFragment() {
         // Required empty public constructor
     }
 
@@ -40,16 +38,15 @@ public class VideoFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment VideoFragment.
+     * @return A new instance of fragment ReviewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static VideoFragment newInstance(String param1, String param2) {
-        VideoFragment fragment = new VideoFragment();
+    public static ReviewFragment newInstance(String param1, String param2) {
+        ReviewFragment fragment = new ReviewFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -67,14 +64,8 @@ public class VideoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mViewModel = new ViewModelProvider(requireActivity()).get(MovieDetailViewModel.class);
-        FragmentVideoBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_video, container, false);
-        mViewModel.setupVideoRecyclerView(binding.rvVideos);
+        FragmentReviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_review, container, false);
+        mViewModel.setupReviewRecyclerView(binding.rvReviews);
         return binding.getRoot();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        Log.d("..", "halloooo");
-        super.onSaveInstanceState(outState);
     }
 }

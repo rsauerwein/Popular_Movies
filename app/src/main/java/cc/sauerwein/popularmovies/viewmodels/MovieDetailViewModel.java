@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cc.sauerwein.popularmovies.R;
+import cc.sauerwein.popularmovies.adapter.ReviewAdapter;
 import cc.sauerwein.popularmovies.adapter.VideoAdapter;
 import cc.sauerwein.popularmovies.data.Repository;
 import cc.sauerwein.popularmovies.model.Movie;
@@ -24,6 +25,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
     private MutableLiveData<String> mBtnFavoriteText;
     private Context mContext;
     private VideoAdapter mVideoAdapter;
+    private ReviewAdapter mReviewAdapter;
 
 
     public MovieDetailViewModel(@NonNull Application application) {
@@ -56,6 +58,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
     private void notifiyRecyclerView() {
         mVideoAdapter.notifyDataSetChanged();
+        mReviewAdapter.notifyDataSetChanged();
     }
 
     public void favoriteButtonTap() {
@@ -76,11 +79,19 @@ public class MovieDetailViewModel extends AndroidViewModel {
         mBtnFavoriteText.postValue(txt);
     }
 
-    public void setupRecyclerView(RecyclerView recyclerView) {
+    public void setupVideoRecyclerView(RecyclerView recyclerView) {
         this.mVideoAdapter = new VideoAdapter(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplication().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(this.mVideoAdapter);
+    }
+
+    public void setupReviewRecyclerView(RecyclerView recyclerView) {
+        this.mReviewAdapter = new ReviewAdapter(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplication().getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(this.mReviewAdapter);
     }
 }
