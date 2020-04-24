@@ -1,15 +1,22 @@
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         tools:context="cc.sauerwein.popularmovies.ReviewFragment">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reviews"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_reviews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </FrameLayout>
+    </LinearLayout>
 </layout>
