@@ -26,23 +26,19 @@ import cc.sauerwein.popularmovies.model.Movie;
 public class MainActivityViewModel extends AndroidViewModel {
 
     private static final String LOG_TAG = MainActivityViewModel.class.getSimpleName();
+    // Options for listUpdate
+    public final String POPULAR_MOVIES = "popular-movies";
+    public final String TOP_RATED_MOVIES = "top-rated-movies";
+    public final String MY_FAVORITES = "my-favorites";
     private Repository mRepository;
-
     // Layout data
     private ObservableInt mLoadingVisibility;
     private ObservableInt mErrorMessageVisibility;
     private ObservableInt mRecyclerViewVisibility;
     private MutableLiveData<String> mActionBarTitle;
-
     // Recyclerview
     private MovieAdapter mMovieAdapter;
     private List<Movie> mMovieList;
-
-    // Options for listUpdate
-    public final String POPULAR_MOVIES = "popular-movies";
-    public final String TOP_RATED_MOVIES = "top-rated-movies";
-    public final String MY_FAVORITES = "my-favorites";
-
     private MutableLiveData<Movie> mClickedItem;
 
 
