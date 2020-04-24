@@ -61,5 +61,24 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_poster"
             tools:text="Lorem ipsum bla bla" />
 
+        <TextView
+            android:id="@+id/tv_vote_average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{view_model.movie.getFormatedUserRating()}"
+            app:layout_constraintStart_toStartOf="@+id/tv_year"
+            app:layout_constraintTop_toBottomOf="@+id/tv_year"
+            tools:text="10/10" />
+
+        <TextView
+            android:id="@+id/tv_vote_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="@{view_model.movie.getFormatedVoteCount()}"
+            app:layout_constraintStart_toEndOf="@+id/tv_vote_average"
+            app:layout_constraintTop_toBottomOf="@+id/tv_year"
+            tools:text="(1337)" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

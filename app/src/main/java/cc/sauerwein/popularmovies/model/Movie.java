@@ -99,6 +99,10 @@ public class Movie {
         return this.voteAverage + "/10";
     }
 
+    public String getFormatedVoteCount() {
+        return "(" + this.voteCount + ")";
+    }
+
     @BindingAdapter("moviePoster")
     public static void loadImage(ImageView view, String url) {
         Picasso.get()
