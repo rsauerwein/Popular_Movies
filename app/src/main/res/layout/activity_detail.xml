@@ -39,13 +39,13 @@
                 app:moviePoster="@{view_model.movie.getMovieBackdropUrl()}" />
 
 
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragment_overview"
                 android:name="cc.sauerwein.popularmovies.OverviewFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragment_videos"
                 android:name="cc.sauerwein.popularmovies.VideoFragment"
                 android:layout_width="match_parent"
@@ -53,7 +53,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp" />
 
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragment_reviews"
                 android:name="cc.sauerwein.popularmovies.ReviewFragment"
                 android:layout_width="match_parent"
