@@ -28,6 +28,8 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     private static final String LOG_TAG = MainActivityViewModel.class.getSimpleName();
     private final Repository mRepository;
+    private Context mContext;
+
     // Layout data
     private final ObservableInt mLoadingVisibility;
     private final ObservableInt mErrorMessageVisibility;
@@ -38,9 +40,12 @@ public class MainActivityViewModel extends AndroidViewModel {
     private List<Movie> mMovieList;
     private final MutableLiveData<Movie> mClickedItem;
 
+    private boolean mFavoritesDisplayed;
+
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
+        mContext = getApplication().getApplicationContext();
         mRepository = Repository.getInstance(application);
 
         mLoadingVisibility = new ObservableInt();
@@ -130,9 +135,8 @@ public class MainActivityViewModel extends AndroidViewModel {
      * Performs a main activity list update
      *
      * @param option  Use the options provided by the Movie class
-     * @param context Main activity context
      */
-    public void listUpdate(String option, Context context) {
+    public void listUpdate(String option) {
         Log.d(LOG_TAG, "Perform MainActivity listUpdate");
         this.resetMovieData();
         this.setRecyclerViewVisibility(View.GONE);
@@ -142,16 +146,19 @@ public class MainActivityViewModel extends AndroidViewModel {
 
         switch (option) {
             case Movie.OPTION_IS_TOP_RATED:
-                this.setActionBarTitle(context.getString(R.string.top_rated));
+                this.setActionBarTitle(mContext.getString(R.string.top_rated));
                 result = this.getTopRatedMovies();
+                mFavoritesDisplayed = false;
                 break;
             case Movie.OPTION_IS_POPULAR:
-                this.setActionBarTitle(context.getString(R.string.popular));
+                this.setActionBarTitle(mContext.getString(R.string.popular));
                 result = this.getPopularMovies();
+                mFavoritesDisplayed = false;
                 break;
             case Movie.OPTION_IS_FAVORITE:
-                this.setActionBarTitle(context.getString(R.string.my_favorites));
+                this.setActionBarTitle(mContext.getString(R.string.my_favorites));
                 result = this.getFavoriteMovies();
+                mFavoritesDisplayed = true;
                 break;
             default:
                 Log.wtf(LOG_TAG, "Passed illegal argument to listUpdate");
@@ -174,13 +181,17 @@ public class MainActivityViewModel extends AndroidViewModel {
                         setErrorMessageVisibility(View.VISIBLE);
                     } else {
                         // Device seems to be offline but locally stored favorites are available
-                        listUpdate(Movie.OPTION_IS_FAVORITE, context);
-                        Toast toast = Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_LONG);
+                        listUpdate(Movie.OPTION_IS_FAVORITE);
+                        Toast toast = Toast.makeText(mContext, mContext.getString(R.string.error), Toast.LENGTH_LONG);
                         toast.show();
                     }
                 }
             }
         });
+    }
+
+    public void activityResumed() {
+        if (mFavoritesDisplayed) listUpdate(Movie.OPTION_IS_FAVORITE);
     }
 
     public void posterClick(int position) {
@@ -199,10 +210,10 @@ public class MainActivityViewModel extends AndroidViewModel {
         Application application = getApplication();
 
         if (item.getTitle().toString().equals(application.getString(R.string.most_popular_menu))) {
-            listUpdate(Movie.OPTION_IS_POPULAR, application.getApplicationContext());
+            listUpdate(Movie.OPTION_IS_POPULAR);
             item.setTitle(application.getString(R.string.top_rated_menu));
         } else if (item.getTitle().toString().equals(application.getString(R.string.top_rated_menu))) {
-            listUpdate(Movie.OPTION_IS_TOP_RATED, application.getApplicationContext());
+            listUpdate(Movie.OPTION_IS_TOP_RATED);
             item.setTitle(application.getString(R.string.most_popular_menu));
         }
     }

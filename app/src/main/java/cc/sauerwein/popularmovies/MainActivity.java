@@ -46,14 +46,18 @@ public class MainActivity extends AppCompatActivity {
 
         // Avoid unnecessary API calls
         if (savedInstanceState == null) {
-            mViewModel.listUpdate(Movie.OPTION_IS_POPULAR, this);
+            mViewModel.listUpdate(Movie.OPTION_IS_POPULAR);
         } else {
             // Fix the issue that the ActionBar contains the application title after rotating the device
             getSupportActionBar().setTitle(mViewModel.getActionBarTitle().getValue());
         }
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mViewModel.activityResumed();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 mViewModel.toggleSort(item);
                 break;
             case R.id.action_my_favorites:
-                mViewModel.listUpdate(Movie.OPTION_IS_FAVORITE, this);
+                mViewModel.listUpdate(Movie.OPTION_IS_FAVORITE);
                 break;
             default:
                 Log.wtf(LOG_TAG, "onOptionsItemSelected called with unknown item");
