@@ -30,7 +30,7 @@ Insert your key in Api.java
 - Better lifecycle understanding
 
 ## License
-Copyright [2020] [Rene Sauerwein]
+Copyright 2020 Rene Sauerwein
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
