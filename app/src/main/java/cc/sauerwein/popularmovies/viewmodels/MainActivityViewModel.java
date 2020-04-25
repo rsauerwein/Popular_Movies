@@ -125,6 +125,12 @@ public class MainActivityViewModel extends AndroidViewModel {
         this.mActionBarTitle.postValue(title);
     }
 
+    /**
+     * Performs a main activity list update
+     *
+     * @param option  Use the options provided by the Movie class
+     * @param context Main activity context
+     */
     public void listUpdate(String option, Context context) {
         Log.d(LOG_TAG, "Perform MainActivity listUpdate");
         this.resetMovieData();
