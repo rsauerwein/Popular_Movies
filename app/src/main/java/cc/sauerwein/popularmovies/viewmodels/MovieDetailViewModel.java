@@ -37,24 +37,29 @@ public class MovieDetailViewModel extends AndroidViewModel {
         Log.d(TAG, "Call MovieDetailViewModel constructor with arguments");
     }
 
-    // Query the room db for a specific Movie
-    // That way we could check if an entry is already stored (favorite)
-    public LiveData<Movie> fetchMovie(int id) {
-        return mRepository.getMovieById(id);
-    }
-
     // Get the Movie object which the ViewModel holds
     public Movie getMovie() {
         return mMovie;
     }
 
-    // As we pass the Movie object from the Main to Detail Activity we need this method to allow the
-    // activity to set the Movie object
-    // As soon as this method gets called the ViewModel also adds Details (Reviews, Videos) to the Movie object
+    /**
+     * As we pass the Movie object from the Main to Detail Activity we need this method to allow the
+     * activity to pass the Movie object to the ViewModel
+     *
+     * @param movie Movie object passed by the MainActivity to the DetailAcitvity
+     */
     public void setMovie(Movie movie) {
         this.mMovie = movie;
 
-        MutableLiveData<Movie> details = mRepository.getMovieDetails(movie);
+        checkIfFavorite();
+        fetchMovieDetails();
+    }
+
+    /**
+     *
+     */
+    private void fetchMovieDetails() {
+        MutableLiveData<Movie> details = mRepository.getMovieDetails(mMovie);
         details.observeForever(new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
@@ -66,6 +71,27 @@ public class MovieDetailViewModel extends AndroidViewModel {
                 } else {
                     mVideoAdapter.notifyDataSetChanged();
                     mReviewAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    /**
+     * Checks if mMovie is already stored in the room database
+     * If yes, the movie is a favorite
+     */
+    private void checkIfFavorite() {
+        LiveData<Movie> queryresult = mRepository.getMovieById(mMovie.getId());
+
+        queryresult.observeForever(new Observer<Movie>() {
+            @Override
+            public void onChanged(Movie movie) {
+                queryresult.removeObserver(this);
+                if (movie != null) {
+                    mMovie.setFavorite(true);
+                    mBtnFavoriteText.postValue(mContext.getString(R.string.remove_from_favorites));
+                } else {
+                    mBtnFavoriteText.postValue(mContext.getString(R.string.mark_as_favorite));
                 }
             }
         });
@@ -85,10 +111,6 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> getmBtnFavoriteText() {
         return mBtnFavoriteText;
-    }
-
-    public void setmBtnFavoriteText(String txt) {
-        mBtnFavoriteText.postValue(txt);
     }
 
     public void setupVideoRecyclerView(RecyclerView recyclerView) {
