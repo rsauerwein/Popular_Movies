@@ -4,5 +4,4 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#d50000</color>
     <color name="textOnPrimary">#ffffff</color>
-    <color name="textOnAccent">#ffffff</color>
 </resources>
