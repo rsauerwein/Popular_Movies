@@ -26,10 +26,6 @@ import cc.sauerwein.popularmovies.model.Movie;
 public class MainActivityViewModel extends AndroidViewModel {
 
     private static final String LOG_TAG = MainActivityViewModel.class.getSimpleName();
-    // Options for listUpdate
-    public final String POPULAR_MOVIES = "popular-movies";
-    private final String TOP_RATED_MOVIES = "top-rated-movies";
-    public final String MY_FAVORITES = "my-favorites";
     private final Repository mRepository;
     // Layout data
     private final ObservableInt mLoadingVisibility;
@@ -138,15 +134,15 @@ public class MainActivityViewModel extends AndroidViewModel {
         LiveData<List<Movie>> result;
 
         switch (option) {
-            case TOP_RATED_MOVIES:
+            case Movie.OPTION_IS_TOP_RATED:
                 this.setActionBarTitle(context.getString(R.string.top_rated));
                 result = this.getTopRatedMovies();
                 break;
-            case POPULAR_MOVIES:
+            case Movie.OPTION_IS_POPULAR:
                 this.setActionBarTitle(context.getString(R.string.popular));
                 result = this.getPopularMovies();
                 break;
-            case MY_FAVORITES:
+            case Movie.OPTION_IS_FAVORITE:
                 this.setActionBarTitle(context.getString(R.string.my_favorites));
                 result = this.getFavoriteMovies();
                 break;
@@ -167,11 +163,11 @@ public class MainActivityViewModel extends AndroidViewModel {
                     setMovieList(movies);
                 } else {
                     // Result contains no data and local favorite db is empty
-                    if (option == MY_FAVORITES) {
+                    if (option == Movie.OPTION_IS_FAVORITE) {
                         mErrorMessageVisibility.set(View.VISIBLE);
                     } else {
                         // Device seems to be offline but locally stored favorites are available
-                        listUpdate(MY_FAVORITES, context);
+                        listUpdate(Movie.OPTION_IS_FAVORITE, context);
                         Toast toast = Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_LONG);
                         toast.show();
                     }
@@ -196,10 +192,10 @@ public class MainActivityViewModel extends AndroidViewModel {
         Application application = getApplication();
 
         if (item.getTitle().toString().equals(application.getString(R.string.most_popular_menu))) {
-            listUpdate(POPULAR_MOVIES, application.getApplicationContext());
+            listUpdate(Movie.OPTION_IS_POPULAR, application.getApplicationContext());
             item.setTitle(application.getString(R.string.top_rated_menu));
         } else if (item.getTitle().toString().equals(application.getString(R.string.top_rated_menu))) {
-            listUpdate(TOP_RATED_MOVIES, application.getApplicationContext());
+            listUpdate(Movie.OPTION_IS_TOP_RATED, application.getApplicationContext());
             item.setTitle(application.getString(R.string.most_popular_menu));
         }
     }

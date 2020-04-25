@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.gson.Gson;
 
 import cc.sauerwein.popularmovies.databinding.ActivityMainBinding;
+import cc.sauerwein.popularmovies.model.Movie;
 import cc.sauerwein.popularmovies.viewmodels.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Avoid unnecessary API calls
         if (savedInstanceState == null) {
-            mViewModel.listUpdate(mViewModel.POPULAR_MOVIES, this);
+            mViewModel.listUpdate(Movie.OPTION_IS_POPULAR, this);
         } else {
             // Fix the issue that the ActionBar contains the application title after rotating the device
             getSupportActionBar().setTitle(mViewModel.getActionBarTitle().getValue());
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 mViewModel.toggleSort(item);
                 break;
             case R.id.action_my_favorites:
-                mViewModel.listUpdate(mViewModel.MY_FAVORITES, this);
+                mViewModel.listUpdate(Movie.OPTION_IS_FAVORITE, this);
                 break;
             default:
                 Log.wtf(LOG_TAG, "onOptionsItemSelected called with unknown item");
