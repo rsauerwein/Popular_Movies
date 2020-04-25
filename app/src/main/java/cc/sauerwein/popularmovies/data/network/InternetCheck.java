@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class InternetCheck extends AsyncTask<Void, Void, Boolean> {
 
-    private Consumer mConsumer;
+    private final Consumer mConsumer;
 
     public InternetCheck(Consumer consumer) {
         mConsumer = consumer;

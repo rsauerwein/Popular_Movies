@@ -26,21 +26,21 @@ import cc.sauerwein.popularmovies.R;
 @Entity(tableName = "movies")
 public class Movie {
     @PrimaryKey
-    private int id;
-    private String title;
-    private String overview;
+    private final int id;
+    private final String title;
+    private final String overview;
     @SerializedName("release_date")
     @ColumnInfo(name = "release_date")
-    private Date releaseDate;
+    private final Date releaseDate;
     @SerializedName("poster_path")
     @ColumnInfo(name = "poster_path")
-    private String posterPath;
+    private final String posterPath;
     @ColumnInfo(name = "backdrop_path")
     @SerializedName("backdrop_path")
     private String backdropPath;
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
-    private double voteAverage;
+    private final double voteAverage;
     @SerializedName("vote_count")
     @ColumnInfo(name = "vote_count")
     private int voteCount;

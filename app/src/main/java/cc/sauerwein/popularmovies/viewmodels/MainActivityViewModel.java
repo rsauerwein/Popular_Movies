@@ -30,16 +30,16 @@ public class MainActivityViewModel extends AndroidViewModel {
     public final String POPULAR_MOVIES = "popular-movies";
     public final String TOP_RATED_MOVIES = "top-rated-movies";
     public final String MY_FAVORITES = "my-favorites";
-    private Repository mRepository;
+    private final Repository mRepository;
     // Layout data
-    private ObservableInt mLoadingVisibility;
-    private ObservableInt mErrorMessageVisibility;
-    private ObservableInt mRecyclerViewVisibility;
-    private MutableLiveData<String> mActionBarTitle;
+    private final ObservableInt mLoadingVisibility;
+    private final ObservableInt mErrorMessageVisibility;
+    private final ObservableInt mRecyclerViewVisibility;
+    private final MutableLiveData<String> mActionBarTitle;
     // Recyclerview
     private MovieAdapter mMovieAdapter;
     private List<Movie> mMovieList;
-    private MutableLiveData<Movie> mClickedItem;
+    private final MutableLiveData<Movie> mClickedItem;
 
 
     public MainActivityViewModel(@NonNull Application application) {

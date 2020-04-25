@@ -23,8 +23,8 @@ public class MovieDetailViewModel extends AndroidViewModel {
     private static final String TAG = MovieDetailViewModel.class.getSimpleName();
     final private Repository mRepository;
     private Movie mMovie;
-    private MutableLiveData<String> mBtnFavoriteText;
-    private Context mContext;
+    private final MutableLiveData<String> mBtnFavoriteText;
+    private final Context mContext;
     private VideoAdapter mVideoAdapter;
     private ReviewAdapter mReviewAdapter;
 
