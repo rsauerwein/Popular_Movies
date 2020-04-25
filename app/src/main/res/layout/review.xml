@@ -33,6 +33,7 @@
             android:id="@+id/tv_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:text="@{view_model.movie.reviews.get(position).author}"
             app:layout_constraintStart_toEndOf="@+id/tv_author_label"
             app:layout_constraintTop_toTopOf="@+id/tv_author_label"
