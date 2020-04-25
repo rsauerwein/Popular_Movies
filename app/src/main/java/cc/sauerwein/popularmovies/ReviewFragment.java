@@ -38,6 +38,8 @@ public class ReviewFragment extends Fragment {
         mViewModel = new ViewModelProvider(requireActivity()).get(MovieDetailViewModel.class);
         FragmentReviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_review, container, false);
         mViewModel.setupReviewRecyclerView(binding.rvReviews);
+        binding.setVariable(BR.view_model, mViewModel);
+        binding.setLifecycleOwner(requireActivity());
         return binding.getRoot();
     }
 }

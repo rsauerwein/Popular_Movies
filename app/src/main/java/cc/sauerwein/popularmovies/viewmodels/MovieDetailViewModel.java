@@ -3,6 +3,7 @@ package cc.sauerwein.popularmovies.viewmodels;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
     final private Repository mRepository;
     private Movie mMovie;
     private final MutableLiveData<String> mBtnFavoriteText;
+    private final MutableLiveData<Integer> mNoReviewsNoticeVisibility;
     private final Context mContext;
     private VideoAdapter mVideoAdapter;
     private ReviewAdapter mReviewAdapter;
@@ -33,6 +35,8 @@ public class MovieDetailViewModel extends AndroidViewModel {
         super(application);
         mRepository = Repository.getInstance(application);
         mBtnFavoriteText = new MutableLiveData<>();
+        mNoReviewsNoticeVisibility = new MutableLiveData<>();
+        mNoReviewsNoticeVisibility.setValue(View.GONE);
         mContext = application.getApplicationContext();
         Log.d(TAG, "Call MovieDetailViewModel constructor with arguments");
     }
@@ -73,6 +77,10 @@ public class MovieDetailViewModel extends AndroidViewModel {
                 } else {
                     mVideoAdapter.notifyDataSetChanged();
                     mReviewAdapter.notifyDataSetChanged();
+
+                    if (movie.getReviews().size() == 0) {
+                        mNoReviewsNoticeVisibility.postValue(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -129,5 +137,9 @@ public class MovieDetailViewModel extends AndroidViewModel {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(this.mReviewAdapter);
+    }
+
+    public MutableLiveData<Integer> getNoReviewsNoticeVisibility() {
+        return mNoReviewsNoticeVisibility;
     }
 }
