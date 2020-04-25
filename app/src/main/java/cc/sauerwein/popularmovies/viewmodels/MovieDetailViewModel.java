@@ -37,7 +37,9 @@ public class MovieDetailViewModel extends AndroidViewModel {
         Log.d(TAG, "Call MovieDetailViewModel constructor with arguments");
     }
 
-    // Get the Movie object which the ViewModel holds
+    /**
+     * @return Movie object which the ViewModel holds
+     */
     public Movie getMovie() {
         return mMovie;
     }
