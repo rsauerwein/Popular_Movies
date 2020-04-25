@@ -170,7 +170,7 @@ public class MainActivityViewModel extends AndroidViewModel {
                 } else {
                     // Result contains no data and local favorite db is empty
                     if (option == Movie.OPTION_IS_FAVORITE) {
-                        mErrorMessageVisibility.set(View.VISIBLE);
+                        setErrorMessageVisibility(View.VISIBLE);
                     } else {
                         // Device seems to be offline but locally stored favorites are available
                         listUpdate(Movie.OPTION_IS_FAVORITE, context);
