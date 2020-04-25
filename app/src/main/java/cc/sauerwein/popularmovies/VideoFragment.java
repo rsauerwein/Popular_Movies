@@ -39,6 +39,8 @@ public class VideoFragment extends Fragment {
         mViewModel = new ViewModelProvider(requireActivity()).get(MovieDetailViewModel.class);
         FragmentVideoBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_video, container, false);
         mViewModel.setupVideoRecyclerView(binding.rvVideos);
+        binding.setVariable(BR.view_model, mViewModel);
+        binding.setLifecycleOwner(requireActivity());
         return binding.getRoot();
     }
 }

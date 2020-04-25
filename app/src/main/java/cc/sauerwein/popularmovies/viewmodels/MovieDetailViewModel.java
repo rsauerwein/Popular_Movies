@@ -26,6 +26,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
     private Movie mMovie;
     private final MutableLiveData<String> mBtnFavoriteText;
     private final MutableLiveData<Integer> mNoReviewsNoticeVisibility;
+    private final MutableLiveData<Integer> mNoTrailersNoticeVisibility;
     private final Context mContext;
     private VideoAdapter mVideoAdapter;
     private ReviewAdapter mReviewAdapter;
@@ -34,9 +35,15 @@ public class MovieDetailViewModel extends AndroidViewModel {
     public MovieDetailViewModel(@NonNull Application application) {
         super(application);
         mRepository = Repository.getInstance(application);
+
         mBtnFavoriteText = new MutableLiveData<>();
+
         mNoReviewsNoticeVisibility = new MutableLiveData<>();
-        mNoReviewsNoticeVisibility.setValue(View.GONE);
+        mNoReviewsNoticeVisibility.postValue(View.GONE);
+
+        mNoTrailersNoticeVisibility = new MutableLiveData<>();
+        mNoTrailersNoticeVisibility.postValue(View.GONE);
+
         mContext = application.getApplicationContext();
         Log.d(TAG, "Call MovieDetailViewModel constructor with arguments");
     }
@@ -80,6 +87,10 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
                     if (movie.getReviews().size() == 0) {
                         mNoReviewsNoticeVisibility.postValue(View.VISIBLE);
+                    }
+
+                    if (movie.getVideos().size() == 0) {
+                        mNoTrailersNoticeVisibility.postValue(View.VISIBLE);
                     }
                 }
             }
@@ -141,5 +152,9 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
     public MutableLiveData<Integer> getNoReviewsNoticeVisibility() {
         return mNoReviewsNoticeVisibility;
+    }
+
+    public MutableLiveData<Integer> getNoTrailersNoticeVisibility() {
+        return mNoTrailersNoticeVisibility;
     }
 }

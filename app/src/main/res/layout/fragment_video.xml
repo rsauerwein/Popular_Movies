@@ -1,5 +1,12 @@
 <layout>
 
+    <data>
+
+        <variable
+            name="view_model"
+            type="cc.sauerwein.popularmovies.viewmodels.MovieDetailViewModel" />
+    </data>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -17,6 +24,13 @@
             android:id="@+id/rv_videos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_no_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No trailers available"
+            android:visibility="@{view_model.getNoTrailersNoticeVisibility()}" />
 
     </LinearLayout>
 </layout>
