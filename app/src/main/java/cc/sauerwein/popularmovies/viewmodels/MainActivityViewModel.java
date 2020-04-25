@@ -191,6 +191,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public void activityResumed() {
+        // Refresh the favorites list as the user may have removed the movie from favorites
         if (mFavoritesDisplayed) listUpdate(Movie.OPTION_IS_FAVORITE);
     }
 
