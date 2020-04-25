@@ -26,21 +26,20 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     private MovieDetailViewModel mViewModel;
-    private ActivityDetailBinding mActivityBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(LOG_TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        mActivityBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+        ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         setTitle(getString(R.string.movie_detail));
 
         mViewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);
-        mActivityBinding.setLifecycleOwner(this);
-        mActivityBinding.setViewModel(mViewModel);
+        binding.setLifecycleOwner(this);
+        binding.setViewModel(mViewModel);
 
 
-        setSupportActionBar(mActivityBinding.detailActivityToolbar);
+        setSupportActionBar(binding.detailActivityToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
