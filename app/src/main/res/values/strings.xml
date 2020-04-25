@@ -14,7 +14,12 @@
     <!--    Error messages-->
     <string name="error">Can\'t retrieve data from the internet\nSwitch to my Favorites</string>
     <string name="detail_error">Can\'t retrieve details from the internet</string>
+
+
+    <!--    Notice messages-->
     <string name="empty_favorites">My favorites is empty</string>
+    <string name="empty_reviews">No reviews available</string>
+    <string name="empty_trailers">No trailers available</string>
 
     <!--   Favorites function-->
     <string name="mark_as_favorite">Mark as Favorite</string>
