@@ -58,7 +58,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
     }
 
     /**
-     *
+     * Fetch trailers and reviews
      */
     private void fetchMovieDetails() {
         MutableLiveData<Movie> details = mRepository.getMovieDetails(mMovie);
