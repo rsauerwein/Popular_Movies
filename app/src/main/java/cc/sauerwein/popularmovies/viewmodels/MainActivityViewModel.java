@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Objects;
 
 import cc.sauerwein.popularmovies.R;
 import cc.sauerwein.popularmovies.adapter.MovieAdapter;
@@ -169,7 +170,7 @@ public class MainActivityViewModel extends AndroidViewModel {
                     setMovieList(movies);
                 } else {
                     // Result contains no data and local favorite db is empty
-                    if (option == Movie.OPTION_IS_FAVORITE) {
+                    if (Objects.equals(option, Movie.OPTION_IS_FAVORITE)) {
                         setErrorMessageVisibility(View.VISIBLE);
                     } else {
                         // Device seems to be offline but locally stored favorites are available
