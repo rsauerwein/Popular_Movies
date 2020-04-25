@@ -42,7 +42,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoAdapter
     class VideoAdapterViewHolder extends RecyclerView.ViewHolder {
         private final ViewDataBinding binding;
 
-        public VideoAdapterViewHolder(ViewDataBinding binding) {
+        VideoAdapterViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

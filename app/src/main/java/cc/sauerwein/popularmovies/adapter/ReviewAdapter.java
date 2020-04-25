@@ -42,7 +42,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewAdap
     class ReviewAdapterViewHolder extends RecyclerView.ViewHolder {
         private final ViewDataBinding binding;
 
-        public ReviewAdapterViewHolder(ViewDataBinding binding) {
+        ReviewAdapterViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
