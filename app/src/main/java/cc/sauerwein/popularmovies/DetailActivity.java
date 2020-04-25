@@ -42,13 +42,11 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        Intent intent = getIntent();
-        String json = intent.getStringExtra(Intent.EXTRA_TEXT);
-        Movie movie = new Gson().fromJson(json, Movie.class);
-
         // Avoid unnecessary api calls
         if (savedInstanceState == null) {
-            mViewModel.setMovie(movie);
+            Intent intent = getIntent();
+            String json = intent.getStringExtra(Intent.EXTRA_TEXT);
+            mViewModel.setMovie(new Gson().fromJson(json, Movie.class));
         }
     }
 
