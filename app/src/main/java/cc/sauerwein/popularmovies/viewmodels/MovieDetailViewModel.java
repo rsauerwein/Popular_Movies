@@ -79,7 +79,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
         } else {
             mMovie.setFavorite(true);
             mRepository.insertMovie(mMovie);
-            mBtnFavoriteText.postValue("Remove from favorites");
+            mBtnFavoriteText.postValue(mContext.getString(R.string.remove_from_favorites));
         }
     }
 
