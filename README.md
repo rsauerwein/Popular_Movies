@@ -9,7 +9,7 @@ Maybe I'll improve this app further after finishing my Nanodegree. But for now i
 ![Main Activity Screenshot](/screenshots/main.png?raw=true "Main Activity")
 ![Detail Activity Screenshot](/screenshots/detail.png?raw=true "Detail Activity")
 
-Improvements:
+## Improvements:
 - MVVM code
 - Offline function (Favorites)
 - Share function
