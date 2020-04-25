@@ -95,7 +95,7 @@ public class DetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void share() {
+    private void share() {
         if (mViewModel.getMovie().getVideos().size() > 0) {
             final Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");

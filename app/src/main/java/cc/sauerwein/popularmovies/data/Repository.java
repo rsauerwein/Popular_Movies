@@ -27,7 +27,7 @@ public class Repository {
     private static AppExecutors sAppExecutors;
     public static LiveData<List<Movie>> mMovies;
 
-    public Repository(Application application) {
+    private Repository(Application application) {
         this.mDb = AppDatabase.getInstance(application);
     }
 

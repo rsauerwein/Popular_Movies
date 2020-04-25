@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void setupClickListener() {
+    private void setupClickListener() {
         mViewModel.getClickedItem().observe(this, movie -> {
             if (movie != null) {
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);

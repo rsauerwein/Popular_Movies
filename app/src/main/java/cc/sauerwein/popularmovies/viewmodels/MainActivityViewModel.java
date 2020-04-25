@@ -28,7 +28,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     private static final String LOG_TAG = MainActivityViewModel.class.getSimpleName();
     // Options for listUpdate
     public final String POPULAR_MOVIES = "popular-movies";
-    public final String TOP_RATED_MOVIES = "top-rated-movies";
+    private final String TOP_RATED_MOVIES = "top-rated-movies";
     public final String MY_FAVORITES = "my-favorites";
     private final Repository mRepository;
     // Layout data
@@ -68,15 +68,15 @@ public class MainActivityViewModel extends AndroidViewModel {
         recyclerView.setAdapter(this.mMovieAdapter);
     }
 
-    public LiveData<List<Movie>> getPopularMovies() {
+    private LiveData<List<Movie>> getPopularMovies() {
         return mRepository.fetchMovies(Movie.OPTION_IS_POPULAR);
     }
 
-    public LiveData<List<Movie>> getTopRatedMovies() {
+    private LiveData<List<Movie>> getTopRatedMovies() {
         return mRepository.fetchMovies(Movie.OPTION_IS_TOP_RATED);
     }
 
-    public LiveData<List<Movie>> getFavoriteMovies() {
+    private LiveData<List<Movie>> getFavoriteMovies() {
         return mRepository.getFavoriteMovies();
     }
 
@@ -84,7 +84,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         return this.mLoadingVisibility;
     }
 
-    public void setLoadingVisibility(int visibility) {
+    private void setLoadingVisibility(int visibility) {
         this.mLoadingVisibility.set(visibility);
     }
 
@@ -92,7 +92,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         return this.mErrorMessageVisibility;
     }
 
-    public void setErrorMessageVisibility(int visibility) {
+    private void setErrorMessageVisibility(int visibility) {
         this.mErrorMessageVisibility.set(visibility);
     }
 
@@ -100,7 +100,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         return mRecyclerViewVisibility;
     }
 
-    public void setRecyclerViewVisibility(int visibility) {
+    private void setRecyclerViewVisibility(int visibility) {
         this.mRecyclerViewVisibility.set(visibility);
     }
 
@@ -108,7 +108,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         return mMovieList;
     }
 
-    public void setMovieList(List<Movie> movieList) {
+    private void setMovieList(List<Movie> movieList) {
         if (movieList != null) {
             this.mMovieList = movieList;
             mMovieAdapter.notifyDataSetChanged();
@@ -117,7 +117,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         }
     }
 
-    public void resetMovieData() {
+    private void resetMovieData() {
         this.mMovieList = null;
     }
 
@@ -125,7 +125,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         return mActionBarTitle;
     }
 
-    public void setActionBarTitle(String title) {
+    private void setActionBarTitle(String title) {
         this.mActionBarTitle.postValue(title);
     }
 
