@@ -68,8 +68,11 @@ public class Repository {
      * Checks if the movie is already stored in room (favorite)
      * and fetches more details from the API
      *
-     * @param movie
-     * @return
+     * The returned Mutable Live Data contains either an update Movie object or null if something
+     * goes wrong (no connection)
+     *
+     * @param movie Movie object
+     * @return MutableLiveData Movie
      */
     public MutableLiveData<Movie> getMovieDetails(Movie movie) {
         final MutableLiveData<Movie> movieDetails = new MutableLiveData<>();
