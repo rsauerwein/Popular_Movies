@@ -83,7 +83,6 @@ public class Api {
 
                     @Override
                     public void onFailure(Call<MovieList> call, Throwable t) {
-                        Log.e(LOG_TAG, t.getMessage());
                         result.postValue(null);
                     }
                 });
