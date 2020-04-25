@@ -1,13 +1,19 @@
 # Android Developer Nanodegreee Project #3 Popular Movies
 
 ## Project Overview
-In this project I'll improve my first Popular Movies version.
+This is the final version from my Udacitiy Nanodegree Popular Movies Project. You can lookup the first
+version here: https://github.com/rsauerwein/Popular_Movies-Stage1
+
+Maybe I'll improve this app further after finishing my Nanodegree. But for now it's time to move on.
+
+![Main Activity Screenshot](/screenshots/main.png?raw=true "Main Activity")
+![Detail Activity Screenshot](/screenshots/detail.png?raw=true "Detail Activity")
 
 Improvements:
-... The app is still under construction
-
-## API Setup instructions
-Rename the ApiKey.java.sample (located in the preferences src dir) to ApiKey.java and insert your API key
+- MVVM code
+- Offline function (Favorites)
+- Share function
+- Added Reviews and Trailers to the Detail Activity
 
 ## App feature overview
 - OptionMenu, which allows you to switch between two overviews:
@@ -15,14 +21,10 @@ Rename the ApiKey.java.sample (located in the preferences src dir) to ApiKey.jav
   - Top Rated Movies
 - Provide you more insights on the movie, like release year, description, ...
 
+## API Setup instructions
+Rename the ApiKey.java.sample (located in the preferences src dir) to ApiKey.java and insert your API key
+
 ## Lessons learned from this project
-
-
-## Used resources
-- https://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-times-out
-- https://www.baeldung.com/gson-deserialization-guide
-- https://square.github.io/picasso/
-- https://square.github.io/retrofit/
-- https://developers.themoviedb.org/3/getting-started/introduction
-- https://developer.android.com/reference
-- I adopted a lot from previous Udacity projects (Recyclerview, Async tasks, Networkutils)
+- It's some work to refactor existing code to MVVM but it's worth the time as in future it will be easier to maintain the code
+- Android Architecture Core Components make the developers life easier
+- Better lifecycle understanding
