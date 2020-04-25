@@ -22,7 +22,7 @@ Maybe I'll improve this app further after finishing my Nanodegree. But for now i
 - Provide you more insights on the movie, like release year, description, ...
 
 ## API Setup instructions
-Rename the ApiKey.java.sample (located in the preferences src dir) to ApiKey.java and insert your API key
+Insert your key in Api.java
 
 ## Lessons learned from this project
 - It's some work to refactor existing code to MVVM but it's worth the time as in future it will be easier to maintain the code
